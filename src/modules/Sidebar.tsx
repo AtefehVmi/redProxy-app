@@ -9,7 +9,7 @@ const Sidebar = () => {
   return (
     <aside className="
         h-screen w-[var(--app-sidebar-width)] border-r border-solid border-white/10 bg-sidebar-bg
-        pt-6 pl-5 pr-6
+        pt-6 pl-5 pr-6 fixed left-0 top-0
     ">
       <header className="flex h-[var(--app-navbar-height)] items-center justify-start pl-[7px]">
         <Link href={APP_ROUTES.dashboard}>

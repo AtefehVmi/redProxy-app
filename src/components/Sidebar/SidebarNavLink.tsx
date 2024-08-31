@@ -15,9 +15,11 @@ const SidebarNavLink: React.FC<SidebarNavLinkProps> = (props) => {
   const pathname = usePathname();
   const isActive = href === pathname;
 
-  const classNames = `flex justify-start items-center h-[35px] w-full gap-x-2 rounded-[2px] px-1.5 py-[9px] ${
-    isActive && "bg-nav-link-active-bg border-r-[4px] border-solid border-white/20"
-  }`;
+  const classNames = `
+    flex justify-start items-center h-[35px] w-full gap-x-2 rounded-[2px] px-1.5 py-[9px] transition-all 
+    duration-300
+    hover:bg-nav-link-active-bg
+    ${isActive && "bg-nav-link-active-bg border-r-[4px] border-solid border-white/20"}`;
 
   return (
     <Link href={href} className={classNames}>

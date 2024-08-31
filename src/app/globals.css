@@ -33,6 +33,11 @@
 :root{
   --app-sidebar-width: 267px;
   --app-navbar-height: 34px;
+  --navbar-margin-top: 38px;
+  --navbar-margin-bottom: 33px;
+  --navbar-margin-left: 39px;
+  --navbar-margin-right: 45px;
+  --custom-card-border-width: 1.75px;
 }
 
 *{

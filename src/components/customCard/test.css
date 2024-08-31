@@ -1,0 +1,19 @@
+.test{
+    /* inner-background */
+
+    box-sizing: border-box;
+
+    position: absolute;
+    width: 153px;
+    height: 34px;
+    left: calc(50% - 153px/2 + 766.5px);
+    top: calc(50% - 34px/2 - 460.5px);
+
+    background: rgba(248, 248, 248, 0.05);
+    opacity: 0.6;
+    box-shadow: 0px 37.3333px 28px -18.6667px rgba(0, 0, 0, 0.4), inset 0px 0px 9.33333px rgba(248, 248, 248, 0.25);
+    backdrop-filter: blur(7px);
+    /* Note: backdrop-filter has minimal browser support */
+    border-radius: 4px;
+
+}

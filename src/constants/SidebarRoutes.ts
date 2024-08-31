@@ -1,20 +1,11 @@
 export const APP_ROUTES = {
   dashboard: "/",
-  transactions: "/general/transactions",
-  tickets: "/general/tickets",
-  specificTicket: (id: string | number) => `/general/tickets/${id}`,
-  ticketsNew: "/general/tickets/new",
-  residential: "/residential/rotating",
-  residentialStatic: "/residential/static",
-  datacenterStatic: "/datacenter/static",
-  datacenterRotating: "/datacenter/rotating",
-  mobileRotating: "/mobile/rotating",
-  mobileLTE: "/mobile/lte",
-  sneaker: "/sneaker",
-  profile: "/profile",
-  login: "/login",
-  signUp: "/sign-up",
-  accountActivation: "/activation",
+  residentialProxy: "/residentialProxy",
+  datacenterProxy: "/datacenterProxy",
+  mobileProxy: "/mobileProxy",
+  setting: "/setting",
+  transactions: "/transaction",
+
 } as const;
 
 /**
@@ -31,6 +22,21 @@ export const APP_ROUTES = {
  * @property {string} children[].iconSrc - The source path for the sub-navigation item's icon.
  * @property {string} children[].href - The route to which the sub-navigation item points.
  */
+
+export interface NavModel {
+
+  title: string;
+  iconSrc?: string;
+  href?: string;
+  children?: Array<{
+    title: string;
+    iconSrc: string;
+    href: string;
+
+  }>
+}
+
+
 export const APP_NAVIGATION = [
   {
     title: "Dashboard",
@@ -43,17 +49,17 @@ export const APP_NAVIGATION = [
       {
         title: "Residential Proxies",
         iconSrc: "/icons/globe.svg",
-        href: APP_ROUTES.transactions,
+        href: APP_ROUTES.residentialProxy,
       },
       {
         title: "Datacenter Proxies",
         iconSrc: "/icons/globe.svg",
-        href: APP_ROUTES.tickets,
+        href: APP_ROUTES.datacenterProxy,
       },
       {
         title: "LTE/Mobile Proxies",
         iconSrc: "/icons/globe.svg",
-        href: APP_ROUTES.tickets,
+        href: APP_ROUTES.mobileProxy,
       },
     ],
   },
@@ -63,22 +69,23 @@ export const APP_NAVIGATION = [
       {
         title: "Settings",
         iconSrc: "/icons/globe.svg",
-        href: APP_ROUTES.transactions,
+        href: APP_ROUTES.setting,
       },
       {
         title: "Transactions",
         iconSrc: "/icons/globe.svg",
-        href: APP_ROUTES.tickets,
+        href: APP_ROUTES.transactions,
       },
     ],
   },
-] as Array<{
-  title: string;
-  iconSrc?: string;
-  href?: string;
-  children?: Array<{
-    title: string;
-    iconSrc: string;
-    href: string;
-  }>;
-}>;
+  {
+    title: "Test",
+    children: [
+      {
+        title: "Test",
+        iconSrc: "/icons/globe.svg",
+        href: "/test",
+      },
+    ],
+  },
+] as Array<NavModel>;
