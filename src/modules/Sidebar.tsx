@@ -2,20 +2,33 @@ import Link from "next/link";
 
 import SidebarNavLink from "@/components/Sidebar/SidebarNavLink";
 import { APP_NAVIGATION, APP_ROUTES } from "@/constants/SidebarRoutes";
-import BrandLogo from "@/public/brand/logo.svg";
+import BrandLogo from "@/components/Sidebar/BrandLogo";
+
 
 const Sidebar = () => {
   return (
-    <aside className="h-screen w-[var(--app-sidebar-width)] border-r border-solid border-darkBorder bg-navBG">
-      <header className="flex h-[var(--app-navbar-height)] items-center justify-start px-[33px]">
+    <aside className="
+        h-screen w-[var(--app-sidebar-width)] border-r border-solid border-white/10 bg-sidebar-bg
+        pt-6 pl-5 pr-6
+    ">
+      <header className="flex h-[var(--app-navbar-height)] items-center justify-start pl-[7px]">
         <Link href={APP_ROUTES.dashboard}>
-          <BrandLogo />
+          <BrandLogo/>
         </Link>
       </header>
-      <nav className="flex flex-col gap-y-5 px-5 pt-[30px]">
+      <nav className="flex flex-col gap-y-[38px] pt-[55px]">
         {APP_NAVIGATION.map((navItem) => {
           if (navItem.children) {
-            return <></>;
+            return (
+                <div key={navItem.title}>
+                    <p className="text-left text-nav-sub-menu-heading-text text-xs font-medium">{navItem.title}</p>
+                    {navItem.children.map(childrenItem =>{
+                        return(
+                            <SidebarNavLink key={childrenItem.title} {...childrenItem}/>
+                        )
+                    })}
+                </div>
+            );
           } else {
             return <SidebarNavLink key={navItem.title} {...navItem} />;
           }

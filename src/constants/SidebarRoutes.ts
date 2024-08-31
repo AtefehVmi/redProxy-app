@@ -38,75 +38,40 @@ export const APP_NAVIGATION = [
     href: APP_ROUTES.dashboard,
   },
   {
-    title: "General",
+    title: "PROXIES",
     children: [
       {
-        title: "Transactions",
-        iconSrc: "/nav/transactions.svg",
+        title: "Residential Proxies",
+        iconSrc: "/icons/globe.svg",
         href: APP_ROUTES.transactions,
       },
       {
-        title: "Tickets",
-        iconSrc: "/nav/tickets.svg",
+        title: "Datacenter Proxies",
+        iconSrc: "/icons/globe.svg",
+        href: APP_ROUTES.tickets,
+      },
+      {
+        title: "LTE/Mobile Proxies",
+        iconSrc: "/icons/globe.svg",
         href: APP_ROUTES.tickets,
       },
     ],
   },
   {
-    title: "Residential",
+    title: "Account",
     children: [
       {
-        title: "Rotating Residential",
-        iconSrc: "/nav/residential.svg",
-        href: APP_ROUTES.residential,
+        title: "Settings",
+        iconSrc: "/icons/globe.svg",
+        href: APP_ROUTES.transactions,
       },
       {
-        title: "Static Residential",
-        iconSrc: "/nav/static-residential.svg",
-        href: APP_ROUTES.residentialStatic,
+        title: "Transactions",
+        iconSrc: "/icons/globe.svg",
+        href: APP_ROUTES.tickets,
       },
     ],
   },
-  {
-    title: "Datacenter",
-    children: [
-      {
-        title: "Rotating Datacenter",
-        iconSrc: "/nav/datacenter.svg",
-        href: APP_ROUTES.datacenterRotating,
-      },
-      {
-        title: "Static Datacenter",
-        iconSrc: "/nav/datacenter.svg",
-        href: APP_ROUTES.datacenterStatic,
-      },
-    ],
-  },
-  {
-    title: "Mobile",
-    children: [
-      {
-        title: "Rotating Mobile",
-        iconSrc: "/nav/mobile.svg",
-        href: APP_ROUTES.mobileRotating,
-      },
-      {
-        title: "LTE Mobile",
-        iconSrc: "/nav/mobile.svg",
-        href: APP_ROUTES.mobileLTE,
-      },
-    ],
-  },
-  // {
-  // 	title: "Sneaker",
-  // 	children: [
-  // 		{
-  // 			title: "Sneaker",
-  // 			iconSrc: "/nav/sneaker.svg",
-  // 			href: APP_ROUTES.sneaker,
-  // 		},
-  // 	],
-  // },
 ] as Array<{
   title: string;
   iconSrc?: string;
