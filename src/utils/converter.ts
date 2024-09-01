@@ -5,5 +5,5 @@ export function formatBytes(bytes: number): string {
     const index = Math.floor(Math.log10(bytes) / 3);
     const sizeInUnit = bytes / Math.pow(1024, index);
 
-    return `${sizeInUnit.toFixed(1)}${units[index]}`;
+    return `${sizeInUnit.toFixed(1)} ${units[index]}`;
 }

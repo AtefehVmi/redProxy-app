@@ -1,6 +1,7 @@
 import React from 'react';
 import {formatTodayDate} from "@/utils/timeFormatter";
 import UserBalance from "@/modules/Dashboard/UserBalance";
+import UserDataUsage from "@/modules/Dashboard/UserDataUsage";
 
 const Page = () => {
     return (
@@ -9,8 +10,9 @@ const Page = () => {
                 <p className="text-left text-white text-xl">Good morning, {"Mike!"}</p>
                 <p className="text-left text-nav-sub-menu-heading-text text-base-500 mt-1.5">{formatTodayDate()}</p>
             </div>
-            <div className="mt-8">
+            <div className="w-full h-auto mt-8 flex justify-between items-center gap-4">
                 <UserBalance/>
+                <UserDataUsage/>
             </div>
 
         </div>

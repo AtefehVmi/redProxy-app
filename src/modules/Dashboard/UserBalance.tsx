@@ -26,7 +26,7 @@ const UserBalance = () => {
         <CustomCard
             borderRadius={"rounded"}
             borderClassName="
-                w-[344px] h-[364px] p-[1.75px]
+                w-[22%] max-w-[344px] h-[364px] p-[1.75px]
             "
             containerClassName="px-4 py-[18px] flex flex-col items-start"
         >
@@ -98,7 +98,7 @@ const ProxyUsageCard = (props: ProxyUsageCardProps) => {
             <div className={`w-1.5 h-1.5 rounded-[1px] ${proxyColor}`}/>
             <p className="text-left text-profile-card-text text-sm ml-[7px]">{props.proxyName}</p>
             <p className="text-left text-white text-sm ml-auto">
-                {props.proxyType === "DATACENTER" ? `${props.balance}IPs` : formatBytes(props.balance)}
+                {props.proxyType === "DATACENTER" ? `${props.balance} IPs` : formatBytes(props.balance)}
             </p>
         </CustomCard>
     )
