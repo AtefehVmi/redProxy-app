@@ -44,16 +44,21 @@ const Navbar = () => {
         ">
             <div className="flex items-center gap-2">
                 <Image src={dashboardIcon} alt={''} className="h-6 w-6"/>
-                <p className="text-left text-white text-2xl font-bold">{activePageName}</p>
+                <p className="text-left text-white text-[24px] font-bold">{activePageName}</p>
             </div>
             <div className="flex items-center gap-4">
                 <Image src={bellIcon} alt={''} className="h-4 w-4 cursor-pointer"/>
-                <CustomCard className="
-                    flex items-center w-[153px] h-[34px] rounded after:rounded
-                    py-[9px] pl-[11px] pr-[15px] cursor-pointer
+                <CustomCard
+                    borderRadius={"rounded"}
+                    borderClassName={`
+                        w-[160px] h-[34px] p-[1.75px]
+                    `}
+                    containerClassName="
+                        flex items-center
+                        py-[9px] pl-[11px] pr-[15px] cursor-pointer
                 ">
                     <Image src={personIcon} alt={''} className="w-4 h-4"/>
-                    <p className="text-profile-card-text text-xs font-medium ml-[7px]">
+                    <p className="text-profile-card-text text-sm ml-[7px]">
                         Mike Wazowski
                     </p>
                     <Image src={rawArrowDownIcon} alt={''} className="ml-[11px]"/>

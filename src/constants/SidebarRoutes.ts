@@ -77,15 +77,5 @@ export const APP_NAVIGATION = [
         href: APP_ROUTES.transactions,
       },
     ],
-  },
-  {
-    title: "Test",
-    children: [
-      {
-        title: "Test",
-        iconSrc: "/icons/globe.svg",
-        href: "/test",
-      },
-    ],
-  },
+  }
 ] as Array<NavModel>;

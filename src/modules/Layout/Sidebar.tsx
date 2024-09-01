@@ -21,7 +21,7 @@ const Sidebar = () => {
           if (navItem.children) {
             return (
                 <div key={navItem.title}>
-                    <p className="text-left text-nav-sub-menu-heading-text text-xs font-medium">{navItem.title}</p>
+                    <p className="text-left text-nav-sub-menu-heading-text text-sm">{navItem.title}</p>
                     {navItem.children.map(childrenItem =>{
                         return(
                             <SidebarNavLink key={childrenItem.title} {...childrenItem}/>

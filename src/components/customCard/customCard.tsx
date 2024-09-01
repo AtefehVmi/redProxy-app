@@ -2,22 +2,30 @@ import React from 'react';
 
 export interface CustomCardProps{
     children:React.ReactNode,
-    className?: string,
+    borderClassName?: string,
+    containerClassName?:string,
+    borderRadius?: string,
 }
 
-const CustomCard = ({children, className}: CustomCardProps) => {
+const CustomCard = ({children,borderClassName, containerClassName, borderRadius}: CustomCardProps) => {
     return (
         <div
             className={`
-                ${className ?? ""}
-                flex justify-center items-center relative bg-custom-card-bg shadow-custom-card    
-                after:content-[''] after:absolute after:top-[calc(-1*var(--custom-card-border-width))] 
-                after:left-[calc(-1*var(--custom-card-border-width))] after:h-[calc(100%+var(--custom-card-border-width)*2)]
-                after:w-[calc(100%+var(--custom-card-border-width)*2)]
-                after:bg-custom-card-gradiant-border after:-z-[1] after:bg-[size:300%_300%]
+                flex justify-center items-center bg-custom-card-gradiant-border
+                ${borderClassName ?? ""} 
+                ${borderRadius ?? ""}
             `}
         >
-            {children}
+            <div
+                className={`
+                    w-full h-full min-h-full min-w-full relative bg-custom-card-bg
+                    shadow-custom-card
+                    ${containerClassName ?? ''} 
+                    ${borderRadius ?? ""}
+                `}
+            >
+                {children}
+            </div>
         </div>
     );
 };

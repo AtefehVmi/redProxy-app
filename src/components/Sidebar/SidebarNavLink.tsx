@@ -26,7 +26,7 @@ const SidebarNavLink: React.FC<SidebarNavLinkProps> = (props) => {
       <div className="relative h-4 w-4">
         <Image src={iconSrc} alt={title} fill />
       </div>
-      <p className="text-left text-white text-sm font-medium">{title}</p>
+      <p className={`text-left text-profile-card-text text-base-500 ${isActive ? "text-white" : ""}`}>{title}</p>
     </Link>
   );
 };
