@@ -1,73 +1,60 @@
 import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 'recharts';
+import StackedBarChartToolTip from "@/components/Charts/StackedBarChartToolTip";
 
-const data = [
-    {
-        month: 'Page A',
-        residential: 4000,
-        mobile: 2400,
-        datacenter: 2400,
-    },
-    {
-        month: 'Page B',
-        residential: 3000,
-        mobile: 1398,
-        datacenter: 2210,
-    },
-    {
-        month: 'Page C',
-        residential: 2000,
-        mobile: 9800,
-        datacenter: 2290,
-    },
-    {
-        month: 'Page D',
-        residential: 2780,
-        mobile: 3908,
-        datacenter: 2000,
-    },
-    {
-        month: 'Page E',
-        residential: 1890,
-        mobile: 4800,
-        datacenter: 2181,
-    },
-    {
-        month: 'Page F',
-        residential: 2390,
-        mobile: 3800,
-        datacenter: 2500,
-    },
-    {
-        month: 'Page G',
-        residential: 3490,
-        mobile: 4300,
-        datacenter: 2100,
-    },
-];
+export interface StackedBarChartProps {
+    data: Array<any>;
+    colors: any;
+    XKey: string;
+    barKeys: Array<string>;
+    verticalCartesian?: boolean;
+    horizontalCartesian?: boolean;
+    horizontalPoints?: Array<number>;
+    verticaPoints?: Array<number>;
+    hasLegend?: boolean;
+    barSize?: number | string;
+}
 
-const StackedBarChart = () => {
+const StackedBarChart = (props: StackedBarChartProps) => {
+
     return (
         <ResponsiveContainer width="100%" height="100%">
             <BarChart
-                // width={500}
-                // height={300}
-                data={data}
-                // margin={{
-                //     top: 20,
-                //     right: 30,
-                //     left: 20,
-                //     bottom: 5,
-                // }}
+                data={props.data}
+                barSize={props.barSize ?? ''}
+                margin={{top: 0,right: 0,bottom: 0,left: 0}}
             >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="mobile" stackId="a" fill="#8884d8" />
-                <Bar dataKey="residential" stackId="a" fill="#82ca9d" />
-                <Bar dataKey="residential" stackId="a" fill="#f8f8f8" />
+                <CartesianGrid
+                    stroke={"#726D6A"}
+                    strokeDasharray="3 1"
+                    vertical={props.verticalCartesian ?? false}
+                    horizontal={props.horizontalCartesian ?? false}
+                    horizontalPoints={props.horizontalPoints ?? undefined}
+                    verticalPoints={props.verticaPoints ?? undefined}
+                />
+                <XAxis
+                    dataKey={props.XKey}
+                    tick={{ fontSize: 10, fill: '#726D6A', fontWeight: 'medium' }}
+                />
+                <YAxis
+                    tick={{ fontSize: 10, fill: '#726D6A', fontWeight: 'medium' }}
+                />
+                <Tooltip
+                    content={<StackedBarChartToolTip/>}
+                    cursor={false}
+                />
+                {props.hasLegend && <Legend/>}
+                {
+                    props.barKeys.map((key, index) => (
+                        <Bar
+                            key={index}
+                            dataKey={key}
+                            stackId="a"
+                            fill={props.colors[key]}
+                            radius={[3, 3, 0, 0]}
+                        />
+                    ))
+                }
             </BarChart>
         </ResponsiveContainer>
     );

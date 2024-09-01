@@ -48,7 +48,7 @@ const CustomSelect = (props: CustomSelectProps) => {
                 <p className="text-profile-card-text text-sm truncate">
                     {selectedValue ? props.options.find(option => option.value === selectedValue)?.label : 'Select...'}
                 </p>
-                <Image src={rawArrowDownIcon} alt={''} className="ml-[11px]"/>
+                <Image src={rawArrowDownIcon} alt={''} />
             </CustomCard>
             {isOpen && (
                 <ul className="absolute z-10 mt-1 w-full bg-custom-card-bg rounded shadow-lg max-h-60 overflow-y-auto">
@@ -56,7 +56,7 @@ const CustomSelect = (props: CustomSelectProps) => {
                         <li
                             key={option.value}
                             className={`p-2 cursor-pointer truncate text-sm text-white hover:bg-proxy-color/50  ${
-                                option.value === selectedValue ? 'bg-proxy-color text-black' : ''
+                                option.value === selectedValue ? 'bg-proxy-color !text-black' : ''
                             }`}
                             onClick={() => handleOptionClick(option.value)}
                         >

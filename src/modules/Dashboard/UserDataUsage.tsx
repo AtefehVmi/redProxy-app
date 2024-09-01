@@ -4,6 +4,32 @@ import CustomCard from "@/components/CustomCard/customCard";
 import Image from "next/image";
 import growUpIcon from "@public/icons/growup.svg"
 import CustomSelect from "@/components/CustomSelect/CustomSelect";
+import StackedBarChart from "@/components/Charts/StackedBarChart";
+
+
+const CHART_DATA = [
+    { "month": "January", "residential": 73, "mobile": 45, "datacenter": 103 },
+    { "month": "February", "residential": 22, "mobile": 117, "datacenter": 92 },
+    { "month": "March", "residential": 108, "mobile": 13, "datacenter": 70 },
+    { "month": "April", "residential": 67, "mobile": 122, "datacenter": 5 },
+    { "month": "May", "residential": 34, "mobile": 55, "datacenter": 81 },
+    { "month": "June", "residential": 120, "mobile": 23, "datacenter": 48 },
+    { "month": "July", "residential": 97, "mobile": 66, "datacenter": 104 },
+    { "month": "August", "residential": 12, "mobile": 39, "datacenter": 73 },
+    { "month": "September", "residential": 50, "mobile": 110, "datacenter": 95 },
+    { "month": "October", "residential": 79, "mobile": 28, "datacenter": 88 },
+    { "month": "November", "residential": 91, "mobile": 72, "datacenter": 111 },
+    { "month": "December", "residential": 25, "mobile": 59, "datacenter": 119 }
+]
+
+const colorMapping = {
+    mobile: "#2ECB6D80",
+    residential: "#2ECB6D",
+    datacenter: "#2ECB6D33",
+};
+
+const barKeys = ['mobile','residential', 'datacenter'];
+
 
 const UserDataUsage = () => {
     function onChartFilterChange() {
@@ -60,6 +86,18 @@ const UserDataUsage = () => {
                     </p>
                 </div>
             </div>
+
+            <div className="w-full h-[187px] mt-[35px]">
+                <StackedBarChart
+                    data={CHART_DATA}
+                    colors={colorMapping}
+                    XKey={"month"}
+                    barKeys={barKeys}
+                    horizontalCartesian={true}
+                    barSize={40}
+                />
+            </div>
+
         </CustomCard>
     );
 };
