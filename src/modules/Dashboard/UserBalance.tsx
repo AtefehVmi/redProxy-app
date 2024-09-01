@@ -1,13 +1,15 @@
 'use client'
 import React, {useEffect, useState} from 'react';
-import CustomCard from "@/components/customCard/customCard";
+import CustomCard from "@/components/CustomCard/customCard";
 import {formatBytes} from "@/utils/converter";
-import {PieChart, Pie, Cell, ResponsiveContainer} from 'recharts';
+import PaddingPieChart from "@/components/Charts/PaddingPieChart";
+
 
 const CHART_DATA = [
     {name: "RESIDENTIAL", value: 400},
     {name: "MOBILE", value: 100},
     {name: "DATACENTER", value: 130},
+
 ];
 
 const COLORS = ["#2ECB6D", "#2ECB6D80", "#2ECB6D33"]
@@ -32,28 +34,14 @@ const UserBalance = () => {
             <div className="w-[258px] h-[129px] mt-6 self-center relative">
                 {mounted ?
                     <>
-                        <ResponsiveContainer width={"100%"} height={"100%"}>
-                            <PieChart>
-                                <Pie
-                                    data={CHART_DATA}
-                                    cx={"50%"}
-                                    cy={"100%"}
-                                    startAngle={180}
-                                    endAngle={0}
-                                    innerRadius={79}
-                                    outerRadius={119}
-                                    fill="#8884d8"
-                                    paddingAngle={5}
-                                    dataKey="value"
-                                    width={"100%"}
-                                >
-                                    {CHART_DATA.map((entry, index) => (
-                                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]}
-                                              stroke={"none"}/>
-                                    ))}
-                                </Pie>
-                            </PieChart>
-                        </ResponsiveContainer>
+                        <PaddingPieChart
+                            data={CHART_DATA}
+                            colors={COLORS}
+                            cx={"50%"}
+                            cy={"100%"}
+                            innerRadius={79}
+                            outerRadius={119}
+                        />
                         <p className="absolute left-1/2 top-2/3 transform -translate-x-1/2 ">
                             <span className="text-white text-3xl">12.68</span>
                             &nbsp;

@@ -2,7 +2,7 @@
 import React, {useEffect} from 'react';
 import Image from "next/image";
 import {usePathname} from "next/navigation";
-import CustomCard from "@/components/customCard/customCard";
+import CustomCard from "@/components/CustomCard/customCard";
 
 import dashboardIcon from '@public/icons/dashboard.svg'
 import bellIcon from '@public/icons/bell.svg'
