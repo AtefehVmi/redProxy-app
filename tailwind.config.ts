@@ -60,6 +60,7 @@ const config: Config = {
                 "custom-card-bg": "#14181A",
                 "profile-card-text": "#B0B0B0",
                 "proxy-color": "#2ECB6D",
+                "error": "#ea2a4e",
 
             },
             backgroundImage: {

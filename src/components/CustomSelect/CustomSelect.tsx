@@ -19,7 +19,7 @@ interface CustomSelectProps {
 
 const CustomSelect = (props: CustomSelectProps) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedValue, setSelectedValue] = useState(props.defaultValue || '');
+    const [selectedValue, setSelectedValue] = useState(props.defaultValue || props.options[0]);
 
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
