@@ -61,7 +61,11 @@ const config: Config = {
                 "profile-card-text": "#B0B0B0",
                 "proxy-color": "#2ECB6D",
                 "error": "#ea2a4e",
-
+                "custom-link-bg": "#FBFAF91A",
+                "custom-link-border": "#F1EEE90D",
+                "custom-link-hover-bg" :"#FBFAF90D",
+                "custom-link-active-bg" :"#FBFAF926",
+                "config-card-heading-text": "#B0B0B080",
             },
             backgroundImage: {
                 "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -71,7 +75,8 @@ const config: Config = {
             },
             boxShadow: {
                 "nav-link": "0px 37.33px 28px -18.67px #00000066",
-                "custom-card": "0px 37.33px 28px -18.67px rgba(0, 0, 0, 0.24), 0px 0px 9.33px 0px rgba(248, 248, 248, 0.15) inset"
+                "custom-card": "0px 37.33px 28px -18.67px rgba(0, 0, 0, 0.24), 0px 0px 9.33px 0px rgba(248, 248, 248, 0.15) inset",
+                "custom-link": "0px 2px 0px 0px #C6C2BC1A"
             }
         },
     },

@@ -1,13 +1,19 @@
-import React from 'react';
+import React, {ReactEventHandler} from 'react';
 
 export interface CustomCardProps{
     children:React.ReactNode,
     borderClassName?: string,
     containerClassName?:string,
     borderRadius?: string,
+    onClick?: (e: any) => void
 }
 
-const CustomCard = ({children,borderClassName, containerClassName, borderRadius}: CustomCardProps) => {
+const CustomCard = ({children,borderClassName, containerClassName, borderRadius, onClick}: CustomCardProps) => {
+
+    const onCardClick = (e:any) =>{
+        if (onClick) onClick(e)
+    }
+
     return (
         <div
             className={`
@@ -15,6 +21,7 @@ const CustomCard = ({children,borderClassName, containerClassName, borderRadius}
                 ${borderClassName ?? ""} 
                 ${borderRadius ?? ""}
             `}
+            onClick={onCardClick}
         >
             <div
                 className={`

@@ -1,8 +1,8 @@
 export const APP_ROUTES = {
   dashboard: "/",
-  residentialProxy: "/residentialProxy",
-  datacenterProxy: "/datacenterProxy",
-  mobileProxy: "/mobileProxy",
+  residentialProxy: "/proxy/residential",
+  datacenterProxy: "/proxy/datacenter",
+  mobileProxy: "/proxy/mobile",
   setting: "/setting",
   transactions: "/transaction",
 
