@@ -26,7 +26,7 @@ const UserBalance = () => {
         <CustomCard
             borderRadius={"rounded"}
             borderClassName="
-                w-[22%] max-w-[344px] h-[364px] p-[1.75px]
+                col-span-1 max-w-[344px] h-[364px] p-[1.75px]
             "
             containerClassName="px-4 py-[18px] flex flex-col items-start"
         >

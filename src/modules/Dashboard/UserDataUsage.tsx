@@ -40,7 +40,7 @@ const UserDataUsage = () => {
         <CustomCard
             borderRadius={"rounded"}
             borderClassName="
-                w-[78%] h-[364px] p-[1.75px]
+                col-span-3 h-[364px] p-[1.75px]
             "
             containerClassName="
                 px-4 pt-[18px] pb-5

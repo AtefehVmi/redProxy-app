@@ -54,7 +54,7 @@ const UserInvoices = () => {
     return (
         <CustomCard
             borderRadius={"rounded"}
-            borderClassName={"w-full h-[331px] p-[1.75px]"}
+            borderClassName={"col-span-4 h-[331px] p-[1.75px]"}
             containerClassName={"px-4 pt-5 pb-4 flex flex-col items-center gap-[18px]"}
         >
             <div className="w-full flex justify-between items-center">
