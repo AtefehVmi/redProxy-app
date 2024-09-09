@@ -44,57 +44,66 @@ const INVOICE_DATA: Array<InvoiceDataType> = [
         download: "https://www.google.com"
     },
     {
-        date: "11/05/2024",
-        invoice: "#982ZK-004",
-        order: "20 GB Residential",
+        date: "10/05/2024",
+        invoice: "#982ZK-003",
+        order: "50 GB Residential",
         amount: "$ 300.00",
         paymentMethod: "Mastercard",
-        status: "FAILED",
+        status: "PAID",
         download: "https://www.google.com"
     },
     {
-        date: "11/05/2024",
-        invoice: "#982ZK-004",
-        order: "20 GB Residential",
+        date: "10/05/2024",
+        invoice: "#982ZK-003",
+        order: "50 GB Residential",
         amount: "$ 300.00",
         paymentMethod: "Mastercard",
-        status: "FAILED",
+        status: "PAID",
         download: "https://www.google.com"
     },
     {
-        date: "11/05/2024",
-        invoice: "#982ZK-004",
-        order: "20 GB Residential",
+        date: "10/05/2024",
+        invoice: "#982ZK-003",
+        order: "50 GB Residential",
         amount: "$ 300.00",
         paymentMethod: "Mastercard",
-        status: "FAILED",
+        status: "PAID",
         download: "https://www.google.com"
     },
     {
-        date: "11/05/2024",
-        invoice: "#982ZK-004",
-        order: "20 GB Residential",
+        date: "10/05/2024",
+        invoice: "#982ZK-003",
+        order: "50 GB Residential",
         amount: "$ 300.00",
         paymentMethod: "Mastercard",
-        status: "FAILED",
+        status: "PAID",
         download: "https://www.google.com"
     },
     {
-        date: "11/05/2024",
-        invoice: "#982ZK-004",
-        order: "20 GB Residential",
+        date: "10/05/2024",
+        invoice: "#982ZK-003",
+        order: "50 GB Residential",
         amount: "$ 300.00",
         paymentMethod: "Mastercard",
-        status: "FAILED",
+        status: "PAID",
         download: "https://www.google.com"
     },
     {
-        date: "11/05/2024",
-        invoice: "#982ZK-004",
-        order: "20 GB Residential",
+        date: "10/05/2024",
+        invoice: "#982ZK-003",
+        order: "50 GB Residential",
         amount: "$ 300.00",
         paymentMethod: "Mastercard",
-        status: "FAILED",
+        status: "PAID",
+        download: "https://www.google.com"
+    },
+    {
+        date: "10/05/2024",
+        invoice: "#982ZK-003",
+        order: "50 GB Residential",
+        amount: "$ 300.00",
+        paymentMethod: "Mastercard",
+        status: "PAID",
         download: "https://www.google.com"
     },
     {
@@ -117,7 +126,7 @@ const UserInvoices = () => {
     return (
         <CustomCard
             borderRadius={"rounded"}
-            borderClassName={"col-span-4 h-[331px] p-[1.75px]"}
+            borderClassName={"w-full h-[700px] p-[1.75px]"}
             containerClassName={"px-4 pt-5 pb-4 flex flex-col items-center gap-[18px] overflow-auto"}
         >
             <div className="w-full flex justify-between items-center">

@@ -20,8 +20,8 @@ const Table = <TData extends object>({columns, data, className, bottomRounded}: 
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
-        getPaginationRowModel: getPaginationRowModel(),
-        initialState: {pagination: {pageIndex: 0}},
+        // getPaginationRowModel: getPaginationRowModel(),
+        // initialState: {pagination: {pageIndex: 0}},
     });
 
 
