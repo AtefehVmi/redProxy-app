@@ -66,6 +66,11 @@ const config: Config = {
                 "custom-link-hover-bg" :"#FBFAF90D",
                 "custom-link-active-bg" :"#FBFAF926",
                 "config-card-heading-text": "#B0B0B080",
+                "select-bg" : "#02020240",
+                "select-item-bg":"#020202",
+                "create-config-button-bg":"#84848440",
+                "create-config-button-hover":"#84848433",
+                "create-config-button-active":"#8484844D",
             },
             backgroundImage: {
                 "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

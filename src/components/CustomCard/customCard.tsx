@@ -1,3 +1,4 @@
+'use client'
 import React, {ReactEventHandler} from 'react';
 
 export interface CustomCardProps{

@@ -47,7 +47,7 @@ const Page = () => {
                     <p className="text-xl font-semibold text-white">Your configurations</p>
                     <p className="text-sm font-medium text-nav-sub-menu-heading-text">You have 2 active configurations</p>
                 </div>
-                <CustomLink href={''} className="py-2 pl-[15px] pr-2.5">
+                <CustomLink href={'/createConfig/residential'} className="py-2 pl-[15px] pr-2.5">
                     <p>Create new</p>
                     <Image src={rawArrowRightIcon} alt={''} className="w-4 h-4"/>
                 </CustomLink>

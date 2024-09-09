@@ -14,12 +14,14 @@ interface CustomSelectProps {
     options: Option[];
     defaultValue?: string;
     onChange: (value: string) => void;
-    className?: string
+    className?: string;
+    label?: string;
 }
 
-const CustomSelect = (props: CustomSelectProps) => {
+const SelectWithCustomCard = (props: CustomSelectProps) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedValue, setSelectedValue] = useState(props.defaultValue || props.options[0]);
+    const [selectedValue, setSelectedValue] = useState(props.defaultValue ||
+        (props.options.length > 0 ? props.options[0].value : undefined));
 
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
@@ -38,6 +40,11 @@ const CustomSelect = (props: CustomSelectProps) => {
             `}
             onClick={toggleDropdown}
         >
+            {props.label &&
+                <label className={"text-config-card-heading-text text-xs font-medium mb-[5px]"}>
+                    {props.label}
+                </label>
+            }
             <CustomCard
                 borderRadius={"rounded"}
                 borderClassName={`
@@ -48,7 +55,7 @@ const CustomSelect = (props: CustomSelectProps) => {
                 <p className="text-profile-card-text text-sm truncate">
                     {selectedValue ? props.options.find(option => option.value === selectedValue)?.label : 'Select...'}
                 </p>
-                <Image src={rawArrowDownIcon} alt={''} />
+                <Image src={rawArrowDownIcon} alt={''}/>
             </CustomCard>
             {isOpen && (
                 <ul className="absolute z-10 mt-1 w-full bg-custom-card-bg rounded shadow-lg max-h-60 overflow-y-auto">
@@ -69,4 +76,4 @@ const CustomSelect = (props: CustomSelectProps) => {
     );
 };
 
-export default CustomSelect;
+export default SelectWithCustomCard;

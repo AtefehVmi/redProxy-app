@@ -3,7 +3,7 @@ import React from 'react';
 import CustomCard from "@/components/CustomCard/customCard";
 import Image from "next/image";
 import growUpIcon from "@public/icons/growup.svg"
-import CustomSelect from "@/components/CustomSelect/CustomSelect";
+import SelectWithCustomCard from "@/components/CustomSelect/SelectWithCustomCard";
 import StackedBarChart from "@/components/Charts/StackedBarChart";
 
 
@@ -71,7 +71,7 @@ const UserDataUsage = () => {
                 </div>
                 {/*col2*/}
                 <div className="flex flex-col justify-start items-end">
-                    <CustomSelect
+                    <SelectWithCustomCard
                         options={[
                             {label: "Last 12 months", value: "year"},
                             {label: "Last 30 days", value: "month"},

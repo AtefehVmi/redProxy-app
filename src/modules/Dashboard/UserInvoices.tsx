@@ -1,7 +1,7 @@
 'use client'
 import React from 'react';
 import CustomCard from "@/components/CustomCard/customCard";
-import CustomSelect from "@/components/CustomSelect/CustomSelect";
+import SelectWithCustomCard from "@/components/CustomSelect/SelectWithCustomCard";
 import Table from "@/components/Table/Table";
 import {InvoiceColumns, InvoiceDataType} from "@/constants/TableColumns";
 
@@ -59,7 +59,7 @@ const UserInvoices = () => {
         >
             <div className="w-full flex justify-between items-center">
                 <p className="text-base font-semibold text-white">Invoices</p>
-                <CustomSelect
+                <SelectWithCustomCard
                     options={[
                         {label: "Last 12 months", value: "year"},
                         {label: "Last 30 days", value: "month"},
