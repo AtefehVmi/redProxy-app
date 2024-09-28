@@ -53,7 +53,7 @@ const Input = ({
                 <input
                     className={`
                         w-full h-full bg-select-bg border border-solid border-white/10 rounded
-                        focus:outline-none focus:border-white/20
+                        focus:outline-none focus:border-white/20 placeholder-input-placeholder
                         ${inputClassName ?? ""} 
                     `}
                     type={currentType ?? "text"}
@@ -75,15 +75,15 @@ const Input = ({
                     </p>
                 }
 
-                {type === "password" &&
-                    <Image
-                        src={''}
-                        alt={''}
-                        priority={true}
-                        className='absolute w-5 h-5 right-3 top-1/2 transform translate-y-[-50%] cursor-pointer'
-                        onClick={handleToggleType}
-                    />
-                }
+                {/*{type === "password" &&*/}
+                {/*    <Image*/}
+                {/*        src={''}*/}
+                {/*        alt={''}*/}
+                {/*        priority={true}*/}
+                {/*        className='absolute w-5 h-5 right-3 top-1/2 transform translate-y-[-50%] cursor-pointer'*/}
+                {/*        onClick={handleToggleType}*/}
+                {/*    />*/}
+                {/*}*/}
             </div>
         </div>
     );
