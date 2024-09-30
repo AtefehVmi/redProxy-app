@@ -44,7 +44,7 @@ function Navbar() {
           <Link href={''} className='transition-all duration-300 hover:transform hover:scale-125'>FAQs</Link>
           <Link href={''} className='transition-all duration-300 hover:transform hover:scale-125'>Blog</Link>
         </div>
-        <CustomLink href='/' className='py-2 px-3'>
+        <CustomLink href='/login' className='py-2 px-3'>
           <p>Sign in</p>
           <Image src={rawArrowRight} alt='signup' priority={true}/>
         </CustomLink>
