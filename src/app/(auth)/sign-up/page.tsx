@@ -1,9 +1,10 @@
 import React from 'react';
+import SignUpForm from "@/modules/SignUp/SignUpForm";
 
 const Page = () => {
   return (
-    <div>
-
+    <div className="w-full h-full flex justify-center items-center">
+      <SignUpForm/>
     </div>
   );
 };

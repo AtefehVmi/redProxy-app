@@ -1,19 +1,15 @@
 import React from 'react';
 import CustomCard from "@/components/CustomCard/customCard";
 import Image from "next/image";
-
+import authLogo from "@public/icons/auth_form_logo.svg";
 import Input from "@/components/Input/Input";
 import Link from "next/link";
 import CustomButton from "@/components/CustomButton/CustomButton";
 import AuthFormDivider from "@/components/AuthFormDivider/AuthFormDivider";
+import googleLogo from "@public/icons/google-logo.svg";
+import xLogo from "@public/icons/x_logo.svg";
 
-import authLogo from '@public/icons/auth_form_logo.svg'
-import googleLogo from '@public/icons/google-logo.svg'
-import xLogo from '@public/icons/x_logo.svg'
-
-
-const LoginForm = () => {
-
+const SignUpForm = () => {
   const inputMainContainerStyle = "h-[62px] "
   const inputContainerStyle = "h-auto w-full"
   const inputLabelStyle = "text-sm font-medium mb-[5px]"
@@ -32,7 +28,7 @@ const LoginForm = () => {
       <div className="w-full h-full flex flex-col items-center">
         <Image src={authLogo} alt={'sign-in'} className={"h-5 w-5"}/>
         <p className="text-white text-[18px] leading-[21px] font-semibold mt-[19px]">
-          Sign in!
+          Sign up!
         </p>
         <p className="text-base-500 text-nav-sub-menu-heading-text mt-[13px] mb-8">
           The proxy gateway for professionals
@@ -51,19 +47,21 @@ const LoginForm = () => {
             type={"password"}
             label={"Password"}
             placeholder={"***********"}
+            mainContainerClassName={inputMainContainerStyle + "mb-4"}
+            inputContainerClassName={inputContainerStyle}
+            labelClassName={inputLabelStyle}
+            inputClassName={inputStyle}
+          />
+          <Input
+            type={"password"}
+            label={"Confirm password"}
             mainContainerClassName={inputMainContainerStyle}
             inputContainerClassName={inputContainerStyle}
             labelClassName={inputLabelStyle}
             inputClassName={inputStyle}
           />
-          <Link
-            href={'/forget-password'}
-            className="text-profile-card-text text-sm mt-2 self-end"
-          >
-            Forget Password?
-          </Link>
           <CustomButton className="w-full h-[47px] text-white/50 mt-4 !bg-custom-link-hover-bg hover:!bg-[#FBFAF908]">
-            Sign in
+            Sign up
           </CustomButton>
         </form>
         <AuthFormDivider/>
@@ -77,9 +75,9 @@ const LoginForm = () => {
         </CustomButton>
 
         <div className="w-full flex justify-center items-center mt-[27px] text-sm">
-          <span className="text-auth-redirect-text ">Don’t have an account?</span>&nbsp;
-          <Link href={'/sign-up'} className="text-profile-card-text underline underline-profile-card-text">
-            Sign up
+          <span className="text-auth-redirect-text ">Do you have an account?</span>&nbsp;
+          <Link href={'/login'} className="text-profile-card-text underline underline-profile-card-text">
+            Sign in
           </Link>
         </div>
       </div>
@@ -87,4 +85,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default SignUpForm;

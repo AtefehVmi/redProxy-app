@@ -73,6 +73,8 @@ const config: Config = {
                 "create-config-button-active":"#8484844D",
                 "input-placeholder": "#B0B0B04D",
                 "auth-redirect-text":"#B0B0B099",
+                "forget-password-card-effect" : "#5CFFD866",
+                "login-card-effect" : "#905CFF66",
                 "auth-divider": "rgba(217, 217, 217, 0.08)"
             },
             backgroundImage: {
