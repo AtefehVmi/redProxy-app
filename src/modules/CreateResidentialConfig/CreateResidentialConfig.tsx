@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import CustomCard from "@/components/CustomCard/customCard";
 import Select from "@/components/CustomSelect/Select";
 import Input from "@/components/Input/Input";
 import TextArea from "@/components/TextArea/TextArea";
@@ -10,6 +9,10 @@ import Button from "@/components/Button/Button";
 import copyIcon from "@public/icons/copy-all.svg";
 import DownloadIcon from "@public/icons/download-icon.svg";
 import CheckIcon from "@public/icons/check.svg";
+import ConfigIcon from "@public/icons/config-name.svg";
+import RotationIcon from "@public/icons/rotation.svg";
+import PortIcon from "@public/icons/port.svg";
+import QuantityIcon from "@public/icons/quantity.svg";
 
 const DUMMY_TEXT_AREA_VALUE =
   "saaf.eth---gmail.com:null:proxy.wtfproxy.com:3030\n" +
@@ -71,9 +74,11 @@ const CreateResidentialConfig = () => {
               type={"text"}
               label={"Config name *"}
               placeholder={"Please input your config name"}
+              startAdornment={<Image src={ConfigIcon} alt="" />}
             />
 
             <Select
+              icon={<Image src={PortIcon} alt="" />}
               key={"port"}
               options={[
                 { label: "HTTP", value: "HTTP" },
@@ -87,6 +92,7 @@ const CreateResidentialConfig = () => {
               itemClassName={selectItemStyle}
             />
             <Select
+              icon={<Image src={RotationIcon} alt="" />}
               key={"rotation"}
               options={[{ label: "Rotation", value: "Rotation" }]}
               onChange={() => {}}
@@ -97,6 +103,7 @@ const CreateResidentialConfig = () => {
               itemClassName={selectItemStyle}
             />
             <Select
+              icon={<Image src={QuantityIcon} alt="" />}
               key={"geoLocation"}
               options={[
                 { label: "Random", value: "Random" },
@@ -111,6 +118,7 @@ const CreateResidentialConfig = () => {
               itemClassName={selectItemStyle}
             />
             <Select
+              icon={<Image src={RotationIcon} alt="" />}
               key={"format"}
               options={[
                 {
@@ -126,6 +134,7 @@ const CreateResidentialConfig = () => {
               itemClassName={selectItemStyle}
             />
             <Input
+              startAdornment={<Image src={QuantityIcon} alt="" />}
               key={"quantity"}
               type={"number"}
               label={"Quantity *"}

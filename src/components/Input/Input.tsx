@@ -77,7 +77,7 @@ const InputText = (props: InputTextProps) => {
       endAdornment && "pr-9"
     ),
     startAdornment:
-      "absolute left-3 top-1/2 -translate-y-1/2 flex items-center justify-center w-6 h-6",
+      "absolute z-10 left-3 top-1/2 -translate-y-1/2 flex items-center justify-center w-6 h-6",
 
     endAdornment: cn(
       "absolute right-2"
