@@ -1,92 +1,117 @@
-'use client'
-import React, {useEffect, useState} from 'react';
-import Image from 'next/image';
+"use client";
 
-export interface InputProps {
-    label?: string,
-    type: "text" | "number" | "password" | "email",
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>, value: string) => void;
-    placeholder?: string,
-    unit?: string;
-    mainContainerClassName?: string;
-    labelClassName?: string;
-    inputContainerClassName?: string;
-    inputClassName?: string;
-    unitClassName?: string;
-}
+import React, { ReactNode, Ref, useState } from "react";
+import { Field, Input, Description, Label } from "@headlessui/react";
+import cn from "@/utils/cn";
 
-const Input = ({
-                   label,
-                   type,
-                   onChange,
-                   placeholder,
-                   unit,
-                   mainContainerClassName,
-                   labelClassName,
-                   inputClassName,
-                   inputContainerClassName,
-                   unitClassName
-               }: InputProps) => {
-    const [value, setValue] = useState<string>('');
-
-    const [currentType, setCurrentType] = useState<"text" | "number" | "password" | "email">(type);
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        let newValue = e.target.value;
-        setValue(newValue)
-        if (onChange) onChange(e, newValue);
-
-    };
-
-    const handleToggleType = () => {
-        setCurrentType(prevState => {
-            return prevState === "password" ? "text" : "password"
-        })
-    }
-
-    return (
-        <div className={`${mainContainerClassName ?? ''}  w-full flex flex-col justify-start items-start`}>
-            <label className={`text-config-card-heading-text ${labelClassName ?? ""}`}>
-                {label}
-            </label>
-            <div className={`w-full relative ${inputContainerClassName ?? ""}`}>
-                <input
-                    className={`
-                        w-full h-full bg-select-bg border border-solid border-white/10 rounded
-                        focus:outline-none focus:border-white/20 placeholder-input-placeholder
-                        ${inputClassName ?? ""} 
-                    `}
-                    type={currentType ?? "text"}
-                    onChange={handleChange}
-                    value={value}
-                    placeholder={placeholder ?? ""}
-                />
-
-                {unit &&
-                    <p
-                        className={`
-                            h-[calc(100%-2px)] bg-storm-gray-100 flex justify-center items-center
-                            absolute right-px top-1/2 transform translate-y-[-50%] rounded-r-3xl
-                            px-2
-                            ${unitClassName ?? ""}
-                        `}
-                    >
-                        {unit}
-                    </p>
-                }
-
-                {/*{type === "password" &&*/}
-                {/*    <Image*/}
-                {/*        src={''}*/}
-                {/*        alt={''}*/}
-                {/*        priority={true}*/}
-                {/*        className='absolute w-5 h-5 right-3 top-1/2 transform translate-y-[-50%] cursor-pointer'*/}
-                {/*        onClick={handleToggleType}*/}
-                {/*    />*/}
-                {/*}*/}
-            </div>
-        </div>
-    );
+type CustomProps = {
+  ref?: Ref<HTMLInputElement>;
+  error?: boolean;
+  // success?: boolean;
+  fullWidth?: boolean;
+  startAdornment?: ReactNode;
+  endAdornment?: React.ReactNode;
+  label?: string;
+  description?: string | React.ReactNode;
+  allocateSpaceForDescription?: boolean;
 };
 
-export default Input;
+export type InputTextProps = CustomProps &
+  Omit<React.ComponentPropsWithoutRef<"input">, keyof CustomProps>;
+
+const InputText = (props: InputTextProps) => {
+  const {
+    className,
+    disabled,
+    fullWidth,
+    error,
+    // success,
+    label,
+    description,
+    startAdornment,
+    endAdornment,
+    allocateSpaceForDescription = false,
+    onFocus,
+    onBlur,
+    ...rest
+  } = props;
+
+  const [focus, setFocus] = useState(false);
+
+  const handleFocusChange = (event: React.FocusEvent<HTMLInputElement>) => {
+    setFocus(true);
+    onFocus?.(event);
+  };
+
+  const handleBlurChange = (event: React.FocusEvent<HTMLInputElement>) => {
+    setFocus(false);
+    onBlur?.(event);
+  };
+
+  const classes = {
+    root: cn(
+      "flex flex-col gap-2",
+      fullWidth && "w-full",
+      focus ? "text-white" : "text-grey-50",
+      className
+    ),
+    label: cn(
+      "text-sm mb-0.5"
+      // error && "text-others-o10",
+      // success && "text-others-o9"
+    ),
+    description: cn(
+      "text-sm font-normal",
+      error && "text-deep dark:text-dark-800",
+      // success && "text-others-o9",
+      description ? "visible" : "invisible"
+    ),
+    inputWrapper: cn(
+      "relative flex justify-center items-center py-[26px] rounded border border-darkmode-100"
+      // focus && "border-white"
+    ),
+    input: cn(
+      "px-3 w-full h-full absolute font-medium text-base rounded-sm  bg-darkmode-300 focus:outline-none",
+      // disabled && "text-neutral-700",
+      startAdornment && "pl-10",
+      endAdornment && "pr-9"
+    ),
+    startAdornment:
+      "absolute left-3 top-1/2 -translate-y-1/2 flex items-center justify-center w-6 h-6",
+
+    endAdornment: cn(
+      "absolute right-2"
+      // error && "text-others-o10",
+      // success && "text-others-o9"
+    ),
+  };
+
+  return (
+    <Field className={classes.root}>
+      {label && <Label className={classes.label}>{label}</Label>}
+      <div className={classes.inputWrapper}>
+        <span className={classes.startAdornment}>
+          {startAdornment && startAdornment}
+        </span>
+        <Input
+          type="text"
+          className={classes.input}
+          disabled={disabled}
+          onFocus={handleFocusChange}
+          onBlur={handleBlurChange}
+          {...rest}
+        />
+        <span className={classes.endAdornment}>
+          {endAdornment && endAdornment}
+        </span>
+      </div>
+      {(allocateSpaceForDescription || description) && (
+        <Description className={classes.description}>
+          {description ? description : "allocateSpaceForDescription"}
+        </Description>
+      )}
+    </Field>
+  );
+};
+
+export default InputText;

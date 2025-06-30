@@ -1,27 +1,27 @@
 @font-face {
-  font-family: 'MonaSans';
-  src: url('../../public/fonts/MonaSans-Regular.woff2') format('woff2');
+  font-family: "MonaSans";
+  src: url("../../public/fonts/MonaSans-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'MonaSans';
-  src: url('../../public/fonts/MonaSans-Medium.woff2') format('woff2');
+  font-family: "MonaSans";
+  src: url("../../public/fonts/MonaSans-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'MonaSans';
-  src: url('../../public/fonts/MonaSans-SemiBold.woff2') format('woff2');
+  font-family: "MonaSans";
+  src: url("../../public/fonts/MonaSans-SemiBold.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'MonaSans';
-  src: url('../../public/fonts/MonaSans-Bold.woff2') format('woff2');
+  font-family: "MonaSans";
+  src: url("../../public/fonts/MonaSans-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
 }
@@ -30,7 +30,7 @@
 @tailwind components;
 @tailwind utilities;
 
-:root{
+:root {
   --app-sidebar-width: 267px;
   --app-navbar-height: 34px;
   --navbar-margin-top: 38px;
@@ -40,7 +40,7 @@
   --custom-card-border-width: 1.75px;
 }
 
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -63,3 +63,50 @@ body {
   position: relative;
 }
 
+.gradient-border {
+  position: relative;
+  border-radius: 8px;
+  z-index: 0;
+}
+
+.gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.12) 2.63%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: -1;
+}
+
+.card-gradient {
+  position: relative;
+  border-radius: 4px;
+  z-index: 0;
+}
+
+.card-gradient::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1.75px;
+  border-radius: inherit;
+  background: linear-gradient(
+    158.39deg,
+    rgba(255, 255, 255, 0.1) 14.19%,
+    rgba(255, 255, 255, 0.000025) 50.59%,
+    rgba(255, 255, 255, 0.000025) 68.79%,
+    rgba(255, 255, 255, 0.025) 105.18%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: -1;
+}

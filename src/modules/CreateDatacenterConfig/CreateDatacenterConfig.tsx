@@ -1,15 +1,17 @@
 "use client";
 import React from "react";
-import CustomCard from "@/components/CustomCard/customCard";
 import Select from "@/components/CustomSelect/Select";
 import Input from "@/components/Input/Input";
 import TextArea from "@/components/TextArea/TextArea";
-import Image from "next/image";
-import cn from "@/utils/cn";
-import Button from "@/components/Button/Button";
 import copyIcon from "@public/icons/copy-all.svg";
 import DownloadIcon from "@public/icons/download-icon.svg";
 import CheckIcon from "@public/icons/check.svg";
+import Image from "next/image";
+import cn from "@/utils/cn";
+import RotationIcon from "@public/icons/rotation.svg";
+import PortIcon from "@public/icons/port.svg";
+import QuantityIcon from "@public/icons/quantity.svg";
+import Button from "@/components/Button/Button";
 
 const DUMMY_TEXT_AREA_VALUE =
   "saaf.eth---gmail.com:null:proxy.wtfproxy.com:3030\n" +
@@ -18,12 +20,12 @@ const DUMMY_TEXT_AREA_VALUE =
   "saaf.eth---gmail.com:null:proxy.wtfproxy.com:3030\n" +
   "saaf.eth---gmail.com:null:proxy.wtfproxy.com:3030\n";
 
-const CreateResidentialConfig = () => {
+const CreateDatacenterConfig = () => {
   const [formatedList, setFormatedList] = React.useState<string>(
     DUMMY_TEXT_AREA_VALUE
   );
-  const [downloaded, setDownloaded] = React.useState(false);
   const [copied, setCopied] = React.useState(false);
+  const [downloaded, setDownloaded] = React.useState(false);
 
   const selectContainerStyle = "h-[62px] col-span-1";
   const selectLabelStyle = "text-sm mb-2.5";
@@ -65,15 +67,21 @@ const CreateResidentialConfig = () => {
           <p className="col-span-2 text-white text-base font-semibold">
             Proxy settings
           </p>
-          <form className="col-span-1 grid grid-cols-2 grid-rows-4 gap-x-5 gap-y-4 mt-8">
-            <Input
-              key={"name"}
-              type={"text"}
-              label={"Config name *"}
-              placeholder={"Please input your config name"}
+          <form className="col-span-1 grid grid-cols-2 grid-rows-4 gap-x-4 gap-y-5 mt-8">
+            <Select
+              icon={<Image src={RotationIcon} alt="" />}
+              key={"rotation"}
+              options={[{ label: "Rotation", value: "Rotation" }]}
+              onChange={() => {}}
+              label={"Rotation *"}
+              className={selectContainerStyle}
+              labelClassName={selectLabelStyle}
+              selectClassName={selectStyle}
+              itemClassName={selectItemStyle}
             />
 
             <Select
+              icon={<Image src={PortIcon} alt="" />}
               key={"port"}
               options={[
                 { label: "HTTP", value: "HTTP" },
@@ -86,31 +94,9 @@ const CreateResidentialConfig = () => {
               selectClassName={selectStyle}
               itemClassName={selectItemStyle}
             />
+
             <Select
-              key={"rotation"}
-              options={[{ label: "Rotation", value: "Rotation" }]}
-              onChange={() => {}}
-              label={"Rotation *"}
-              className={selectContainerStyle}
-              labelClassName={selectLabelStyle}
-              selectClassName={selectStyle}
-              itemClassName={selectItemStyle}
-            />
-            <Select
-              key={"geoLocation"}
-              options={[
-                { label: "Random", value: "Random" },
-                { label: "Germany", value: "Germany" },
-                { label: "France", value: "France" },
-              ]}
-              onChange={() => {}}
-              label={"Geo Location *"}
-              className={selectContainerStyle}
-              labelClassName={selectLabelStyle}
-              selectClassName={selectStyle}
-              itemClassName={selectItemStyle}
-            />
-            <Select
+              icon={<Image src={RotationIcon} alt="" />}
               key={"format"}
               options={[
                 {
@@ -120,12 +106,16 @@ const CreateResidentialConfig = () => {
               ]}
               onChange={() => {}}
               label={"Format *"}
-              className={selectContainerStyle}
+              className={cn(selectContainerStyle)}
               labelClassName={selectLabelStyle}
               selectClassName={selectStyle}
               itemClassName={selectItemStyle}
             />
             <Input
+              className="col-span-1"
+              startAdornment={
+                <Image src={QuantityIcon} alt="" width={18} height={18} />
+              }
               key={"quantity"}
               type={"number"}
               label={"Quantity *"}
@@ -181,4 +171,4 @@ const CreateResidentialConfig = () => {
   );
 };
 
-export default CreateResidentialConfig;
+export default CreateDatacenterConfig;
