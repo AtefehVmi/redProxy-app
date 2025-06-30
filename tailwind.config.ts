@@ -104,6 +104,7 @@ const config: Config = {
         "grey-50": "#F9FAFB",
         "grey-40": "#8A8D97",
         "grey-200": "#E5E7EB",
+        "grey-500": "#6D7280",
         "darkmode-100": "#26292B",
         "darkmode-200": "#15191B",
         "darkmode-300": "#0E1214",
