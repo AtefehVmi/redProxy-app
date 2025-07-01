@@ -18,7 +18,7 @@ const FirstViewPage = () => {
             Configure your new proxy settings
           </p>
         </div>
-        <Link href={"/proxy/residential"}>
+        <Link href={"/plan/residential"}>
           <Button
             rightIcon={<Image src={ArrowRightIcon} alt="" />}
             className="py-2 px-4"

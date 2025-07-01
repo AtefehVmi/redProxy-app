@@ -26,13 +26,6 @@ const config: Config = {
             fontWeight: "500",
           },
         ],
-        sm: [
-          "0.75rem",
-          {
-            lineHeight: "0.9rem",
-            fontWeight: "500",
-          },
-        ],
         "base-500": [
           "0.875rem",
           {
