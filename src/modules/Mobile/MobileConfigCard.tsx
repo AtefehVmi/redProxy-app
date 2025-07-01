@@ -9,6 +9,7 @@ import MobileImage from "@public/icons/mobile.svg";
 import ToggleBox from "@/components/ToggleBox/ToggleBox";
 import Button from "@/components/Button/Button";
 import cn from "@/utils/cn";
+import ProxiesModal from "@/components/Modal/ProxiesModal";
 
 interface MobileConfigCardProps {
   configName: string;
@@ -22,6 +23,7 @@ interface MobileConfigCardProps {
 
 const MobileConfigCard = (props: MobileConfigCardProps) => {
   const [copiedField, setCopiedField] = useState<string | null>(null);
+  const [showProxies, setShowProxies] = useState(false);
 
   const handleCopyAll = () => {
     const text = `Location: ${props.location}
@@ -43,11 +45,17 @@ Date: ${props.date}`;
   const headingStyle = "text-xs font-medium text-config-card-heading-text";
   const valueStyle = "text-sm leading-6 font-semibold text-white";
 
+  const handleCardClick = (e: any) => {
+    e.preventDefault();
+    setShowProxies(true);
+  };
+
   return (
     <div
+      onClick={handleCardClick}
       className={cn(
         "rounded w-full h-auto grid grid-cols-7 px-4 py-[19px] gap-x-[67px] !gap-y-2.5",
-        "bg-darkmode-200 border border-darkmode-100"
+        "bg-darkmode-200 border border-darkmode-100 cursor-pointer"
       )}
     >
       {/*col 1*/}
@@ -76,7 +84,9 @@ Date: ${props.date}`;
         </div>
         <div className={containerStyle}>
           <p className={headingStyle}>Auto Renew</p>
-          <ToggleBox checked={props.autoRenew} />
+          <span onClick={(e) => e.stopPropagation()}>
+            <ToggleBox checked={props.autoRenew} />
+          </span>
         </div>
         <div className={containerStyle}>
           <p className={headingStyle}>Remaining Time</p>
@@ -102,17 +112,29 @@ Date: ${props.date}`;
               className="w-4 h-4"
             />
           }
-          onClick={handleCopyAll}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleCopyAll();
+          }}
         >
           <p className="text-xs font-medium text-white">Copy all lines</p>
         </Button>
         <Button
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
           variant="secondary"
           icon={<Image src={trashIcon} alt={""} className="w-4 h-4" />}
         >
           <p className="text-xs font-medium text-white">Delete configuration</p>
         </Button>
       </div>
+
+      <ProxiesModal
+        onClose={() => setShowProxies(false)}
+        open={showProxies}
+        title="Proxy List"
+      />
     </div>
   );
 };
