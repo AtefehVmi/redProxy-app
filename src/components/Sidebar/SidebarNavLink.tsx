@@ -8,20 +8,30 @@ export interface SidebarNavLinkProps {
   title: string;
   href?: string;
   iconSrc?: string;
+  matchPaths?: string[];
 }
 
-const SidebarNavLink: React.FC<SidebarNavLinkProps> = (props) => {
-  const { href = "", title, iconSrc = "" } = props;
+const SidebarNavLink: React.FC<SidebarNavLinkProps> = ({
+  title,
+  href = "",
+  iconSrc = "",
+  matchPaths = [],
+}) => {
   const pathname = usePathname();
-  const isActive = href === pathname;
+
+  const isActive =
+    pathname === href ||
+    pathname.startsWith(href + "/") ||
+    matchPaths.some((path) => pathname.startsWith(path));
 
   const classNames = `
     flex justify-start items-center w-full gap-x-2 rounded-[2px] p-2.5 transition-all 
     duration-300
     hover:bg-nav-link-active-bg
     ${
-      isActive &&
-      "bg-nav-link-active-bg border-r-[4px] border-solid border-white/20"
+      isActive
+        ? "bg-nav-link-active-bg border-r-[4px] border-solid border-white/20"
+        : ""
     }`;
 
   return (
