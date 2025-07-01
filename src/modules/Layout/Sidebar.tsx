@@ -11,6 +11,7 @@ const Sidebar = () => {
     [APP_ROUTES.residentialProxy]: ["/createConfig/residential"],
     [APP_ROUTES.datacenterProxy]: ["/createConfig/datacenter"],
     [APP_ROUTES.mobileProxy]: ["/createConfig/mobile"],
+    [APP_ROUTES.ispProxy]: ["/createConfig/isp"],
   };
 
   return (
