@@ -8,7 +8,7 @@ const Page = () => {
       <div className="w-full flex justify-between items-center">
         <div className="flex flex-col items-start gap-1.5">
           <p className="text-xl font-semibold text-white">
-            New Mobile configuration
+            New ISP configuration
           </p>
           <p className="text-sm font-medium text-nav-sub-menu-heading-text">
             Configure your new proxy settings
