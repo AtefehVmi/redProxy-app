@@ -33,6 +33,7 @@ const notifs = [
 
 const NotifDropdown = ({ className }: { className?: string }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<"all" | "read" | "unread">("all"); // Active tab state
 
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -81,21 +82,45 @@ const NotifDropdown = ({ className }: { className?: string }) => {
 
           <div className="p-4">
             <div className="flex items-center gap-1 pl-2">
-              <button className="flex items-center gap-1 p-2.5 border-b border-white">
-                <p className="text-[14px] text-white">All</p>
-                <div className="bg-darkmode-100 rounded py-0.5 px-[5px] text-sm text-white">
+              <button
+                onClick={() => setActiveTab("all")}
+                className={cn(
+                  "flex items-center gap-1 p-2.5",
+                  activeTab === "all"
+                    ? "*:text-white border-b"
+                    : "*:text-grey-500"
+                )}
+              >
+                <p className="text-[14px]">All</p>
+                <div className="bg-darkmode-100 rounded py-0.5 px-[5px] text-sm">
                   12
                 </div>
               </button>
-              <button className="flex items-center gap-1 p-2.5">
-                <p className="text-[14px] text-white">Read</p>
-                <div className="bg-darkmode-100 rounded py-0.5 px-[5px] text-sm text-white">
+              <button
+                className={cn(
+                  "flex items-center gap-1 p-2.5",
+                  activeTab === "read"
+                    ? "*:text-white border-b"
+                    : "*:text-grey-500"
+                )}
+                onClick={() => setActiveTab("read")}
+              >
+                <p className="text-[14px]">Read</p>
+                <div className="bg-darkmode-100 rounded py-0.5 px-[5px] text-sm">
                   2
                 </div>
               </button>
-              <button className="flex items-center gap-1 p-2.5">
-                <p className="text-[14px] text-white">Unread</p>
-                <div className="bg-darkmode-100 rounded py-0.5 px-[5px] text-sm text-white">
+              <button
+                className={cn(
+                  "flex items-center gap-1 p-2.5",
+                  activeTab === "unread"
+                    ? "*:text-white border-b"
+                    : "*:text-grey-500"
+                )}
+                onClick={() => setActiveTab("unread")}
+              >
+                <p className="text-[14px]">Unread</p>
+                <div className="bg-darkmode-100 rounded py-0.5 px-[5px] text-sm">
                   10
                 </div>
               </button>
