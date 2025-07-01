@@ -75,6 +75,8 @@ const config: Config = {
             fontWeight: "600",
           },
         ],
+        "24px": ["24px", { lineHeight: "32px" }],
+        "18px": ["18px", { lineHeight: "28px" }],
       },
       colors: {
         "main-bg": "#0E1214",
@@ -105,10 +107,12 @@ const config: Config = {
         "grey-40": "#8A8D97",
         "grey-200": "#E5E7EB",
         "grey-500": "#6D7280",
+        "grey-300": "#D2D5DA",
         "darkmode-100": "#26292B",
         "darkmode-200": "#15191B",
         "darkmode-300": "#0E1214",
         "orange-200": "#FF975C",
+        "blue-100": "#5CA7FF",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
