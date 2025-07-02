@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import Select from "@/components/CustomSelect/Select";
 import Input from "@/components/Input/Input";
 import TextArea from "@/components/TextArea/TextArea";
 import Image from "next/image";
@@ -29,11 +28,7 @@ const CreateResidentialConfig = () => {
   const [downloaded, setDownloaded] = React.useState(false);
   const [copied, setCopied] = React.useState(false);
 
-  const selectContainerStyle = "h-[62px] col-span-1";
   const selectLabelStyle = "text-sm mb-2.5";
-  const selectStyle =
-    "h-[53px] text-profile-card-text text-base px-4 py-[14px]";
-  const selectItemStyle = "text-sm text-white px-4 py-[14px]";
 
   function copyToClipboard(text: string) {
     navigator.clipboard.writeText(text);
