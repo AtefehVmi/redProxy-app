@@ -18,6 +18,7 @@ type Props = {
   text2: string;
   checkIcon: StaticImageData;
   color: string;
+  numberColor: string;
 };
 
 const ResidentialFirstView: React.FC<Props> = ({
@@ -31,6 +32,7 @@ const ResidentialFirstView: React.FC<Props> = ({
   text2,
   checkIcon,
   color,
+  numberColor,
 }) => {
   return (
     <div
@@ -56,8 +58,20 @@ const ResidentialFirstView: React.FC<Props> = ({
       <div className="mt-6 flex flex-col gap-3">
         {keyFeatures.map((keyFeature, index) => (
           <div key={keyFeature.feature} className="flex items-center gap-4">
-            <div className="rounded-lg h-7 w-7 bg-blue-100 flex items-center justify-center">
-              <p className="text-base text-white">{index}</p>
+            <div
+              className={cn(
+                "rounded-lg h-7 w-7 flex items-center justify-center",
+                numberColor
+              )}
+            >
+              <p
+                className={cn(
+                  "text-base",
+                  numberColor === "bg-yellow-100" ? "text-black" : "text-white"
+                )}
+              >
+                {index}
+              </p>
             </div>
 
             <div className="flex items-center gap-1">

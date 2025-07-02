@@ -29,6 +29,7 @@ const FirstViewPage = () => {
       </div>
 
       <ResidentialFirstView
+        numberColor="bg-blue-100"
         color="bg-blue-100/15"
         text1="Key Features of Residential Proxies"
         text2="Use Cases of Residential Proxies"
