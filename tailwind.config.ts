@@ -106,6 +106,7 @@ const config: Config = {
         "darkmode-300": "#0E1214",
         "orange-200": "#FF975C",
         "blue-100": "#5CA7FF",
+        "indigo-100": "#735CFF",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

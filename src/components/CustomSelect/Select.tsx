@@ -1,8 +1,7 @@
 "use client";
 
 import React, { ReactNode, useEffect, useRef, useState } from "react";
-import CustomCard from "@/components/CustomCard/customCard";
-import rawArrowDownIcon from "@public/icons/raw_arrow_down.svg";
+import rawArrowDownIcon from "@public/icons/angle-down.svg";
 import Image from "next/image";
 
 interface Option {

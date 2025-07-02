@@ -30,8 +30,8 @@ const FirstViewPage = () => {
 
       <ResidentialFirstView
         color="bg-blue-100/15"
-        text1="Key Features of Static Residential Proxies"
-        text2="Use Cases of Static Residential Proxies"
+        text1="Key Features of Residential Proxies"
+        text2="Use Cases of Residential Proxies"
         desc="A Residential Proxy is an intermediary server that  routes your internet traffic through a real residential IP address  provided by an Internet Service Provider (ISP). Unlike datacenter  proxies (which come from cloud servers), residential proxies use IPs  assigned to actual home devices, making them appear as legitimate,  organic users rather than bots or automated traffic."
         title="Residential Proxy"
         className="my-8"
