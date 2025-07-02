@@ -1,4 +1,4 @@
-import IspPage from "./IspPage";
+import IspPage from "@/modules/IspConfigCard/IspPage";
 
 const Page = () => {
   return (

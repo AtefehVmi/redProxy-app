@@ -1,4 +1,4 @@
-import DatacenterPage from "./DatacenterPage";
+import DatacenterPage from "@/modules/Datacenter/DatacenterPage";
 
 const Page = () => {
   return (

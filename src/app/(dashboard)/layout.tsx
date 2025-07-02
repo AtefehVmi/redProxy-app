@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Sidebar from "@/modules/Layout/Sidebar";
 import Navbar from "@/modules/Layout/Navbar";
 import LayoutMainContainer from "@/modules/Layout/LayoutMainContainer";
@@ -8,7 +8,9 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     <>
       <Sidebar />
       <Navbar className="z-50" />
-      <LayoutMainContainer>{children}</LayoutMainContainer>
+      <LayoutMainContainer>
+        <Suspense>{children}</Suspense>
+      </LayoutMainContainer>
     </>
   );
 };

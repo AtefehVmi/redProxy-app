@@ -1,4 +1,4 @@
-import MobilePage from "./MobilePage";
+import MobilePage from "@/modules/Mobile/MobilePage";
 
 const Page = () => {
   return (
