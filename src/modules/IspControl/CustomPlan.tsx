@@ -1,13 +1,12 @@
 "use client";
 
-import Select from "@/components/CustomSelect/Select";
 import Image from "next/image";
 import PlanIcon from "@public/icons/config-name.svg";
 import QuantityIcon from "@public/icons/qty.svg";
 import LocationIcon from "@public/icons/quantity.svg";
 import InputText from "@/components/Input/Input";
 import React, { useState } from "react";
-import cn from "@/utils/cn";
+import Autocomplete from "@/components/AutoComplete/Autocomplete";
 
 type Props = {
   plan: string;
@@ -26,26 +25,17 @@ const CustomPlan: React.FC<Props> = ({
   location,
   setLocation,
 }) => {
-  const selectContainerStyle = "h-[62px] col-span-1";
-  const selectLabelStyle = "text-sm mb-2.5";
-  const selectStyle = "h-[53px] text-grey-400 text-base px-4 py-[14px]";
-  const selectItemStyle = "text-sm text-white px-4 py-[14px]";
-
   return (
     <div className="rounded bg-darkmode-200 border border-darkmode-100 p-8">
       <p className="text-white font-bold text-xl">Custom Plan</p>
 
       <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-7">
-        <Select
-          icon={<Image src={PlanIcon} alt="" />}
-          key={"plan"}
+        <Autocomplete
+          value={plan}
           options={[{ label: "1 Day", value: "1 Day" }]}
           onChange={() => {}}
           label={"Plan *"}
-          className={selectContainerStyle}
-          labelClassName={selectLabelStyle}
-          selectClassName={selectStyle}
-          itemClassName={selectItemStyle}
+          startAdornment={<Image src={PlanIcon} alt="" />}
         />
 
         <InputText
@@ -61,16 +51,12 @@ const CustomPlan: React.FC<Props> = ({
           placeholder={"Enter"}
         />
 
-        <Select
-          icon={<Image src={LocationIcon} alt="" />}
-          key={"location"}
+        <Autocomplete
+          value={location}
           options={[{ label: "Germany", value: "Germany" }]}
           onChange={() => {}}
           label={"Location *"}
-          className={cn(selectContainerStyle, "mb-8")}
-          labelClassName={selectLabelStyle}
-          selectClassName={selectStyle}
-          itemClassName={selectItemStyle}
+          startAdornment={<Image src={LocationIcon} alt="" />}
         />
       </div>
     </div>

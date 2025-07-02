@@ -10,7 +10,7 @@ const IspControl = ({ className }: { className?: string }) => {
   const [coupon, setCoupon] = useState("");
   const [plan, setPlan] = useState("1 Day");
   const [quantity, setQuantity] = useState(1);
-  const [location, setLocation] = useState("");
+  const [location, setLocation] = useState("Germany");
 
   return (
     <div className={cn("grid grid-cols-11 gap-4", className)}>

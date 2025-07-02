@@ -8,20 +8,24 @@ import CustomPlan from "./CustomPlan";
 
 const MobileControl = ({ className }: { className?: string }) => {
   const [coupon, setCoupon] = useState("");
-  const [plan, setPlan] = useState("1 Day");
+  const [country, setCountry] = useState("UK");
+  const [city, setCity] = useState("London");
   const [quantity, setQuantity] = useState(1);
-  const [location, setLocation] = useState("");
+  const [port, setPort] = useState("");
+  const [lte, setLte] = useState("1 Day");
 
   return (
     <div className={cn("grid grid-cols-11 gap-4", className)}>
       <div className="col-span-8">
         <CustomPlan
-          plan={plan}
-          setPlan={setPlan}
-          quantity={quantity}
-          setQuantity={setQuantity}
-          location={location}
-          setLocation={setLocation}
+          lte={lte}
+          setLte={setLte}
+          country={country}
+          setCountry={setCountry}
+          city={city}
+          setCity={setCity}
+          port={port}
+          setPort={setPort}
         />
         <CouponCard coupon={coupon} setCoupon={setCoupon} className="mt-4" />
       </div>
@@ -32,7 +36,7 @@ const MobileControl = ({ className }: { className?: string }) => {
           pricePerGb={2}
           quantity={quantity}
           coupon={coupon}
-          plan={plan}
+          plan={lte}
         />
       </div>
     </div>

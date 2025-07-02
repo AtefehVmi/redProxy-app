@@ -1,34 +1,25 @@
 "use client";
 
-import Select from "@/components/CustomSelect/Select";
 import Image from "next/image";
 import BandwidthIcon from "@public/icons/config-name.svg";
 import InputText from "@/components/Input/Input";
-import React, { useState } from "react";
+import React from "react";
+import Autocomplete from "@/components/AutoComplete/Autocomplete";
 
 type Props = { bandwidth: number; setBandwidth: (bandwidth: number) => void };
 
 const CustomPlan: React.FC<Props> = ({ bandwidth, setBandwidth }) => {
-  const selectContainerStyle = "h-[62px] col-span-1";
-  const selectLabelStyle = "text-sm mb-2.5";
-  const selectStyle = "h-[53px] text-grey-400 text-base px-4 py-[14px]";
-  const selectItemStyle = "text-sm text-white px-4 py-[14px]";
-
   return (
     <div className="rounded bg-darkmode-200 border border-darkmode-100 p-8">
       <p className="text-white font-bold text-xl">Custom Plan</p>
 
       <div className="mt-8 flex flex-col gap-y-7">
-        <Select
-          icon={<Image src={BandwidthIcon} alt="" />}
-          key={"bandwidth"}
+        <Autocomplete
+          value={"Bandwidth"}
           options={[{ label: "Bandwidth", value: "Bandwidth" }]}
           onChange={() => {}}
-          label={"Band width *"}
-          className={selectContainerStyle}
-          labelClassName={selectLabelStyle}
-          selectClassName={selectStyle}
-          itemClassName={selectItemStyle}
+          label={"Bandwidth *"}
+          startAdornment={<Image src={BandwidthIcon} alt="" />}
         />
 
         <div className="relative pt-8">

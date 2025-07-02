@@ -53,7 +53,8 @@ const InputText = (props: InputTextProps) => {
       "flex flex-col gap-2",
       fullWidth && "w-full",
       focus ? "text-white" : "text-grey-50",
-      className
+      className,
+      error && "text-error-main"
     ),
     label: cn(
       "text-sm mb-0.5"
@@ -62,19 +63,25 @@ const InputText = (props: InputTextProps) => {
     ),
     description: cn(
       "text-sm font-normal",
-      error && "text-deep dark:text-dark-800",
+      error && "text-error-main",
       // success && "text-others-o9",
       description ? "visible" : "invisible"
     ),
     inputWrapper: cn(
-      "relative flex justify-center items-center py-[26px] rounded border border-darkmode-100"
+      "relative flex justify-center items-center py-[28px] rounded border",
       // focus && "border-white"
+      error
+        ? "border-error-main"
+        : focus
+        ? "focus:border-grey-500"
+        : "border-darkmode-100"
     ),
     input: cn(
-      "px-3 w-full h-full absolute text-base rounded-sm  bg-darkmode-300 focus:outline-none",
-      // disabled && "text-neutral-700",
+      "px-3 w-full h-full absolute text-base rounded-sm  bg-darkmode-300 focus:border-grey-500",
+      disabled && "text-neutral-700",
       startAdornment && "pl-10",
-      endAdornment && "pr-9"
+      endAdornment && "pr-9",
+      error && "border-error-main"
     ),
     startAdornment:
       "absolute z-10 left-3 top-1/2 -translate-y-1/2 flex items-center justify-center w-6 h-6",
