@@ -108,6 +108,7 @@ const config: Config = {
         "blue-100": "#5CA7FF",
         "indigo-100": "#735CFF",
         "yellow-100": "#FFF85C",
+        "orange-300": "#FF5C5C",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

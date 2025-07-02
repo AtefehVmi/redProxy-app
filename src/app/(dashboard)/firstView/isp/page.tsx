@@ -34,7 +34,7 @@ const FirstViewPage = () => {
         text1="Key Features of Static Residential Proxies"
         text2="Use Cases of Static Residential Proxies"
         desc="A Static Residential Proxy is an IP address provided by an Internet Service Provider (ISP) that remains the same (static) over  time, unlike rotating proxies that change periodically. These proxies  route your internet traffic through a real residential device (such as a home computer or router), making your requests appear as if they come  from a legitimate residential user rather than a data center or VPN."
-        title="Static Residential Proxy"
+        title="Static Residential Proxies"
         className="my-8"
         keyFeatures={[
           {
