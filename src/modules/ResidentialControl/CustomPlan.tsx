@@ -4,8 +4,11 @@ import Select from "@/components/CustomSelect/Select";
 import Image from "next/image";
 import BandwidthIcon from "@public/icons/config-name.svg";
 import InputText from "@/components/Input/Input";
+import React, { useState } from "react";
 
-const CustomPlan = () => {
+type Props = { bandwidth: number; setBandwidth: (bandwidth: number) => void };
+
+const CustomPlan: React.FC<Props> = ({ bandwidth, setBandwidth }) => {
   const selectContainerStyle = "h-[62px] col-span-1";
   const selectLabelStyle = "text-sm mb-2.5";
   const selectStyle = "h-[53px] text-grey-400 text-base px-4 py-[14px]";
@@ -36,6 +39,8 @@ const CustomPlan = () => {
         </div>
 
         <InputText
+          value={bandwidth}
+          onChange={(e) => setBandwidth(Number(e.target.value))}
           className="col-span-1"
           startAdornment={
             <Image src={BandwidthIcon} alt="" width={18} height={18} />

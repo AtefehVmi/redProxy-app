@@ -71,7 +71,7 @@ const InputText = (props: InputTextProps) => {
       // focus && "border-white"
     ),
     input: cn(
-      "px-3 w-full h-full absolute font-medium text-base rounded-sm  bg-darkmode-300 focus:outline-none",
+      "px-3 w-full h-full absolute text-base rounded-sm  bg-darkmode-300 focus:outline-none",
       // disabled && "text-neutral-700",
       startAdornment && "pl-10",
       endAdornment && "pr-9"

@@ -70,7 +70,7 @@ export const APP_NAVIGATION = [
     ],
   },
   {
-    title: "Account",
+    title: "ACCOUNT",
     children: [
       {
         title: "Settings",
