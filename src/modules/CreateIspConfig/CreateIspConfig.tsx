@@ -12,6 +12,7 @@ import RotationIcon from "@public/icons/rotation.svg";
 import PortIcon from "@public/icons/port.svg";
 import QuantityIcon from "@public/icons/quantity.svg";
 import Button from "@/components/Button/Button";
+import Autocomplete from "@/components/AutoComplete/Autocomplete";
 
 const DUMMY_TEXT_AREA_VALUE =
   "saaf.eth---gmail.com:null:proxy.wtfproxy.com:3030\n" +
@@ -68,36 +69,27 @@ const CreateIspConfig = () => {
             Proxy settings
           </p>
           <form className="col-span-1 grid grid-cols-2 grid-rows-4 gap-x-4 gap-y-5 mt-8">
-            <Select
-              icon={<Image src={RotationIcon} alt="" />}
-              key={"rotation"}
+            <Autocomplete
+              value={"Rotation"}
               options={[{ label: "Rotation", value: "Rotation" }]}
               onChange={() => {}}
               label={"Rotation *"}
-              className={selectContainerStyle}
-              labelClassName={selectLabelStyle}
-              selectClassName={selectStyle}
-              itemClassName={selectItemStyle}
+              startAdornment={<Image src={RotationIcon} alt="" />}
             />
 
-            <Select
-              icon={<Image src={PortIcon} alt="" />}
-              key={"port"}
+            <Autocomplete
+              value={"HTTP"}
               options={[
                 { label: "HTTP", value: "HTTP" },
                 { label: "Socks5", value: "Socks5" },
               ]}
               onChange={() => {}}
               label={"Port Type *"}
-              className={selectContainerStyle}
-              labelClassName={selectLabelStyle}
-              selectClassName={selectStyle}
-              itemClassName={selectItemStyle}
+              startAdornment={<Image src={PortIcon} alt="" />}
             />
 
-            <Select
-              icon={<Image src={RotationIcon} alt="" />}
-              key={"format"}
+            <Autocomplete
+              value={"hostname:port:username:password"}
               options={[
                 {
                   label: "hostname:port:username:password",
@@ -106,18 +98,16 @@ const CreateIspConfig = () => {
               ]}
               onChange={() => {}}
               label={"Format *"}
-              className={cn(selectContainerStyle)}
-              labelClassName={selectLabelStyle}
-              selectClassName={selectStyle}
-              itemClassName={selectItemStyle}
+              startAdornment={<Image src={RotationIcon} alt="" />}
             />
+
             <Input
               className="col-span-1"
               startAdornment={<Image src={QuantityIcon} alt="" />}
               key={"quantity"}
               type={"number"}
               label={"Quantity *"}
-              placeholder={"Please input config quantity"}
+              placeholder={"Enter Quantity"}
             />
             <Button className="col-span-2 mt-8 text-base">
               Generate Proxy

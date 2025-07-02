@@ -1,13 +1,8 @@
 "use client";
 
-import Select from "@/components/CustomSelect/Select";
 import Image from "next/image";
 import PlanIcon from "@public/icons/config-name.svg";
-import QuantityIcon from "@public/icons/qty.svg";
-import LocationIcon from "@public/icons/quantity.svg";
-import InputText from "@/components/Input/Input";
-import React, { useState } from "react";
-import cn from "@/utils/cn";
+import React from "react";
 import Autocomplete from "@/components/AutoComplete/Autocomplete";
 
 type Props = {

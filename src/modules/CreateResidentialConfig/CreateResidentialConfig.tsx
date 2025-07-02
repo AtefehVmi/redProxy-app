@@ -13,6 +13,7 @@ import ConfigIcon from "@public/icons/config-name.svg";
 import RotationIcon from "@public/icons/rotation.svg";
 import PortIcon from "@public/icons/port.svg";
 import QuantityIcon from "@public/icons/quantity.svg";
+import Autocomplete from "@/components/AutoComplete/Autocomplete";
 
 const DUMMY_TEXT_AREA_VALUE =
   "saaf.eth---gmail.com:null:proxy.wtfproxy.com:3030\n" +
@@ -72,39 +73,32 @@ const CreateResidentialConfig = () => {
             <Input
               key={"name"}
               type={"text"}
-              label={"Config name *"}
-              placeholder={"Please input your config name"}
+              label={"Config Name *"}
+              placeholder={"Enter Config Name"}
               startAdornment={<Image src={ConfigIcon} alt="" />}
             />
 
-            <Select
-              icon={<Image src={PortIcon} alt="" />}
-              key={"port"}
+            <Autocomplete
+              value={"HTTP"}
               options={[
                 { label: "HTTP", value: "HTTP" },
                 { label: "Socks5", value: "Socks5" },
               ]}
               onChange={() => {}}
               label={"Port Type *"}
-              className={selectContainerStyle}
-              labelClassName={selectLabelStyle}
-              selectClassName={selectStyle}
-              itemClassName={selectItemStyle}
+              startAdornment={<Image src={PortIcon} alt="" />}
             />
-            <Select
-              icon={<Image src={RotationIcon} alt="" />}
-              key={"rotation"}
+
+            <Autocomplete
+              value={"Rotation"}
               options={[{ label: "Rotation", value: "Rotation" }]}
               onChange={() => {}}
               label={"Rotation *"}
-              className={selectContainerStyle}
-              labelClassName={selectLabelStyle}
-              selectClassName={selectStyle}
-              itemClassName={selectItemStyle}
+              startAdornment={<Image src={RotationIcon} alt="" />}
             />
-            <Select
-              icon={<Image src={QuantityIcon} alt="" />}
-              key={"geoLocation"}
+
+            <Autocomplete
+              value={"Germany"}
               options={[
                 { label: "Random", value: "Random" },
                 { label: "Germany", value: "Germany" },
@@ -112,14 +106,11 @@ const CreateResidentialConfig = () => {
               ]}
               onChange={() => {}}
               label={"Geo Location *"}
-              className={selectContainerStyle}
-              labelClassName={selectLabelStyle}
-              selectClassName={selectStyle}
-              itemClassName={selectItemStyle}
+              startAdornment={<Image src={QuantityIcon} alt="" />}
             />
-            <Select
-              icon={<Image src={RotationIcon} alt="" />}
-              key={"format"}
+
+            <Autocomplete
+              value={"hostname:port:username:password"}
               options={[
                 {
                   label: "hostname:port:username:password",
@@ -128,17 +119,15 @@ const CreateResidentialConfig = () => {
               ]}
               onChange={() => {}}
               label={"Format *"}
-              className={selectContainerStyle}
-              labelClassName={selectLabelStyle}
-              selectClassName={selectStyle}
-              itemClassName={selectItemStyle}
+              startAdornment={<Image src={RotationIcon} alt="" />}
             />
+
             <Input
               startAdornment={<Image src={QuantityIcon} alt="" />}
               key={"quantity"}
               type={"number"}
               label={"Quantity *"}
-              placeholder={"Please input config quantity"}
+              placeholder={"Enter Quantity"}
             />
             <Button className="col-span-2 mt-8 text-base">
               Generate Proxy

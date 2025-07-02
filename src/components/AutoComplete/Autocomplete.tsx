@@ -165,7 +165,7 @@ const Autocomplete = <A extends string | number | null, B extends any>(
           anchor="bottom"
           transition
           className={cn(
-            "dark:text-dark-800 hover:bg-green-600",
+            "dark:text-dark-800",
             "border border-solid border-darkmode-100 bg-green-500 dark:bg-dark-300",
             "z-40 w-[var(--input-width)] rounded-b-[4px] text-sm font-normal [--anchor-gap:0.1rem] empty:invisible",
             "origin-top transition duration-200 ease-out empty:invisible data-[closed]:scale-95 data-[closed]:opacity-0"
@@ -174,7 +174,7 @@ const Autocomplete = <A extends string | number | null, B extends any>(
           {({ option }) => (
             <ComboboxOption
               value={option}
-              className="flex gap-2 justify-start items-center px-2 py-4 w-full cursor-pointer hover:bg-borderColor dark:hover:bg-dark-500"
+              className="flex gap-2 justify-start items-center px-2 py-4 w-full cursor-pointer border-b border-darkmode-100 hover:bg-green-600"
             >
               {option.icon && option.icon}
               {option.label}
