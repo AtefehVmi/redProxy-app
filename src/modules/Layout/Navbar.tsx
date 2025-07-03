@@ -1,72 +1,89 @@
-'use client'
-import React, {useEffect} from 'react';
+"use client";
+
+import React, { useEffect } from "react";
 import Image from "next/image";
-import {usePathname} from "next/navigation";
-import CustomCard from "@/components/CustomCard/customCard";
+import { usePathname } from "next/navigation";
 
-import dashboardIcon from '@public/icons/dashboard.svg'
-import bellIcon from '@public/icons/bell.svg'
-import personIcon from '@public/icons/person.svg'
-import rawArrowDownIcon from '@public/icons/raw_arrow_down.svg'
-import {APP_NAVIGATION, NavModel} from "@/constants/SidebarRoutes";
+import dashboardIcon from "@public/icons/dashboard.svg";
+import personIcon from "@public/icons/user.svg";
+import rawArrowDownIcon from "@public/icons/down.svg";
 
+import { APP_NAVIGATION, NavModel } from "@/constants/SidebarRoutes";
+import Button from "@/components/Button/Button";
+import NotifDropdown from "../Dropdown/NotifDropdown";
+import cn from "@/utils/cn";
 
-const Navbar = () => {
-    const pathName = usePathname()
-    const [activePageName, setActivePageName] = React.useState("Dashboard")
+const Navbar = ({ className }: { className?: string }) => {
+  const pathName = usePathname();
 
-    function findTitleByPathName(data: Array<NavModel>, pathName: string): string |undefined {
-        for (let item of data) {
-            if (item.href === pathName) {
-                return item.title;
-            }
+  const [activePageName, setActivePageName] = React.useState("Dashboard");
+  const [activeNavItem, setActiveNavItem] = React.useState<NavModel | null>(
+    null
+  );
 
-            if (item.children && item.children.length > 0) {
-                const result = findTitleByPathName(item.children, pathName);
-                if (result) {
-                    return result;
-                }
-            }
+  function findNavItemByPathName(
+    data: Array<NavModel>,
+    pathName: string
+  ): NavModel | undefined {
+    for (const item of data) {
+      if (item.href === pathName) {
+        return item;
+      }
+      if (item.children && item.children.length > 0) {
+        const foundChild = findNavItemByPathName(item.children, pathName);
+        if (foundChild) {
+          return foundChild;
         }
+      }
     }
+  }
 
-    useEffect(() => {
-        const activeTitle = findTitleByPathName(APP_NAVIGATION, pathName)
-        setActivePageName(activeTitle ?? "Dashboard")
-    }, [pathName])
+  useEffect(() => {
+    const activeItem = findNavItemByPathName(APP_NAVIGATION, pathName);
+    setActivePageName(activeItem?.title ?? "Dashboard");
+    setActiveNavItem(activeItem ?? null);
+  }, [pathName]);
 
-    return (
-        <div className="
-            w-[calc(100vw-var(--app-sidebar-width)-var(--navbar-margin-left)-var(--navbar-margin-right))]
-            h-[var(--app-navbar-height)] fixed top-[var(--navbar-margin-top)]
-            left-[calc(var(--navbar-margin-left)+var(--app-sidebar-width))]
-            flex justify-between items-center
-        ">
-            <div className="flex items-center gap-2">
-                <Image src={dashboardIcon} alt={''} className="h-6 w-6"/>
-                <p className="text-left text-white text-[24px] font-bold">{activePageName}</p>
-            </div>
-            <div className="flex items-center gap-4">
-                <Image src={bellIcon} alt={''} className="h-4 w-4 cursor-pointer"/>
-                <CustomCard
-                    borderRadius={"rounded"}
-                    borderClassName={`
-                        w-[160px] h-[34px] p-[1.75px]
-                    `}
-                    containerClassName="
-                        flex items-center
-                        py-[9px] pl-[11px] pr-[15px] cursor-pointer
-                ">
-                    <Image src={personIcon} alt={''} className="w-4 h-4"/>
-                    <p className="text-profile-card-text text-sm ml-[7px]">
-                        Mike Wazowski
-                    </p>
-                    <Image src={rawArrowDownIcon} alt={''} className="ml-[11px]"/>
-                </CustomCard>
+  const iconSrc =
+    // @ts-ignore: NavModel children have navbarIconSrc, but parent doesn't
+    activeNavItem?.navbarIconSrc ??
+    activeNavItem?.iconSrc ??
+    (activeNavItem?.href === "/" ? "/icons/dashboard.svg" : null);
 
-            </div>
-        </div>
-    );
+  const iconToUse =
+    typeof iconSrc === "string" && iconSrc.length > 0 ? iconSrc : dashboardIcon;
+
+  return (
+    <div
+      className={cn(
+        "w-[calc(100vw-var(--app-sidebar-width)-var(--navbar-margin-left)-var(--navbar-margin-right))] h-[var(--app-navbar-height)] fixed top-[var(--navbar-margin-top)] left-[calc(var(--navbar-margin-left)+var(--app-sidebar-width))]",
+        className,
+        "flex justify-between items-center"
+      )}
+    >
+      <div className="flex items-center gap-2">
+        <Image
+          src={iconToUse}
+          alt={activePageName}
+          width={24}
+          height={24}
+          unoptimized
+        />
+        <p className="text-left text-white text-[24px] font-bold">
+          {activePageName}
+        </p>
+      </div>
+      <div className="flex items-center gap-3 relative">
+        <NotifDropdown />
+        <Button icon={<Image src={personIcon} alt="" className="w-4 h-4" />}>
+          <p className="text-white text-sm ml-[7px] font-semibold">
+            Mike Wazowski
+          </p>
+          <Image src={rawArrowDownIcon} alt="" />
+        </Button>
+      </div>
+    </div>
+  );
 };
 
 export default Navbar;

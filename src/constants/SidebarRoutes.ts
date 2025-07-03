@@ -3,9 +3,9 @@ export const APP_ROUTES = {
   residentialProxy: "/proxy/residential",
   datacenterProxy: "/proxy/datacenter",
   mobileProxy: "/proxy/mobile",
+  ispProxy: "/proxy/isp",
   setting: "/setting",
   transactions: "/transaction",
-
 } as const;
 
 /**
@@ -24,7 +24,6 @@ export const APP_ROUTES = {
  */
 
 export interface NavModel {
-
   title: string;
   iconSrc?: string;
   href?: string;
@@ -32,15 +31,13 @@ export interface NavModel {
     title: string;
     iconSrc: string;
     href: string;
-
-  }>
+  }>;
 }
-
 
 export const APP_NAVIGATION = [
   {
     title: "Dashboard",
-    iconSrc: "/icons/globe.svg",
+    iconSrc: "/icons/dashboard-small.svg",
     href: APP_ROUTES.dashboard,
   },
   {
@@ -48,34 +45,43 @@ export const APP_NAVIGATION = [
     children: [
       {
         title: "Residential Proxies",
-        iconSrc: "/icons/globe.svg",
+        iconSrc: "/icons/resi-small-icon.svg",
+        navbarIconSrc: "/icons/resi-icon.svg",
         href: APP_ROUTES.residentialProxy,
       },
       {
+        title: "ISP Proxies",
+        iconSrc: "/icons/isp-small-icon.svg",
+        navbarIconSrc: "/icons/isp-icon.svg",
+        href: APP_ROUTES.ispProxy,
+      },
+      {
         title: "Datacenter Proxies",
-        iconSrc: "/icons/globe.svg",
+        iconSrc: "/icons/datacenter-small-icon.svg",
+        navbarIconSrc: "/icons/datacenter-icon.svg",
         href: APP_ROUTES.datacenterProxy,
       },
       {
         title: "LTE/Mobile Proxies",
-        iconSrc: "/icons/globe.svg",
+        iconSrc: "/icons/mobile-small-icon.svg",
+        navbarIconSrc: "/icons/mobile-icon.svg",
         href: APP_ROUTES.mobileProxy,
       },
     ],
   },
   {
-    title: "Account",
+    title: "ACCOUNT",
     children: [
       {
         title: "Settings",
-        iconSrc: "/icons/globe.svg",
+        iconSrc: "/icons/settings-small-icon.svg",
         href: APP_ROUTES.setting,
       },
       {
         title: "Transactions",
-        iconSrc: "/icons/globe.svg",
+        iconSrc: "/icons/transaction-small-icon.svg",
         href: APP_ROUTES.transactions,
       },
     ],
-  }
+  },
 ] as Array<NavModel>;
