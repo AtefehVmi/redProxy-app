@@ -6,6 +6,7 @@ export const APP_ROUTES = {
   ispProxy: "/proxy/isp",
   setting: "/setting",
   transactions: "/transaction",
+  profile: "/profile",
 } as const;
 
 /**
@@ -73,9 +74,9 @@ export const APP_NAVIGATION = [
     title: "ACCOUNT",
     children: [
       {
-        title: "Settings",
-        iconSrc: "/icons/settings-small-icon.svg",
-        href: APP_ROUTES.setting,
+        title: "Profile",
+        iconSrc: "/icons/sidebar-user.svg",
+        href: APP_ROUTES.profile,
       },
       {
         title: "Transactions",

@@ -12,6 +12,7 @@ import { APP_NAVIGATION, NavModel } from "@/constants/SidebarRoutes";
 import Button from "@/components/Button/Button";
 import NotifDropdown from "../Dropdown/NotifDropdown";
 import cn from "@/utils/cn";
+import ProfileDropdown from "../Dropdown/ProfileDropdown";
 
 const Navbar = ({ className }: { className?: string }) => {
   const pathName = usePathname();
@@ -75,12 +76,7 @@ const Navbar = ({ className }: { className?: string }) => {
       </div>
       <div className="flex items-center gap-3 relative">
         <NotifDropdown />
-        <Button icon={<Image src={personIcon} alt="" className="w-4 h-4" />}>
-          <p className="text-white text-sm ml-[7px] font-semibold">
-            Mike Wazowski
-          </p>
-          <Image src={rawArrowDownIcon} alt="" />
-        </Button>
+        <ProfileDropdown />
       </div>
     </div>
   );
