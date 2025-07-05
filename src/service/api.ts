@@ -3,6 +3,7 @@ import { createAppErrorMessage } from "@/utils/createAppErrorMessage";
 import { isServer } from "@/utils/isServer";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { Profile } from "./models";
 
 export const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASEURL,
@@ -104,5 +105,10 @@ export async function loginUser(payload: any): Promise<any> {
       withCredentials: true,
     }
   );
+  return data;
+}
+
+export async function getUserProfile(): Promise<Profile> {
+  const { data } = await instance.get("users/profile/");
   return data;
 }

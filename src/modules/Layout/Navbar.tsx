@@ -5,11 +5,8 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 import dashboardIcon from "@public/icons/dashboard.svg";
-import personIcon from "@public/icons/user.svg";
-import rawArrowDownIcon from "@public/icons/down.svg";
 
 import { APP_NAVIGATION, NavModel } from "@/constants/SidebarRoutes";
-import Button from "@/components/Button/Button";
 import NotifDropdown from "../Dropdown/NotifDropdown";
 import cn from "@/utils/cn";
 import ProfileDropdown from "../Dropdown/ProfileDropdown";

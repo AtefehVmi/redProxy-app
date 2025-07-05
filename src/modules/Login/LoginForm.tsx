@@ -55,7 +55,7 @@ const LoginForm = () => {
     const captcha = generateCaptcha();
     setValue("captcha", captcha);
 
-    await loginFetch({ ...data, captcha }).catch((error) => {
+    const res = await loginFetch({ ...data, captcha }).catch((error) => {
       const err = error.err;
       if (typeof err.response.data === "object") {
         for (const key in err.response.data) {
@@ -69,8 +69,11 @@ const LoginForm = () => {
           }
         }
       }
+
       toast.error("Login failed", error);
     });
+
+    localStorage.setItem("token", res.token);
 
     toast.success("Logged in successfully!");
     router.push("/");

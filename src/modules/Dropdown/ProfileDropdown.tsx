@@ -9,10 +9,18 @@ import rawArrowDownIcon from "@public/icons/down.svg";
 import UserIcon from "@public/icons/modal-user.svg";
 import LogoutIcon from "@public/icons/signout.svg";
 import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
+import { QUERY_KEYS } from "@/constants/querykeys";
+import { getUserProfile } from "@/service/api";
+import Loader from "@/components/Loader/Loader";
 
 const ProfileDropdown = ({ className }: { className?: string }) => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const { data, isLoading } = useQuery({
+    queryKey: QUERY_KEYS.PROFILE,
+    queryFn: () => getUserProfile(),
+  });
   const profileRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -41,7 +49,7 @@ const ProfileDropdown = ({ className }: { className?: string }) => {
         icon={<Image src={personIcon} alt="" className="w-4 h-4 relative" />}
       >
         <p className="text-white text-sm ml-[7px] font-semibold">
-          Mike Wazowski
+          {isLoading ? <Loader /> : data?.email}
         </p>
         <Image src={rawArrowDownIcon} alt="" />
       </Button>
