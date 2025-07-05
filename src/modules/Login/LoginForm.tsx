@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useEffect } from "react";
 import CustomCard from "@/components/CustomCard/customCard";
 import Image from "next/image";
 
@@ -10,8 +12,72 @@ import authLogo from "@public/icons/auth_form_logo.svg";
 import googleLogo from "@public/icons/google-logo.svg";
 import xLogo from "@public/icons/x_logo.svg";
 import InputText from "@/components/Input/Input";
+import z from "zod";
+import { useRouter } from "next/navigation";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import useFetch from "@/hooks/UseFetch";
+import { loginUser } from "@/service/api";
+import { toast } from "react-toastify";
+import { generateCaptcha } from "@/utils/generateCaptcha";
+
+const signInSchema = z.object({
+  email: z.string().email("Invalid email address"),
+  password: z.string(),
+  captcha: z.string().nonempty("Captcha is required"),
+});
+type SignInFormData = z.infer<typeof signInSchema>;
 
 const LoginForm = () => {
+  const router = useRouter();
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    trigger,
+    setError,
+    formState: { errors },
+    watch,
+  } = useForm<SignInFormData>({
+    resolver: zodResolver(signInSchema),
+  });
+
+  const { loading, fetch: loginFetch } = useFetch(loginUser, false, {
+    toastOnError: true,
+  });
+
+  useEffect(() => {
+    setValue("captcha", generateCaptcha(), { shouldValidate: true });
+  }, []);
+
+  const onSubmit: SubmitHandler<SignInFormData> = async (data) => {
+    const captcha = generateCaptcha();
+    setValue("captcha", captcha);
+
+    await loginFetch({ ...data, captcha }).catch((error) => {
+      const err = error.err;
+      if (typeof err.response.data === "object") {
+        for (const key in err.response.data) {
+          console.log(key, Object.prototype.hasOwnProperty.call(data, key));
+
+          if (Object.prototype.hasOwnProperty.call(data, key)) {
+            setError(key as keyof SignInFormData, {
+              type: "server",
+              message: err.response.data[key],
+            });
+          }
+        }
+      }
+      toast.error("Login failed", error);
+    });
+
+    toast.success("Logged in successfully!");
+    router.push("/");
+  };
+
+  const values = watch();
+
   return (
     <CustomCard
       borderRadius={"rounded"}
@@ -32,14 +98,34 @@ const LoginForm = () => {
         <p className="text-base-500 text-nav-sub-menu-heading-text mt-[13px] mb-8">
           The proxy gateway for professionals
         </p>
-        <form className="w-full h-auto flex flex-col items-center mb-4">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="w-full h-auto flex flex-col items-center mb-4"
+        >
           <InputText
+            error={!!errors.email?.message}
+            value={values.email}
+            description={errors.email?.message}
+            {...register("email")}
+            onChange={({ target: { value } }) => {
+              setValue("email", value);
+              trigger("email");
+            }}
             className="w-full"
             type={"email"}
             label={"Email"}
             placeholder={"johndoe@gmail.com"}
           />
+
           <InputText
+            error={!!errors.password?.message}
+            value={values.password}
+            description={errors.password?.message}
+            {...register("password")}
+            onChange={({ target: { value } }) => {
+              setValue("password", value);
+              trigger("password");
+            }}
             className="w-full mt-4"
             type={"password"}
             label={"Password"}
@@ -51,7 +137,11 @@ const LoginForm = () => {
           >
             Forget Password?
           </Link>
-          <CustomButton className="w-full h-[47px] text-white/50 mt-4 !bg-custom-link-hover-bg hover:!bg-[#FBFAF908]">
+          <CustomButton
+            loading={loading}
+            type="submit"
+            className="w-full h-[47px] text-white/50 mt-4 !bg-custom-link-hover-bg hover:!bg-[#FBFAF908]"
+          >
             Sign in
           </CustomButton>
         </form>

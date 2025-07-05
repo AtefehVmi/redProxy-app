@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import CustomCard from "@/components/CustomCard/customCard";
 import Image from "next/image";
 import authLogo from "@public/icons/auth_form_logo.svg";
@@ -17,6 +17,7 @@ import useFetch from "@/hooks/UseFetch";
 import { regisetrUser } from "@/service/api";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { generateCaptcha } from "@/utils/generateCaptcha";
 
 const signUpSchema = z
   .object({
@@ -52,16 +53,7 @@ const SignUpForm = () => {
   //   setValue("captcha", token, { shouldValidate: true });
   // };
 
-  function generateCaptcha(length = 6) {
-    const chars =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    return Array.from(
-      { length },
-      () => chars[Math.floor(Math.random() * chars.length)]
-    ).join("");
-  }
-
-  React.useEffect(() => {
+  useEffect(() => {
     setValue("captcha", generateCaptcha(), { shouldValidate: true });
   }, []);
 
@@ -78,7 +70,7 @@ const SignUpForm = () => {
         router.push("/login");
       })
       .catch((error) => {
-        console.log("Login failed", error);
+        toast.error("Login failed", error);
       });
   };
 

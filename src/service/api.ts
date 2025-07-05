@@ -38,8 +38,8 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   async function (response) {
     if (
-      response.config.url === "/users/register/" ||
-      response.config.url === "/users/login/"
+      response.config.url === "users/register/" ||
+      response.config.url === "users/login/"
     ) {
       if (response.status === 200 || response.status === 201) {
         const {
@@ -80,6 +80,21 @@ instance.interceptors.response.use(
 export async function regisetrUser(payload: any): Promise<any> {
   const { data } = await axios.post(
     `${process.env.NEXT_PUBLIC_API_BASEURL}users/register/`,
+    {
+      email: payload?.email,
+      password: payload?.password,
+      captcha: payload?.captcha,
+    },
+    {
+      withCredentials: true,
+    }
+  );
+  return data;
+}
+
+export async function loginUser(payload: any): Promise<any> {
+  const { data } = await axios.post(
+    `${process.env.NEXT_PUBLIC_API_BASEURL}users/login/`,
     {
       email: payload?.email,
       password: payload?.password,
