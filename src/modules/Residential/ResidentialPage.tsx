@@ -5,9 +5,11 @@ import CustomLink from "@/components/CustomLink/customLink";
 import Image from "next/image";
 import ResidentialConfigCard from "@/modules/Residential/ResidentialConfigCard";
 
-import rawArrowRightIcon from "@public/icons/raw_arrow_right.svg";
+import rawArrowRightIcon from "@public/icons/arrow-small-right.svg";
 import { useSearchParams } from "next/navigation";
 import Pagination from "@/components/Pagination/Pagination";
+import Link from "next/link";
+import Button from "@/components/Button/Button";
 
 const CHART_DATA = [
   {
@@ -126,13 +128,17 @@ const ResidentialPage = () => {
             You have {data?.length} active configurations
           </p>
         </div>
-        <CustomLink
-          href={"/createConfig/residential"}
-          className="py-2 pl-[15px] pr-2.5"
-        >
-          <p>Create new</p>
-          <Image src={rawArrowRightIcon} alt={""} className="w-4 h-4" />
-        </CustomLink>
+
+        <Link href={"/createConfig/residential"}>
+          <Button
+            rightIcon={
+              <Image src={rawArrowRightIcon} alt={""} className="w-4 h-4" />
+            }
+            className="py-2 pl-[15px] pr-2.5"
+          >
+            <p>Create new</p>
+          </Button>
+        </Link>
       </div>
 
       <div className="w-full h-auto mt-[30px] mb-8">

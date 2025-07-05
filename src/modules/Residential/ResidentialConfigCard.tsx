@@ -1,14 +1,14 @@
 "use client";
 import React, { useState } from "react";
 import { formatBytes } from "@/utils/converter";
-import CustomCard from "@/components/CustomCard/customCard";
 import Image from "next/image";
-import ConfigCardButton from "@/components/CustomButton/ConfigCardButton";
 
 import copyIcon from "@public/icons/copy.svg";
-import trashIcon from "@public/icons/trash.svg";
+import trashIcon from "@public/icons/bin.svg";
 import CheckIcon from "@public/icons/check.svg";
 import AreaLineChart from "@/components/Charts/AreaLineChart";
+import cn from "@/utils/cn";
+import Button from "@/components/Button/Button";
 
 interface ResidentialConfigCardProps {
   configName: string;
@@ -72,13 +72,14 @@ PASSWORD: ${props.password}`;
   );
 
   return (
-    <CustomCard
-      borderRadius={"rounded"}
-      borderClassName={"w-full h-auto"}
-      containerClassName="grid grid-cols-5 px-4 py-[19px] gap-x-[67px] !gap-y-2.5"
+    <div
+      className={cn(
+        "rounded w-full h-auto grid grid-cols-7 px-4 py-[19px] gap-x-[67px] !gap-y-2.5",
+        "bg-darkmode-200 border border-darkmode-100"
+      )}
     >
       {/*col 1*/}
-      <div className="col-span-1 grid grid-cols-3 grid-rows-3">
+      <div className="col-span-2 grid grid-cols-3 grid-rows-3">
         <p className="col-span-3 row-span-1 mb-[13px] text-white text-base font-semibold">
           {props.configName}
         </p>
@@ -139,21 +140,35 @@ PASSWORD: ${props.password}`;
         </div>
       </div>
       {/*col 3*/}
-      <div className="col-span-1 flex flex-col justify-center items-end gap-2.5">
-        <ConfigCardButton onClick={handleCopyAll}>
-          <Image
-            src={copiedField === "ALL" ? CheckIcon : copyIcon}
-            alt=""
-            className="w-4 h-4"
-          />
+      <div className="col-span-2 flex flex-col justify-center items-end gap-2.5">
+        <Button
+          className="px-[27px]"
+          icon={
+            <Image
+              src={copiedField === "ALL" ? CheckIcon : copyIcon}
+              alt=""
+              className="w-4 h-4"
+            />
+          }
+          onClick={(e) => {
+            e.stopPropagation();
+            handleCopyAll();
+          }}
+        >
           <p className="text-xs font-medium text-white">Copy all lines</p>
-        </ConfigCardButton>
-        <ConfigCardButton>
-          <Image src={trashIcon} alt={""} className="w-4 h-4" />
+        </Button>
+
+        <Button
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+          variant="secondary"
+          icon={<Image src={trashIcon} alt={""} className="w-4 h-4" />}
+        >
           <p className="text-xs font-medium text-white">Delete configuration</p>
-        </ConfigCardButton>
+        </Button>
       </div>
-    </CustomCard>
+    </div>
   );
 };
 

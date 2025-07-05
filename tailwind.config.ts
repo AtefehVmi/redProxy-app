@@ -19,13 +19,6 @@ const config: Config = {
         bold: "700",
       },
       fontSize: {
-        xs: [
-          "0.625rem",
-          {
-            lineHeight: "0.75rem",
-            fontWeight: "500",
-          },
-        ],
         "base-500": [
           "0.875rem",
           {
