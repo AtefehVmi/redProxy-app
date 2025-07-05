@@ -2,19 +2,14 @@ import React from "react";
 import CustomCard from "@/components/CustomCard/customCard";
 import Image from "next/image";
 import authLogo from "@public/icons/auth_form_logo.svg";
-import Input from "@/components/Input/Input";
 import Link from "next/link";
 import CustomButton from "@/components/CustomButton/CustomButton";
 import AuthFormDivider from "@/components/AuthFormDivider/AuthFormDivider";
 import googleLogo from "@public/icons/google-logo.svg";
 import xLogo from "@public/icons/x_logo.svg";
+import InputText from "@/components/Input/Input";
 
 const SignUpForm = () => {
-  const inputMainContainerStyle = "h-[62px] ";
-  const inputContainerStyle = "h-auto w-full";
-  const inputLabelStyle = "text-sm font-medium mb-[5px]";
-  const inputStyle = "!h-[43px] text-profile-card-text text-xs px-4 py-[14px]";
-
   return (
     <CustomCard
       borderRadius={"rounded"}
@@ -36,17 +31,23 @@ const SignUpForm = () => {
           The proxy gateway for professionals
         </p>
         <form className="w-full h-auto flex flex-col gap-4 items-center mb-4">
-          <Input
+          <InputText
+            className="w-full"
             type={"email"}
             label={"Email"}
             placeholder={"johndoe@gmail.com"}
           />
-          <Input
+          <InputText
+            className="w-full"
             type={"password"}
             label={"Password"}
             placeholder={"***********"}
           />
-          <Input type={"password"} label={"Confirm password"} />
+          <InputText
+            className="w-full"
+            type={"password"}
+            label={"Confirm password"}
+          />
           <CustomButton className="w-full h-[47px] text-white/50 mt-4 !bg-custom-link-hover-bg hover:!bg-[#FBFAF908]">
             Sign up
           </CustomButton>

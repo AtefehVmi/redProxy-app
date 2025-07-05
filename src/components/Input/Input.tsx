@@ -57,8 +57,8 @@ const InputText = (props: InputTextProps) => {
       error && "text-error-main"
     ),
     label: cn(
-      "text-sm mb-0.5"
-      // error && "text-others-o10",
+      "text-sm mb-0.5 text-[#B0B0B0]",
+      focus && "text-white"
       // success && "text-others-o9"
     ),
     description: cn(
