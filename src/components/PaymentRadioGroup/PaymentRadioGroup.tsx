@@ -4,10 +4,15 @@ import { RadioGroup } from "@headlessui/react";
 import cn from "@/utils/cn";
 import React from "react";
 
+type Option = {
+  label: string;
+  value: number;
+};
+
 type Props = {
-  options: string[];
-  selected: string;
-  onChange: (value: string) => void;
+  options: Option[];
+  selected: number;
+  onChange: (value: number) => void;
 };
 
 const PaymentRadioGroup: React.FC<Props> = ({
@@ -21,8 +26,8 @@ const PaymentRadioGroup: React.FC<Props> = ({
       onChange={onChange}
       className="bg-darkmode-300 rounded-lg p-[18px] mt-3 flex flex-col gap-3"
     >
-      {options.map((option) => (
-        <RadioGroup.Option key={option} value={option}>
+      {options.map(({ label, value }) => (
+        <RadioGroup.Option key={value} value={value}>
           {({ checked }) => (
             <div
               className={cn(
@@ -46,7 +51,7 @@ const PaymentRadioGroup: React.FC<Props> = ({
                   checked ? "text-white font-medium" : "text-gray-500"
                 )}
               >
-                {option}
+                {label}
               </p>
             </div>
           )}

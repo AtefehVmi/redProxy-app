@@ -6,6 +6,9 @@ import Image from "next/image";
 import CouponIcon from "@public/icons/coupon.svg";
 import Button from "@/components/Button/Button";
 import React, { useState } from "react";
+import useFetch from "@/hooks/UseFetch";
+import { calculateDiscount } from "@/service/api";
+import Loader from "@/components/Loader/Loader";
 
 type Props = {
   className?: string;
@@ -14,6 +17,30 @@ type Props = {
 };
 
 const CouponCard: React.FC<Props> = ({ className, coupon, setCoupon }) => {
+  const [inputValue, setInputValue] = useState(coupon ?? "");
+
+  const {
+    fetch: discountFetch,
+    loading: discountLoading,
+    data: discountData,
+  } = useFetch(calculateDiscount, false, { toastOnError: true });
+
+  const handleCouponCheckClick = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
+    try {
+      e.preventDefault();
+
+      if (!inputValue.trim()) return;
+
+      await discountFetch(inputValue, 1);
+      setCoupon(inputValue);
+    } catch {
+      setCoupon("");
+      setInputValue("");
+    }
+  };
+
   return (
     <div
       className={cn(
@@ -23,21 +50,37 @@ const CouponCard: React.FC<Props> = ({ className, coupon, setCoupon }) => {
     >
       <p className="text-white font-bold text-xl">Coupon Code</p>
 
-      <form className="flex items-end gap-4">
+      <form
+        className="flex items-end gap-4 mt-8"
+        onSubmit={handleCouponCheckClick}
+      >
         <InputText
-          value={coupon}
-          onChange={(e) => setCoupon(e.target.value)}
-          className="col-span-1 mt-8 w-5/6"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          className="w-5/6"
           startAdornment={
-            <Image src={CouponIcon} alt="" width={18} height={18} />
+            <Image src={CouponIcon} alt="coupon" width={18} height={18} />
           }
           key={"coupon"}
           label={"Coupon Code *"}
           placeholder={"Enter Code"}
         />
-        <Button className="px-2 py-4 text-base w-1/6">Continue</Button>
+        <Button
+          disabled={discountLoading}
+          type="submit"
+          className="px-2 py-4 text-base w-1/6"
+        >
+          {discountLoading ? (
+            <>
+              Continue <Loader />
+            </>
+          ) : (
+            "Continue"
+          )}
+        </Button>
       </form>
     </div>
   );
 };
+
 export default CouponCard;

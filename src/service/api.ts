@@ -3,7 +3,7 @@ import { createAppErrorMessage } from "@/utils/createAppErrorMessage";
 import { isServer } from "@/utils/isServer";
 import axios from "axios";
 import { toast } from "react-toastify";
-import Order, { GenerateResidentialProxy, Profile } from "./models";
+import Order, { GenerateResidentialProxy, Plans, Profile } from "./models";
 
 export const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASEURL,
@@ -157,10 +157,8 @@ export async function generateProxy(
   return data;
 }
 
-export async function getProductPlans(
-  productName: string
-): Promise<{ plans: any[] }> {
-  const { data } = await instance.get(`products/${productName}/plans/`);
+export async function getProductPlans(name: string): Promise<Plans> {
+  const { data } = await instance.get(`products/${name}/plans/`);
   return data;
 }
 
@@ -245,5 +243,31 @@ export async function getPurchaseSeries(): Promise<any> {
 
 export async function getPurchaseOverview(): Promise<any> {
   const { data } = await instance.get(`payment/orders/purchase-details/`);
+  return data;
+}
+
+export async function calculateDiscount(
+  code: string,
+  amount: number
+): Promise<any> {
+  const { data } = await instance.get(
+    `/payment/coupon/${code}?amount=${amount}`
+  );
+  return data;
+}
+
+export async function purchaseRotatingProxy(
+  name: string,
+  quantity: number,
+  method: number,
+  coupon?: string,
+  plan?: string
+): Promise<any> {
+  const { data } = await instance.post(`payment/purchase/rotating/${name}/`, {
+    quantity,
+    method,
+    coupon,
+    plan,
+  });
   return data;
 }

@@ -50,3 +50,19 @@ export default interface Order {
   quantity: number;
   duration: string;
 }
+
+export interface Plan {
+  id: number;
+  name: string;
+  duration: string;
+  price: string;
+  active: boolean;
+  minimum_quantity: number;
+}
+
+export type Plans = {
+  id: number;
+  name: string;
+  active: boolean;
+  plans: Plan[];
+};

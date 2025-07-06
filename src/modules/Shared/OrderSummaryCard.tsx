@@ -2,7 +2,14 @@
 
 import Button from "@/components/Button/Button";
 import PaymentRadioGroup from "@/components/PaymentRadioGroup/PaymentRadioGroup";
+import { QUERY_KEYS } from "@/constants/querykeys";
+import { PAYMENT_METHODS } from "@/constants/variables";
+import useFetch from "@/hooks/UseFetch";
+import { purchaseRotatingProxy } from "@/service/api";
+import { useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 type Props = {
   coupon: string;
@@ -13,8 +20,11 @@ type Props = {
   plan?: string;
 };
 
-const paymentMethods = ["Balanced", "Credit Card"];
-
+const paymentOptions = [
+  { label: "Balance", value: PAYMENT_METHODS.BALANCE },
+  { label: "Credit Card", value: PAYMENT_METHODS.CARD },
+  { label: "Crypto", value: PAYMENT_METHODS.CRYPTO },
+];
 const OrderSummaryCard: React.FC<Props> = ({
   bandwidth,
   coupon,
@@ -23,7 +33,42 @@ const OrderSummaryCard: React.FC<Props> = ({
   quantity,
   plan,
 }) => {
-  const [selectedPayment, setSelectedPayment] = useState(paymentMethods[0]);
+  const [selectedPayment, setSelectedPayment] = useState(0);
+
+  const { fetch: purchaseRotatingFetch, loading: rotatingFetch } = useFetch(
+    purchaseRotatingProxy,
+    false,
+    { toastOnError: true }
+  );
+
+  const router = useRouter();
+  const queryClient = useQueryClient();
+
+  const handlePurchaseBandwidth = () => {
+    purchaseRotatingFetch(
+      "residential",
+      bandwidth,
+      selectedPayment,
+      coupon,
+      "Bandwidth"
+    ).then((resp) => {
+      if (selectedPayment === PAYMENT_METHODS.CRYPTO) {
+        toast.success("You'll be redirected soon...");
+        return router.push(resp.url);
+      }
+      toast.success("Purchased Successfully!");
+      // queryClient.invalidateQueries({
+      //   queryKey: QUERY_KEYS.trafficDetails(pool),
+      // });
+      queryClient.invalidateQueries({
+        queryKey: ["refreshable"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.PROFILE,
+      });
+      router.refresh();
+    });
+  };
 
   return (
     <div className="bg-darkmode-200 border border-darkmode-100 rounded p-8">
@@ -105,12 +150,18 @@ const OrderSummaryCard: React.FC<Props> = ({
       )}
 
       <PaymentRadioGroup
-        options={paymentMethods}
+        options={paymentOptions}
         selected={selectedPayment}
         onChange={setSelectedPayment}
       />
 
-      <Button className="mt-6 text-base font-semibold w-full">Purchase</Button>
+      <Button
+        disabled={rotatingFetch}
+        onClick={handlePurchaseBandwidth}
+        className="mt-6 text-base font-semibold w-full"
+      >
+        {rotatingFetch ? "Purchasing..." : "Purchase"}
+      </Button>
     </div>
   );
 };

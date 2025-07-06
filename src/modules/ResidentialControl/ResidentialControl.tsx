@@ -13,18 +13,11 @@ const ResidentialControl = ({ className }: { className?: string }) => {
   const [coupon, setCoupon] = useState("");
   const [bandwidth, setBandwidth] = useState<number>(1);
 
-  const { data } = useQuery({
-    queryKey: QUERY_KEYS.PLAN_DETAILS,
-    queryFn: () => getPlanDetails(),
-  });
-  console.log(data);
-
-  const { data: plan } = useQuery({
+  const { data: plan, isLoading } = useQuery({
     queryKey: QUERY_KEYS.PRODUCTS,
-    queryFn: () => getUserPlans(),
+    queryFn: () => getProductPlans("residential"),
   });
-  console.log(plan);
-  const price = bandwidth * (plan?.pricePerGb ?? 2);
+  const price = bandwidth * (Number(plan?.plans?.[0].price) ?? 2);
 
   return (
     <div className={cn("grid grid-cols-11 gap-4", className)}>
@@ -39,7 +32,7 @@ const ResidentialControl = ({ className }: { className?: string }) => {
       <div className="col-span-3">
         <OrderSummaryCard
           price={price}
-          pricePerGb={plan?.pricePerGb ?? 2}
+          pricePerGb={Number(plan?.plans?.[0].price) ?? 2}
           bandwidth={bandwidth}
           coupon={coupon}
         />
