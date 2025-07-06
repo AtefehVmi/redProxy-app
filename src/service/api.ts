@@ -112,3 +112,36 @@ export async function getUserProfile(): Promise<Profile> {
   const { data } = await instance.get("users/profile/");
   return data;
 }
+
+export async function getPlanDetails(plan_id?: string): Promise<any> {
+  const { data } = await instance.get("proxies/plan/details/", {
+    params: { plan_id },
+  });
+  return data;
+}
+
+export async function getResiCountries(pool: string): Promise<any> {
+  const { data } = await instance.get(`residential/${pool}/countries/`);
+  return data;
+}
+
+export async function getResiStates(
+  pool: string,
+  country: string
+): Promise<any> {
+  const { data } = await instance.get(
+    `residential/${pool}/states/?country=${country}`
+  );
+  return data;
+}
+
+export async function getResiCities(
+  pool: string,
+  country: string,
+  state: string
+): Promise<any> {
+  const { data } = await instance.get(
+    `residential/${pool}/cities/?country=${country}&state=${state}`
+  );
+  return data;
+}

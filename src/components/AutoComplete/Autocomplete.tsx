@@ -84,7 +84,7 @@ const Autocomplete = <A extends string | number | null, B extends any>(
   const classes = {
     root: cn("flex flex-col gap-[11px]", fullWidth && "w-full", className),
     label: cn(
-      "text-sm text-grey-50",
+      "text-sm",
       focus ? "text-white" : "text-grey-50",
       error && "",
       success && ""
