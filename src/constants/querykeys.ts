@@ -4,4 +4,5 @@ export const QUERY_KEYS = {
   RESI_COUNTRY: ["resi_country"],
   PRODUCTS: ["products"],
   PRICING: ["pricing"],
+  ORDERS: ["orders"],
 };

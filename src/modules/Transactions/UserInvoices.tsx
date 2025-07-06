@@ -3,10 +3,14 @@ import React from "react";
 import CustomCard from "@/components/CustomCard/customCard";
 import SelectWithCustomCard from "@/components/CustomSelect/SelectWithCustomCard";
 import Table from "@/components/Table/Table";
-import { InvoiceColumns, InvoiceDataType } from "@/constants/TableColumns";
+import { InvoiceColumns } from "@/constants/TableColumns";
 import cn from "@/utils/cn";
+import { getOrders } from "@/service/api";
+import { useQuery } from "@tanstack/react-query";
+import { QUERY_KEYS } from "@/constants/querykeys";
+import Order from "@/service/models";
 
-const INVOICE_DATA: Array<InvoiceDataType> = [
+const INVOICE_DATA: Array<any> = [
   {
     date: "08/05/2024",
     invoice: "#982ZK-001",
@@ -119,6 +123,10 @@ const INVOICE_DATA: Array<InvoiceDataType> = [
 
 const UserInvoices = () => {
   function onFilterChange() {}
+  const { data: orders } = useQuery({
+    queryKey: QUERY_KEYS.ORDERS,
+    queryFn: () => getOrders({ completed: false, all: true }),
+  });
 
   return (
     <div
@@ -140,7 +148,7 @@ const UserInvoices = () => {
           className="w-[119px] h-26px"
         />
       </div>
-      <Table columns={InvoiceColumns} data={INVOICE_DATA} />
+      <Table columns={InvoiceColumns} data={orders ?? INVOICE_DATA} />
     </div>
   );
 };

@@ -24,7 +24,7 @@ const ResidentialControl = ({ className }: { className?: string }) => {
     queryFn: () => getUserPlans(),
   });
   console.log(plan);
-  const price = bandwidth * (plan.pricePerGb ?? 2);
+  const price = bandwidth * (plan?.pricePerGb ?? 2);
 
   return (
     <div className={cn("grid grid-cols-11 gap-4", className)}>
@@ -39,7 +39,7 @@ const ResidentialControl = ({ className }: { className?: string }) => {
       <div className="col-span-3">
         <OrderSummaryCard
           price={price}
-          pricePerGb={plan.pricePerGb ?? 2}
+          pricePerGb={plan?.pricePerGb ?? 2}
           bandwidth={bandwidth}
           coupon={coupon}
         />

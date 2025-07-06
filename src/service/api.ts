@@ -3,7 +3,7 @@ import { createAppErrorMessage } from "@/utils/createAppErrorMessage";
 import { isServer } from "@/utils/isServer";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { GenerateResidentialProxy, Profile } from "./models";
+import Order, { GenerateResidentialProxy, Profile } from "./models";
 
 export const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASEURL,
@@ -170,7 +170,7 @@ export async function getPricings() {
 }
 
 export async function getUserPlans(name: string = "enterprise"): Promise<any> {
-  const { data } = await instance.get(`/residential/${name}/plans/`);
+  const { data } = await instance.get(`residential/${name}/plans/`);
   return data;
 }
 
@@ -178,8 +178,72 @@ export async function getProxyUsageDetails(
   name: "residential" | "premium_residential" | "enterprise_residential",
   plan_id?: string
 ): Promise<any> {
-  const { data } = await instance.get(`/residential/${name}/details/`, {
+  const { data } = await instance.get(`residential/${name}/details/`, {
     params: { plan_id },
   });
+  return data;
+}
+
+export async function getPlan(plan_id?: string): Promise<any> {
+  const { data } = await instance.get(`proxies/plan/details/`, {
+    params: { plan_id },
+  });
+  return data;
+}
+
+export async function depositBalance(
+  amount: number,
+  method: number
+): Promise<any> {
+  return await instance.post("payment/deposit/", { amount, method });
+}
+
+export async function getOrders({
+  completed = true,
+  productName,
+  all = false,
+}: {
+  completed?: boolean;
+  productName?: string;
+  all?: boolean;
+} = {}): Promise<Order[]> {
+  let queryString = "";
+
+  const params = new URLSearchParams();
+  if (productName) {
+    params.append("product", productName);
+  }
+  if (all) {
+    params.append("all", all.toString());
+  }
+  params.append("completed", completed.toString());
+  queryString = `?${params.toString()}`;
+
+  const { data } = await instance.get(`payment/orders/${queryString}`);
+  return data;
+}
+
+export async function getTransactions(): Promise<any> {
+  const { data } = await instance.get("payment/orders/transactions/");
+  return data;
+}
+
+export async function getProxiesByName(name: string): Promise<any> {
+  const { data } = await instance.get(`payment/orders/?product=${name}`);
+  return data;
+}
+
+export async function getPackages(name: string): Promise<any> {
+  const { data } = await instance.get(`payment/purchase/packages/${name}/`);
+  return data;
+}
+
+export async function getPurchaseSeries(): Promise<any> {
+  const { data } = await instance.get(`payment/orders/chart/`);
+  return data;
+}
+
+export async function getPurchaseOverview(): Promise<any> {
+  const { data } = await instance.get(`payment/orders/purchase-details/`);
   return data;
 }

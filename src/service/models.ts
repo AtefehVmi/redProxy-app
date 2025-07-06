@@ -39,3 +39,14 @@ export interface GenerateResidentialProxy {
   lifetime: number;
   plan: string;
 }
+
+export default interface Order {
+  id: number;
+  name: string;
+  status: string;
+  created: string;
+  provider: string;
+  total_amount: string;
+  quantity: number;
+  duration: string;
+}
