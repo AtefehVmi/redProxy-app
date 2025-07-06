@@ -103,7 +103,7 @@ const DatacenterPage = () => {
             You have {data.length} active configurations
           </p>
         </div>
-        <Link href={"/createConfig/datacenter"}>
+        <Link href={"/plan/datacenter"}>
           <Button
             rightIcon={
               <Image src={rawArrowRightIcon} alt={""} className="w-4 h-4" />

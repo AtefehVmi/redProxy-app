@@ -103,7 +103,7 @@ const IspPage = () => {
             You have {data?.length} active configurations
           </p>
         </div>
-        <Link href={"/createConfig/isp"}>
+        <Link href={"/plan/isp"}>
           <Button
             rightIcon={
               <Image src={rawArrowRightIcon} alt={""} className="w-4 h-4" />

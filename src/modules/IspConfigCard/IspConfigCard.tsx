@@ -4,12 +4,13 @@ import Image from "next/image";
 
 import copyIcon from "@public/icons/copy-all.svg";
 import trashIcon from "@public/icons/bin.svg";
-import CheckIcon from "@public/icons/check.svg";
+import CheckIcon from "@public/icons/check-icon.svg";
 import IspImage from "@public/icons/isp.svg";
 import ToggleBox from "@/components/ToggleBox/ToggleBox";
 import Button from "@/components/Button/Button";
 import cn from "@/utils/cn";
 import ProxiesModal from "@/components/Modal/ProxiesModal";
+import rawArrowRightIcon from "@public/icons/arrow-small-right.svg";
 
 interface IspConfigCardProps {
   configName: string;
@@ -52,10 +53,9 @@ Date: ${props.date}`;
 
   return (
     <div
-      onClick={handleCardClick}
       className={cn(
         "rounded w-full h-auto grid grid-cols-7 px-4 py-[19px] gap-x-[67px] !gap-y-2.5",
-        "bg-darkmode-200 border border-darkmode-100 cursor-pointer"
+        "bg-darkmode-200 border border-darkmode-100"
       )}
     >
       {/*col 1*/}
@@ -103,30 +103,44 @@ Date: ${props.date}`;
       </div>
       {/*col 3*/}
       <div className="col-span-3 flex flex-col justify-center items-end gap-2.5">
+        <div className="flex items-center gap-1 col-span-2">
+          <Button
+            className="col-span-1"
+            variant="secondary"
+            icon={
+              <Image
+                src={copiedField === "ALL" ? CheckIcon : copyIcon}
+                alt=""
+                className="w-4 h-4"
+              />
+            }
+            onClick={(e) => {
+              e.stopPropagation();
+              handleCopyAll();
+            }}
+          >
+            <p className="text-xs font-medium text-white">Copy</p>
+          </Button>
+
+          <Button
+            className="col-span-1"
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+            variant="secondary"
+            icon={<Image src={trashIcon} alt={""} className="w-4 h-4" />}
+          >
+            <p className="text-xs font-medium text-white">Delete</p>
+          </Button>
+        </div>
         <Button
-          className="px-[27px]"
-          icon={
-            <Image
-              src={copiedField === "ALL" ? CheckIcon : copyIcon}
-              alt=""
-              className="w-4 h-4"
-            />
+          onClick={handleCardClick}
+          rightIcon={
+            <Image src={rawArrowRightIcon} alt={""} className="w-4 h-4" />
           }
-          onClick={(e) => {
-            e.stopPropagation();
-            handleCopyAll();
-          }}
+          className="col-span-2 px-9"
         >
-          <p className="text-xs font-medium text-white">Copy all lines</p>
-        </Button>
-        <Button
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-          variant="secondary"
-          icon={<Image src={trashIcon} alt={""} className="w-4 h-4" />}
-        >
-          <p className="text-xs font-medium text-white">Delete configuration</p>
+          Proxy List
         </Button>
       </div>
 

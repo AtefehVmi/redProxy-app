@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import CustomLink from "@/components/CustomLink/customLink";
 import Image from "next/image";
 import ResidentialConfigCard from "@/modules/Residential/ResidentialConfigCard";
 
@@ -129,7 +128,7 @@ const ResidentialPage = () => {
           </p>
         </div>
 
-        <Link href={"/createConfig/residential"}>
+        <Link href={"/plan/residential"}>
           <Button
             rightIcon={
               <Image src={rawArrowRightIcon} alt={""} className="w-4 h-4" />

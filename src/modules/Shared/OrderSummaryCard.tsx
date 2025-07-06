@@ -1,5 +1,8 @@
+"use client";
+
 import Button from "@/components/Button/Button";
-import React from "react";
+import PaymentRadioGroup from "@/components/PaymentRadioGroup/PaymentRadioGroup";
+import React, { useState } from "react";
 
 type Props = {
   coupon: string;
@@ -10,6 +13,8 @@ type Props = {
   plan?: string;
 };
 
+const paymentMethods = ["Balanced", "Credit Card"];
+
 const OrderSummaryCard: React.FC<Props> = ({
   bandwidth,
   coupon,
@@ -18,6 +23,8 @@ const OrderSummaryCard: React.FC<Props> = ({
   quantity,
   plan,
 }) => {
+  const [selectedPayment, setSelectedPayment] = useState(paymentMethods[0]);
+
   return (
     <div className="bg-darkmode-200 border border-darkmode-100 rounded p-8">
       <p className="text-white font-bold text-xl">Order Summary</p>
@@ -97,9 +104,13 @@ const OrderSummaryCard: React.FC<Props> = ({
         </div>
       )}
 
-      <Button className="mt-6 text-base font-semibold py-4 w-full">
-        Purchase
-      </Button>
+      <PaymentRadioGroup
+        options={paymentMethods}
+        selected={selectedPayment}
+        onChange={setSelectedPayment}
+      />
+
+      <Button className="mt-6 text-base font-semibold w-full">Purchase</Button>
     </div>
   );
 };

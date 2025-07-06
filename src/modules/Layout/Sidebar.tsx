@@ -9,21 +9,17 @@ import BrandLogo from "@/components/Sidebar/BrandLogo";
 const Sidebar = () => {
   const matchPathMap: Record<string, string[]> = {
     [APP_ROUTES.residentialProxy]: [
-      "/createConfig/residential",
+      "/viewConfig/residential",
       "/plan/residential",
       "/firstView/residential",
     ],
     [APP_ROUTES.datacenterProxy]: [
-      "/createConfig/datacenter",
+      "/viewConfig/datacenter",
       "/plan/datacenter",
       "/firstView/datacenter",
     ],
-    [APP_ROUTES.mobileProxy]: [
-      "/createConfig/mobile",
-      "/plan/mobile",
-      "/firstView/mobile",
-    ],
-    [APP_ROUTES.ispProxy]: ["/createConfig/isp", "/plan/isp", "/firstView/isp"],
+    [APP_ROUTES.mobileProxy]: ["/plan/mobile", "/firstView/mobile"],
+    [APP_ROUTES.ispProxy]: ["/plan/isp", "/firstView/isp"],
   };
 
   return (

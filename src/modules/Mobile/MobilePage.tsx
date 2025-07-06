@@ -103,7 +103,7 @@ const MobilePage = () => {
             You have {data?.length} active configurations
           </p>
         </div>
-        <Link href={"/createConfig/mobile"}>
+        <Link href={"/plan/mobile"}>
           <Button
             rightIcon={
               <Image src={rawArrowRightIcon} alt={""} className="w-4 h-4" />

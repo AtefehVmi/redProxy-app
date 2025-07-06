@@ -2,13 +2,16 @@
 import React, { useState } from "react";
 import { formatBytes } from "@/utils/converter";
 import Image from "next/image";
+import rawArrowRightIcon from "@public/icons/arrow-small-right.svg";
 
-import copyIcon from "@public/icons/copy.svg";
+import copyIcon from "@public/icons/copy-white.svg";
+import copyItemIcon from "@public/icons/copy.svg";
 import trashIcon from "@public/icons/bin.svg";
-import CheckIcon from "@public/icons/check.svg";
+import CheckIcon from "@public/icons/check-icon.svg";
 import AreaLineChart from "@/components/Charts/AreaLineChart";
 import cn from "@/utils/cn";
 import Button from "@/components/Button/Button";
+import Link from "next/link";
 
 interface ResidentialConfigCardProps {
   configName: string;
@@ -60,7 +63,7 @@ PASSWORD: ${props.password}`;
 
   const renderCopyIcon = (field: string) => (
     <Image
-      src={copiedField === field ? CheckIcon : copyIcon}
+      src={copiedField === field ? CheckIcon : copyItemIcon}
       alt=""
       className="w-4 h-4 cursor-pointer transition-all duration-300 active:scale-90"
       onClick={() => {
@@ -141,32 +144,46 @@ PASSWORD: ${props.password}`;
       </div>
       {/*col 3*/}
       <div className="col-span-2 flex flex-col justify-center items-end gap-2.5">
-        <Button
-          className="px-[27px]"
-          icon={
-            <Image
-              src={copiedField === "ALL" ? CheckIcon : copyIcon}
-              alt=""
-              className="w-4 h-4"
-            />
-          }
-          onClick={(e) => {
-            e.stopPropagation();
-            handleCopyAll();
-          }}
-        >
-          <p className="text-xs font-medium text-white">Copy all lines</p>
-        </Button>
+        <div className="flex items-center gap-1 col-span-2">
+          <Button
+            className="col-span-1"
+            variant="secondary"
+            icon={
+              <Image
+                src={copiedField === "ALL" ? CheckIcon : copyIcon}
+                alt=""
+                className="w-4 h-4"
+              />
+            }
+            onClick={(e) => {
+              e.stopPropagation();
+              handleCopyAll();
+            }}
+          >
+            <p className="text-xs font-medium text-white">Copy</p>
+          </Button>
 
-        <Button
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-          variant="secondary"
-          icon={<Image src={trashIcon} alt={""} className="w-4 h-4" />}
-        >
-          <p className="text-xs font-medium text-white">Delete configuration</p>
-        </Button>
+          <Button
+            className="col-span-1"
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+            variant="secondary"
+            icon={<Image src={trashIcon} alt={""} className="w-4 h-4" />}
+          >
+            <p className="text-xs font-medium text-white">Delete</p>
+          </Button>
+        </div>
+        <Link href={"/viewConfig/residential"}>
+          <Button
+            rightIcon={
+              <Image src={rawArrowRightIcon} alt={""} className="w-4 h-4" />
+            }
+            className="col-span-2"
+          >
+            View configuration
+          </Button>
+        </Link>
       </div>
     </div>
   );
