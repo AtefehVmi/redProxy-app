@@ -27,3 +27,15 @@ export type Country = {
   iso_code: string;
   states: State[];
 };
+
+export interface GenerateResidentialProxy {
+  format: string;
+  port: string;
+  country: string;
+  state: string;
+  city: string;
+  rotation: string;
+  quantity: number;
+  lifetime: number;
+  plan: string;
+}

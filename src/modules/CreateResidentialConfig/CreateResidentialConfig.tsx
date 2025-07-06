@@ -16,7 +16,12 @@ import QuantityIcon from "@public/icons/quantity.svg";
 import Autocomplete from "@/components/AutoComplete/Autocomplete";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/querykeys";
-import { getResiCities, getResiCountries, getResiStates } from "@/service/api";
+import {
+  generateProxy,
+  getResiCities,
+  getResiCountries,
+  getResiStates,
+} from "@/service/api";
 import { useParams, usePathname } from "next/navigation";
 import useFetch from "@/hooks/UseFetch";
 import { City, Country, State } from "@/service/models";
@@ -87,9 +92,9 @@ const CreateResidentialConfig = () => {
   const [format, setFormat] = useState(formatOptions[0].value);
   const [quantity, setQuantity] = useState(0);
 
-  const path = usePathname(); // e.g. "/viewConfig/residential"
+  const path = usePathname();
   const pool = path.split("/")[2];
-  console.log("pool param value:", pool); // This must log: 'residential' or 'premium_residential' etc.
+  console.log("pool param value:", pool);
 
   const [country, setCountry] = useState<string | null>(null);
   const [countryOptions, setCountryOptions] = useState<
@@ -148,6 +153,8 @@ const CreateResidentialConfig = () => {
     setDownloaded(true);
     setTimeout(() => setDownloaded(false), 5000);
   }
+
+  //country, state, city logics
 
   const handleCountriesFetch = () => {
     if (countryOptions.length === 0) {
@@ -285,6 +292,28 @@ const CreateResidentialConfig = () => {
     }
   };
 
+  //generate residential
+
+  const { fetch: generateProxyFetch, loading: generateProxyLoading } = useFetch(
+    generateProxy,
+    false,
+    { toastOnError: true }
+  );
+
+  const handleSubmit = () => {
+    const res = generateProxyFetch(pool, {
+      format,
+      port,
+      country,
+      state,
+      city,
+      rotation,
+      quantity,
+    });
+
+    console.log(res);
+  };
+
   return (
     <div
       className={cn(
@@ -297,7 +326,7 @@ const CreateResidentialConfig = () => {
           <p className="col-span-2 text-white text-base font-semibold">
             Proxy settings
           </p>
-          <form className="col-span-1 grid grid-cols-2 grid-rows-4 gap-x-5 gap-y-4 mt-8">
+          <div className="col-span-1 grid grid-cols-2 grid-rows-4 gap-x-5 gap-y-4 mt-8">
             <Input
               key={"name"}
               type={"text"}
@@ -323,7 +352,7 @@ const CreateResidentialConfig = () => {
             />
 
             <Autocomplete
-              value={country}
+              value={"germany"}
               options={countryOptions}
               onChange={() => {}}
               onFocus={handleCountriesFetch}
@@ -348,10 +377,13 @@ const CreateResidentialConfig = () => {
               value={quantity}
               onChange={(e) => setQuantity(Number(e.target.value))}
             />
-            <Button className="col-span-2 mt-8 text-base">
+            <Button
+              onClick={handleSubmit}
+              className="col-span-2 mt-8 text-base"
+            >
               Generate Proxy
             </Button>
-          </form>
+          </div>
         </div>
         <TextArea
           buttons={

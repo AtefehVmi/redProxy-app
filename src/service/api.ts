@@ -3,7 +3,7 @@ import { createAppErrorMessage } from "@/utils/createAppErrorMessage";
 import { isServer } from "@/utils/isServer";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { Profile } from "./models";
+import { GenerateResidentialProxy, Profile } from "./models";
 
 export const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASEURL,
@@ -143,5 +143,43 @@ export async function getResiCities(
   const { data } = await instance.get(
     `residential/${pool}/cities/?country=${country}&state=${state}`
   );
+  return data;
+}
+
+export async function generateProxy(
+  pool: string,
+  payload: GenerateResidentialProxy
+): Promise<any> {
+  const { data } = await instance.post(
+    `residential/${pool}/generate/`,
+    payload
+  );
+  return data;
+}
+
+export async function getProductPlans(
+  productName: string
+): Promise<{ plans: any[] }> {
+  const { data } = await instance.get(`products/${productName}/plans/`);
+  return data;
+}
+
+export async function getPricings() {
+  const { data } = await instance.get(`residential/enterprise/plans/`);
+  return data;
+}
+
+export async function getUserPlans(name: string = "enterprise"): Promise<any> {
+  const { data } = await instance.get(`/residential/${name}/plans/`);
+  return data;
+}
+
+export async function getProxyUsageDetails(
+  name: "residential" | "premium_residential" | "enterprise_residential",
+  plan_id?: string
+): Promise<any> {
+  const { data } = await instance.get(`/residential/${name}/details/`, {
+    params: { plan_id },
+  });
   return data;
 }
