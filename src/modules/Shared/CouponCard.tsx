@@ -14,11 +14,16 @@ type Props = {
   className?: string;
   coupon: string;
   setCoupon: (coupon: string) => void;
+  amount?: number;
 };
 
-const CouponCard: React.FC<Props> = ({ className, coupon, setCoupon }) => {
+const CouponCard: React.FC<Props> = ({
+  className,
+  coupon,
+  setCoupon,
+  amount,
+}) => {
   const [inputValue, setInputValue] = useState(coupon ?? "");
-
   const {
     fetch: discountFetch,
     loading: discountLoading,
@@ -33,7 +38,7 @@ const CouponCard: React.FC<Props> = ({ className, coupon, setCoupon }) => {
 
       if (!inputValue.trim()) return;
 
-      await discountFetch(inputValue, 1);
+      await discountFetch(inputValue, amount ?? 1);
       setCoupon(inputValue);
     } catch {
       setCoupon("");

@@ -18,6 +18,7 @@ type Props = {
   price: number;
   pricePerGb: number;
   plan?: string;
+  selectedPlan: any;
 };
 
 const paymentOptions = [
@@ -32,6 +33,7 @@ const OrderSummaryCard: React.FC<Props> = ({
   pricePerGb,
   quantity,
   plan,
+  selectedPlan,
 }) => {
   const [selectedPayment, setSelectedPayment] = useState(0);
 
@@ -84,7 +86,9 @@ const OrderSummaryCard: React.FC<Props> = ({
           </div>
 
           <div className="flex items-center justify-between mt-2.5">
-            <p className="text-sm text-grey-500">Bandwidth</p>
+            <p className="text-sm text-grey-500">
+              {selectedPlan?.plans?.[0].name}
+            </p>
             <p className="text-base text-white font-semibold">{bandwidth} GB</p>
           </div>
 
@@ -98,13 +102,15 @@ const OrderSummaryCard: React.FC<Props> = ({
           <div className="flex items-center justify-between mt-2.5 border-b-[1.5px] border-dashed border-darkmode-100 pb-5">
             <p className="text-sm text-grey-500">Price Per GB</p>
             <p className="text-base text-white font-semibold">
-              ${pricePerGb.toFixed(2)}
+              ${selectedPlan?.plans?.[0].price}
             </p>
           </div>
 
           <div className="flex items-center justify-between mt-5">
             <p className="text-sm text-grey-500">Total</p>
-            <p className="text-base text-white font-semibold">$4.00</p>
+            <p className="text-base text-white font-semibold">
+              ${price.toFixed(2)}
+            </p>
           </div>
         </div>
       )}
