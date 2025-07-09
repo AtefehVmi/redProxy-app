@@ -4,6 +4,7 @@ import TrendupIcon from "@public/icons/trend-up.svg";
 import Button from "@/components/Button/Button";
 import PlusIcon from "@public/icons/plus.svg";
 import ProgressBar from "@/components/ProgressBar/ProgressBar";
+import AddBandwidthModal from "./AddBandwidthModal";
 
 const AddBandwidthCard = () => {
   return (
@@ -28,9 +29,7 @@ const AddBandwidthCard = () => {
           </div>
         </div>
 
-        <Button className="p-2.5">
-          <Image src={PlusIcon} alt="" />
-        </Button>
+        <AddBandwidthModal />
       </div>
 
       <div className="mt-10">
