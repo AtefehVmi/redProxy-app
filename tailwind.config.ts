@@ -33,13 +33,6 @@ const config: Config = {
             fontWeight: "600",
           },
         ],
-        lg: [
-          "1rem",
-          {
-            lineHeight: "1.2rem",
-            fontWeight: "600",
-          },
-        ],
         xl: [
           "1.25rem",
           {
@@ -94,10 +87,12 @@ const config: Config = {
         "grey-200": "#E5E7EB",
         "grey-500": "#6D7280",
         "grey-300": "#D2D5DA",
+        "grey-100": "#FAFAFA",
         "darkmode-100": "#26292B",
         "darkmode-200": "#15191B",
         "darkmode-300": "#0E1214",
         "orange-200": "#FF975C",
+        "orange-100": "#FFA15C",
         "blue-100": "#5CA7FF",
         "indigo-100": "#735CFF",
         "yellow-100": "#FFF85C",
