@@ -5,6 +5,7 @@ import { useState } from "react";
 import MyProfile from "./MyProfile";
 import { useRouter, useSearchParams } from "next/navigation";
 import UserInvoices from "../Transactions/UserInvoices";
+import NotificationTab from "./NotificationTab";
 
 const profileItems = [
   { name: "My profile", key: "profile", content: <MyProfile /> },
@@ -13,7 +14,7 @@ const profileItems = [
     key: "billing",
     content: <UserInvoices height="h-[600px]" />,
   },
-  { name: "Notification", key: "notification" },
+  { name: "Notification", key: "notification", content: <NotificationTab /> },
   { name: "Delete Account", key: "delete" },
 ];
 
@@ -30,7 +31,7 @@ const ProfilePanel = ({ className }: { className?: string }) => {
   return (
     <div
       className={cn(
-        "bg-darkmode-200/60 border-[1.75px] border-darkmode-100 p-8 rounded",
+        "bg-darkmode-200/60 border-[1.75px] border-darkmode-100 p-8 rounded mb-8",
         className,
         "flex items-start gap-8"
       )}

@@ -33,7 +33,7 @@ const notifs = [
 
 const NotifDropdown = ({ className }: { className?: string }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<"all" | "read" | "unread">("all"); // Active tab state
+  const [activeTab, setActiveTab] = useState<"all" | "read" | "unread">("all");
 
   const dropdownRef = useRef<HTMLDivElement>(null);
 

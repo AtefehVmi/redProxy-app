@@ -28,7 +28,8 @@ const Button = ({
   const variantStyle = cn(
     variant === "primary" &&
       "bg-darkmode-100 text-white hover:bg-darkmode-100/80 gradient-border",
-    variant === "text" && "bg-transparent text-custom-gray hover:bg-white/5",
+    variant === "text" &&
+      "bg-transparent text-white hover:bg-darkmode-200 disabled:text-grey-400 focus:bg-darkmode-100",
     variant === "secondary" &&
       "bg-transparent rounded-lg hover:bg-white/5 border border-white/10",
     variant === "tertiary" &&
