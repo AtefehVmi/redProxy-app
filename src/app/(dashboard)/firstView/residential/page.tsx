@@ -5,6 +5,7 @@ import Image from "next/image";
 import ResidentialFirstView from "@/components/ResidentialFirstView/ResidentialFirstView";
 import ResidentialImage from "@public/icons/residential.svg";
 import CheckIcon from "@public/icons/blue-check.svg";
+import ResidentialCards from "@/components/ResidentialFirstView/ResidentialCards";
 
 const FirstViewPage = () => {
   return (
@@ -31,41 +32,12 @@ const FirstViewPage = () => {
       <ResidentialFirstView
         numberColor="bg-blue-100"
         color="bg-blue-100/15"
-        text1="Key Features of Residential Proxies"
-        text2="Use Cases of Residential Proxies"
         desc="A Residential Proxy is an intermediary server that  routes your internet traffic through a real residential IP address  provided by an Internet Service Provider (ISP). Unlike datacenter  proxies (which come from cloud servers), residential proxies use IPs  assigned to actual home devices, making them appear as legitimate,  organic users rather than bots or automated traffic."
         title="Residential Proxy"
         className="my-8"
-        keyFeatures={[
-          {
-            feature: "High Anonymity",
-            featureDesc: "–  Harder to detect than datacenter proxies.",
-          },
-          {
-            feature: "Geo-Specific IPs",
-            featureDesc: "– Choose IPs from specific countries/cities.",
-          },
-          {
-            feature: "Rotating or Static Options",
-            featureDesc:
-              "– IPs can change automatically (rotating) or stay fixed (static residential).",
-          },
-          {
-            feature: "Lower Block Rates",
-            featureDesc:
-              "– Ideal for scraping, sneaker copping, and social media automation.",
-          },
-        ]}
-        usecases={[
-          "Web Scraping",
-          "Social Media Automation",
-          "Ad Verification",
-          "Sneaker & Limited Drops",
-          "SEO Monitoring",
-          "Streaming & Geo-Unblocking",
-        ]}
         image={ResidentialImage}
         checkIcon={CheckIcon}
+        resiCards={<ResidentialCards />}
       />
     </div>
   );
