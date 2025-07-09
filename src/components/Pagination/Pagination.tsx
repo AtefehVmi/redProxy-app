@@ -170,21 +170,19 @@ const Pagination: React.FC<PaginationProps> = ({
         style={{ borderRadius: "8px" }}
       >
         <button
-          className="px-2.5 py-1 h-full flex items-center gap-0.5 cursor-pointer bg-orange-200 hover:bg-orange-400 rounded disabled:cursor-not-allowed disabled:bg-darkmode-100"
+          className="px-2.5 py-1 h-full flex items-center gap-0.5 cursor-pointer bg-darkmode-300 hover:bg-darkmode-200 rounded disabled:cursor-not-allowed *:text-white *:disabled:text-grey-400"
           onClick={() => handlePageChange(0)}
           disabled={currentOffset === 0}
         >
-          <Image src={PrevDoubleIcon} alt="" />{" "}
-          <p className="text-white text-sm">First</p>
+          <Image src={PrevDoubleIcon} alt="" /> <p className="text-sm">First</p>
         </button>
 
         <button
-          className="px-2.5 py-1 h-full flex items-center gap-0.5 cursor-pointer bg-orange-200 hover:bg-orange-400 rounded disabled:cursor-not-allowed disabled:bg-darkmode-100"
+          className="px-2.5 py-1 h-full flex items-center gap-0.5 cursor-pointer bg-darkmode-300 hover:bg-darkmode-200 rounded disabled:cursor-not-allowed *:text-white *:disabled:text-grey-400"
           onClick={() => handlePageChange(currentOffset - currentLimit)}
           disabled={currentOffset === 0}
         >
-          <Image src={PrevIcon} alt="" />{" "}
-          <p className="text-white text-sm">Prev</p>
+          <Image src={PrevIcon} alt="" /> <p className="text-sm">Prev</p>
         </button>
 
         <span className="flex items-center text-sm gap-2.5">
@@ -192,26 +190,26 @@ const Pagination: React.FC<PaginationProps> = ({
         </span>
 
         <button
-          className="px-2.5 py-1 h-full flex items-center gap-0.5 cursor-pointer bg-orange-200 hover:bg-orange-400 rounded disabled:cursor-not-allowed disabled:bg-darkmode-100"
+          className="px-2.5 py-1 h-full flex items-center gap-0.5 cursor-pointer bg-darkmode-300 hover:bg-darkmode-200 rounded disabled:cursor-not-allowed *:text-white *:disabled:text-grey-400"
           onClick={() => handlePageChange(currentOffset + currentLimit)}
           disabled={
             !isDataAvailable ||
             (!!totalCount && currentOffset + currentLimit >= totalCount)
           }
         >
-          <p className="text-white text-sm">Next</p>
+          <p className="text-sm">Next</p>
           <Image src={PrevIcon} alt="" className="rotate-180" />
         </button>
 
         <button
-          className="px-2.5 py-1 h-full flex items-center gap-0.5 cursor-pointer bg-orange-200 hover:bg-orange-400 rounded disabled:cursor-not-allowed disabled:bg-darkmode-100"
+          className="px-2.5 py-1 h-full flex items-center gap-0.5 cursor-pointer bg-darkmode-300 hover:bg-darkmode-200 rounded disabled:cursor-not-allowed *:text-white *:disabled:text-grey-400"
           onClick={() => handlePageChange((totalPages! - 1) * currentLimit)}
           disabled={
             !isDataAvailable ||
             (!!totalCount && currentOffset + currentLimit >= totalCount)
           }
         >
-          <p className="text-white text-sm">Last</p>
+          <p className="text-sm">Last</p>
           <Image src={PrevDoubleIcon} alt="" className="rotate-180" />
         </button>
       </div>
@@ -222,7 +220,7 @@ const Pagination: React.FC<PaginationProps> = ({
           onChange={handleSetLimit}
           className={cn(
             style.select,
-            "bg-orange-200 text-sm text-white font-semibold"
+            "bg-darkmode-100 text-sm text-grey-300 font-semibold"
           )}
         >
           {[4, 10, 15, 20, 25, 30, 50, 100].map((size) => (
