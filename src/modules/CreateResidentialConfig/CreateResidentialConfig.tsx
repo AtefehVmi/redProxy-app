@@ -80,7 +80,7 @@ const poolToName = {
   premium_residential: "Premium Residential",
 };
 
-const CreateResidentialConfig = () => {
+const CreateResidentialConfig = ({ className }: { className?: string }) => {
   const [formatedList, setFormatedList] = React.useState<string>(
     DUMMY_TEXT_AREA_VALUE
   );
@@ -317,16 +317,17 @@ const CreateResidentialConfig = () => {
   return (
     <div
       className={cn(
-        "rounded w-full h-auto p-[1.75px] pt-[19px] pr-[29px] pb-5 pl-4 grid grid-cols-2",
-        "bg-darkmode-200 card-gradient shadow-nav-link"
+        "rounded w-full h-auto p-[1.75px] pt-[19px] pr-[29px] pb-5 pl-4",
+        "bg-darkmode-200 card-gradient shadow-nav-link",
+        className
       )}
     >
-      <div className="col-span-2 grid grid-cols-2 gap-x-[18px]">
+      <div className="flex flex-col gap-x-[18px]">
         <div>
           <p className="col-span-2 text-white text-base font-semibold">
             Proxy settings
           </p>
-          <div className="col-span-1 grid grid-cols-2 grid-rows-4 gap-x-5 gap-y-4 mt-8">
+          <div className="col-span-1 grid grid-cols-2 gap-x-5 gap-y-4 mt-8">
             <Input
               key={"name"}
               type={"text"}
@@ -377,15 +378,15 @@ const CreateResidentialConfig = () => {
               value={quantity}
               onChange={(e) => setQuantity(Number(e.target.value))}
             />
-            <Button
-              onClick={handleSubmit}
-              className="col-span-2 mt-8 text-base"
-            >
+          </div>
+          <div className="flex items-center justify-end col-span-2">
+            <Button onClick={handleSubmit} className="mt-8 text-base">
               Generate Proxy
             </Button>
           </div>
         </div>
         <TextArea
+          className="mt-12"
           buttons={
             <div className="flex items-center gap-3">
               <Button
@@ -422,7 +423,7 @@ const CreateResidentialConfig = () => {
           containerClassName={"col-span-1"}
           labelClassName={selectLabelStyle}
           textAreaClassName={
-            "h-full max-h-full px-[19px] py-4 text-xs font-medium"
+            "h-full h-[153px] px-[19px] py-4 text-xs font-medium"
           }
         ></TextArea>
       </div>

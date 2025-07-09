@@ -1,6 +1,8 @@
 import React from "react";
 import CustomLink from "@/components/CustomLink/customLink";
 import CreateResidentialConfig from "@/modules/CreateResidentialConfig/CreateResidentialConfig";
+import AddBandwidthCard from "@/modules/CreateResidentialConfig/AddBandwidthCard";
+import ResiDetailCard from "@/modules/CreateResidentialConfig/ResiDetailCard";
 
 const Page = () => {
   return (
@@ -18,8 +20,13 @@ const Page = () => {
           <p>Cancel configuration</p>
         </CustomLink>
       </div>
-      <div className="w-full mt-[30px]">
-        <CreateResidentialConfig />
+      <div className="grid grid-cols-9 mt-[30px] gap-4">
+        <CreateResidentialConfig className="col-span-6" />
+
+        <div className="col-span-3">
+          <AddBandwidthCard />
+          <ResiDetailCard />
+        </div>
       </div>
     </div>
   );
