@@ -3,15 +3,24 @@
 import cn from "@/utils/cn";
 import { useState } from "react";
 import MyProfile from "./MyProfile";
+import { useRouter, useSearchParams } from "next/navigation";
+import UserInvoices from "../Transactions/UserInvoices";
 
 const profileItems = [
   { name: "My profile", key: "profile", content: <MyProfile /> },
-  { name: "Billing", key: "billing" },
+  {
+    name: "Billing",
+    key: "billing",
+    content: <UserInvoices height="h-[600px]" />,
+  },
   { name: "Notification", key: "notification" },
   { name: "Delete Account", key: "delete" },
 ];
 
 const ProfilePanel = ({ className }: { className?: string }) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const initialTab = searchParams?.get("tab") || "profile";
   const [activeTab, setActiveTab] = useState("profile");
 
   const activeContent = profileItems.find(
@@ -30,7 +39,10 @@ const ProfilePanel = ({ className }: { className?: string }) => {
         <div className="flex flex-col gap-4">
           {profileItems.map((item, index) => (
             <button
-              onClick={() => setActiveTab(item.key)}
+              onClick={() => {
+                setActiveTab(item.key);
+                router.replace(`?tab=${item.key}`, { scroll: false });
+              }}
               type="button"
               className={cn(
                 "rounded-full py-2.5 px-4 text-base text-white text-left",

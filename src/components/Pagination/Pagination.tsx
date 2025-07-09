@@ -16,6 +16,7 @@ interface PaginationProps {
   offset: number;
   totalCount?: number;
   isDataAvailable: boolean;
+  noMargin?: boolean;
 }
 
 const Pagination: React.FC<PaginationProps> = ({
@@ -23,6 +24,7 @@ const Pagination: React.FC<PaginationProps> = ({
   offset,
   totalCount,
   isDataAvailable,
+  noMargin = false,
 }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -153,7 +155,12 @@ const Pagination: React.FC<PaginationProps> = ({
   const currentPage = Math.floor(currentOffset / currentLimit) + 1;
 
   return (
-    <div className="flex items-center justify-between p-4 bg-darkmode-200 border border-darkmode-100 my-8 rounded-lg">
+    <div
+      className={cn(
+        "flex items-center justify-between p-4 bg-darkmode-200 border border-darkmode-100 mb-8",
+        noMargin ? "-mt-1 rounded-b-lg" : "mt-8 rounded-lg"
+      )}
+    >
       <div className="">
         {totalCount && (
           <p className="text-sm text-grey-400">

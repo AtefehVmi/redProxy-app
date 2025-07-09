@@ -8,6 +8,8 @@ import cn from "@/utils/cn";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/querykeys";
 import { getOrders } from "@/service/api";
+import Pagination from "@/components/Pagination/Pagination";
+import { useSearchParams } from "next/navigation";
 
 const INVOICE_DATA: Array<any> = [
   {
@@ -112,6 +114,10 @@ const INVOICE_DATA: Array<any> = [
 ];
 
 const UserInvoices = () => {
+  const params = useSearchParams();
+  const limit = params.get("limit") ? parseInt(params.get("limit")!) : 4;
+  const offset = params.get("offset") ? parseInt(params.get("offset")!) : 0;
+
   function onFilterChange() {}
 
   const { data: orders } = useQuery({
@@ -120,26 +126,35 @@ const UserInvoices = () => {
   });
 
   return (
-    <div
-      className={cn(
-        "rounded col-span-4 h-[331px] p-[1.75px] px-4 pt-5 pb-4 flex flex-col items-center gap-[18px] overflow-auto",
-        "border border-darkmode-100 bg-darkmode-200"
-      )}
-    >
-      <div className="w-full flex justify-between items-center">
-        <p className="text-base font-semibold text-white">Invoices</p>
-        <SelectWithCustomCard
-          options={[
-            { label: "Last 12 months", value: "year" },
-            { label: "Last 30 days", value: "month" },
-            { label: "Last 7 days", value: "week" },
-          ]}
-          defaultValue={"week"}
-          onChange={onFilterChange}
-          className="w-[119px] h-26px"
-        />
+    <div className="flex flex-col col-span-4">
+      <div
+        className={cn(
+          "rounded h-[331px] p-[1.75px] px-4 pt-5 pb-4 flex flex-col items-center gap-[18px] overflow-auto",
+          "border border-darkmode-100 bg-darkmode-200"
+        )}
+      >
+        <div className="w-full flex justify-between items-center">
+          <p className="text-base font-semibold text-white">Invoices</p>
+          <SelectWithCustomCard
+            options={[
+              { label: "Last 12 months", value: "year" },
+              { label: "Last 30 days", value: "month" },
+              { label: "Last 7 days", value: "week" },
+            ]}
+            defaultValue={"week"}
+            onChange={onFilterChange}
+            className="w-[119px] h-26px"
+          />
+        </div>
+        <Table columns={InvoiceColumns} data={orders ?? INVOICE_DATA} />
       </div>
-      <Table columns={InvoiceColumns} data={orders ?? INVOICE_DATA} />
+      <Pagination
+        noMargin={true}
+        totalCount={INVOICE_DATA.length}
+        limit={limit}
+        offset={offset}
+        isDataAvailable={(orders?.length ?? 0) >= limit}
+      />
     </div>
   );
 };
