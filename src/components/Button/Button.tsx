@@ -2,7 +2,7 @@ import cn from "@/utils/cn";
 import React, { ReactNode } from "react";
 
 interface ButtonProps {
-  variant?: "primary" | "text" | "secondary" | "tertiary";
+  variant?: "primary" | "text" | "secondary";
   className?: string;
   icon?: ReactNode;
   children?: React.ReactNode;
@@ -31,9 +31,7 @@ const Button = ({
     variant === "text" &&
       "bg-transparent text-white hover:bg-darkmode-200 disabled:text-grey-400 focus:bg-darkmode-100",
     variant === "secondary" &&
-      "bg-transparent rounded-lg hover:bg-white/5 border border-white/10 text-white",
-    variant === "tertiary" &&
-      "bg-darkmode-200 gradient-border hover:bg-darkmode-300"
+      "bg-transparent rounded-lg hover:bg-white/5 border border-white/10 text-white"
   );
 
   return (
