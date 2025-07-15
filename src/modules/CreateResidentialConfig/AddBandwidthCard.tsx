@@ -1,8 +1,6 @@
 import LayersIcon from "@public/icons/layers.svg";
 import Image from "next/image";
 import TrendupIcon from "@public/icons/trend-up.svg";
-import Button from "@/components/Button/Button";
-import PlusIcon from "@public/icons/plus.svg";
 import ProgressBar from "@/components/ProgressBar/ProgressBar";
 import AddBandwidthModal from "./AddBandwidthModal";
 
