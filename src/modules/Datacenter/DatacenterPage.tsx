@@ -166,6 +166,7 @@ const DatacenterPage = () => {
         <div className="flex flex-col gap-6">
           {paginatedData.map((config, index) => (
             <IspConfigCard
+              href="/viewConfig/datacenter"
               dataUsage={config.dataUsage}
               chartColor="#FF5C5C"
               plan={config.plan}
