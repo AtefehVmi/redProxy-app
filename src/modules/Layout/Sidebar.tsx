@@ -19,7 +19,7 @@ const Sidebar = () => {
       "/firstView/datacenter",
     ],
     [APP_ROUTES.mobileProxy]: ["/plan/mobile", "/firstView/mobile"],
-    [APP_ROUTES.ispProxy]: ["/plan/isp", "/firstView/isp"],
+    [APP_ROUTES.ispProxy]: ["/plan/isp", "/firstView/isp", "/viewConfig/isp"],
   };
 
   return (

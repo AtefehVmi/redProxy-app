@@ -1,14 +1,15 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
-import ResidentialConfigCard from "@/modules/Residential/ResidentialConfigCard";
-
-import rawArrowRightIcon from "@public/icons/arrow-small-right.svg";
 import { useSearchParams } from "next/navigation";
-import Pagination from "@/components/Pagination/Pagination";
-import Link from "next/link";
-import Button from "@/components/Button/Button";
+import ResidentialFirstView from "@/components/ResidentialFirstView/ResidentialFirstView";
+import ResidentialImage from "@public/icons/residential.svg";
+import CheckIcon from "@public/icons/blue-check.svg";
+import BandwidthStatCards from "./BandwidthStatCards";
+import StatCard from "./StatCard";
+import IpRoyalIcon from "@public/icons/ip-royal.svg";
+import NetNutIcon from "@public/icons/net-nut.svg";
+import OxyLabsIcon from "@public/icons/oxy-labs.svg";
 
 const CHART_DATA = [
   {
@@ -118,53 +119,57 @@ const ResidentialPage = () => {
 
   return (
     <div className="w-full h-full">
-      <div className="w-full flex justify-between items-center">
-        <div className="flex flex-col items-start gap-1.5">
-          <p className="text-xl font-semibold text-white">
-            Your configurations
-          </p>
-          <p className="text-sm font-medium text-nav-sub-menu-heading-text">
-            You have {data?.length} active configurations
-          </p>
-        </div>
+      <p className="text-xl font-semibold text-white">
+        New Residential configuration
+      </p>
+      <p className="text-grey-500 text-sm mt-2">
+        Configurate your new proxy settings
+      </p>
 
-        <Link href={"/plan/residential"}>
-          <Button
-            rightIcon={
-              <Image src={rawArrowRightIcon} alt={""} className="w-4 h-4" />
-            }
-            className="py-2 pl-[15px] pr-2.5"
-          >
-            <p>Create new</p>
-          </Button>
-        </Link>
-      </div>
+      <ResidentialFirstView
+        numberColor="bg-blue-100"
+        color="bg-blue-100/15"
+        desc="A Residential Proxy is an intermediary server that  routes your internet traffic through a real residential IP address  provided by an Internet Service Provider (ISP). Unlike datacenter  proxies (which come from cloud servers), residential proxies use IPs  assigned to actual home devices, making them appear as legitimate,  organic users rather than bots or automated traffic."
+        title="Residential Proxy"
+        className="my-8"
+        image={ResidentialImage}
+        checkIcon={CheckIcon}
+      />
 
-      <div className="w-full h-auto mt-[30px] mb-8">
-        <div className="flex flex-col gap-6">
-          {paginatedData.map((config, index) => (
-            <ResidentialConfigCard
-              configName={config.configName}
-              dataUsage={config.dataUsage}
-              dataUsed={config.dataUsed}
-              portType={config.portType}
-              geoLocation={config.geoLocation}
-              format={config.format}
-              username={config.username}
-              rotation={config.rotation}
-              quantityGenerated={config.quantityGenerated}
-              port={config.port}
-              password={config.password}
-              key={index}
-            />
-          ))}
-        </div>
+      <div className="grid grid-cols-9 gap-6">
+        <BandwidthStatCards
+          className="col-span-3"
+          total_gb="345"
+          netNut="12"
+          ipRoyal="12"
+          oxyLabs="12"
+        />
 
-        <Pagination
-          totalCount={data.length}
-          limit={limit}
-          offset={offset}
-          isDataAvailable={data?.length >= limit}
+        <StatCard
+          icon={IpRoyalIcon}
+          name="IP Royal"
+          gb={24}
+          percent={60}
+          dataUsage={CHART_DATA}
+          className="col-span-2"
+        />
+
+        <StatCard
+          icon={NetNutIcon}
+          name="Net Nut"
+          gb={24}
+          percent={-20}
+          dataUsage={CHART_DATA}
+          className="col-span-2"
+        />
+
+        <StatCard
+          icon={OxyLabsIcon}
+          name="Oxylabs"
+          plan="10 Plans"
+          percent={40}
+          dataUsage={CHART_DATA}
+          className="col-span-2"
         />
       </div>
     </div>
