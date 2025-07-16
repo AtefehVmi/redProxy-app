@@ -2,13 +2,44 @@
 
 import React from "react";
 import Image from "next/image";
-
+import MobileImage from "@public/icons/mobile.svg";
 import rawArrowRightIcon from "@public/icons/arrow-small-right.svg";
 import Button from "@/components/Button/Button";
 import Link from "next/link";
-import MobileConfigCard from "@/modules/Mobile/MobileConfigCard";
 import { useSearchParams } from "next/navigation";
 import Pagination from "@/components/Pagination/Pagination";
+import IspConfigCard from "../IspConfigCard/IspConfigCard";
+
+const CHART_DATA = [
+  {
+    month: "Page A",
+    usage: 2400,
+  },
+  {
+    month: "Page B",
+    usage: 1398,
+  },
+  {
+    month: "Page C",
+    usage: 3800,
+  },
+  {
+    month: "Page D",
+    usage: 3908,
+  },
+  {
+    month: "Page E",
+    usage: 4800,
+  },
+  {
+    month: "Page F",
+    usage: 3800,
+  },
+  {
+    month: "Page G",
+    usage: 4300,
+  },
+];
 
 const data = [
   {
@@ -19,6 +50,8 @@ const data = [
     remain: "23.10.2024",
     status: "Active",
     date: "23.10.2024",
+    plan: "30 Days",
+    dataUsage: CHART_DATA,
   },
   {
     configName: "Residential for reddit",
@@ -28,6 +61,8 @@ const data = [
     remain: "23.10.2024",
     status: "Active",
     date: "23.10.2024",
+    plan: "30 Days",
+    dataUsage: CHART_DATA,
   },
   {
     configName: "Residential for reddit",
@@ -37,6 +72,8 @@ const data = [
     remain: "23.10.2024",
     status: "Active",
     date: "23.10.2024",
+    plan: "30 Days",
+    dataUsage: CHART_DATA,
   },
   {
     configName: "Residential for reddit",
@@ -46,6 +83,8 @@ const data = [
     remain: "23.10.2024",
     status: "Active",
     date: "23.10.2024",
+    plan: "30 Days",
+    dataUsage: CHART_DATA,
   },
   {
     configName: "Residential for reddit",
@@ -55,6 +94,8 @@ const data = [
     remain: "23.10.2024",
     status: "Active",
     date: "23.10.2024",
+    plan: "30 Days",
+    dataUsage: CHART_DATA,
   },
   {
     configName: "Residential for reddit",
@@ -64,6 +105,8 @@ const data = [
     remain: "23.10.2024",
     status: "Active",
     date: "23.10.2024",
+    plan: "30 Days",
+    dataUsage: CHART_DATA,
   },
   {
     configName: "Residential for reddit",
@@ -73,6 +116,8 @@ const data = [
     remain: "23.10.2024",
     status: "Active",
     date: "23.10.2024",
+    plan: "30 Days",
+    dataUsage: CHART_DATA,
   },
   {
     configName: "Residential for reddit",
@@ -82,6 +127,8 @@ const data = [
     remain: "23.10.2024",
     status: "Active",
     date: "23.10.2024",
+    plan: "30 Days",
+    dataUsage: CHART_DATA,
   },
 ];
 
@@ -118,7 +165,12 @@ const MobilePage = () => {
       <div className="w-full h-auto mt-[30px] mb-8">
         <div className="flex flex-col gap-6">
           {paginatedData.map((config, index) => (
-            <MobileConfigCard
+            <IspConfigCard
+              dataUsage={config.dataUsage}
+              chartColor="#FFF85C"
+              proxyname="Mobile Proxies"
+              plan={config.plan}
+              image={MobileImage}
               configName={config.configName}
               location={config.location}
               autoRenew={config.autoRenew}

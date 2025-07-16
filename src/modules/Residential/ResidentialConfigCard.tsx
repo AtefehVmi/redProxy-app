@@ -95,7 +95,7 @@ PASSWORD: ${props.password}`;
           </p>
         </div>
         <div className="col-span-2 row-span-2">
-          <AreaLineChart data={props.dataUsage} />
+          <AreaLineChart color="#5CA7FF" data={props.dataUsage} />
         </div>
       </div>
       {/*col 2*/}

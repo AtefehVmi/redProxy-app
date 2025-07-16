@@ -9,6 +9,38 @@ import Link from "next/link";
 import IspConfigCard from "@/modules/IspConfigCard/IspConfigCard";
 import Pagination from "@/components/Pagination/Pagination";
 import { useSearchParams } from "next/navigation";
+import IspImage from "@public/icons/isp.svg";
+
+const CHART_DATA = [
+  {
+    month: "Page A",
+    usage: 2400,
+  },
+  {
+    month: "Page B",
+    usage: 1398,
+  },
+  {
+    month: "Page C",
+    usage: 3800,
+  },
+  {
+    month: "Page D",
+    usage: 3908,
+  },
+  {
+    month: "Page E",
+    usage: 4800,
+  },
+  {
+    month: "Page F",
+    usage: 3800,
+  },
+  {
+    month: "Page G",
+    usage: 4300,
+  },
+];
 
 const data = [
   {
@@ -19,6 +51,8 @@ const data = [
     remain: "23.10.2024",
     status: "Active",
     date: "23.10.2024",
+    plan: "30 Days",
+    dataUsage: CHART_DATA,
   },
   {
     configName: "Residential for reddit",
@@ -28,6 +62,8 @@ const data = [
     remain: "23.10.2024",
     status: "Active",
     date: "23.10.2024",
+    plan: "30 Days",
+    dataUsage: CHART_DATA,
   },
   {
     configName: "Residential for reddit",
@@ -37,6 +73,8 @@ const data = [
     remain: "23.10.2024",
     status: "Active",
     date: "23.10.2024",
+    plan: "30 Days",
+    dataUsage: CHART_DATA,
   },
   {
     configName: "Residential for reddit",
@@ -46,6 +84,8 @@ const data = [
     remain: "23.10.2024",
     status: "Active",
     date: "23.10.2024",
+    plan: "30 Days",
+    dataUsage: CHART_DATA,
   },
   {
     configName: "Residential for reddit",
@@ -55,6 +95,8 @@ const data = [
     remain: "23.10.2024",
     status: "Active",
     date: "23.10.2024",
+    plan: "30 Days",
+    dataUsage: CHART_DATA,
   },
   {
     configName: "Residential for reddit",
@@ -64,6 +106,8 @@ const data = [
     remain: "23.10.2024",
     status: "Active",
     date: "23.10.2024",
+    plan: "30 Days",
+    dataUsage: CHART_DATA,
   },
   {
     configName: "Residential for reddit",
@@ -73,6 +117,8 @@ const data = [
     remain: "23.10.2024",
     status: "Active",
     date: "23.10.2024",
+    plan: "30 Days",
+    dataUsage: CHART_DATA,
   },
   {
     configName: "Residential for reddit",
@@ -82,6 +128,8 @@ const data = [
     remain: "23.10.2024",
     status: "Active",
     date: "23.10.2024",
+    plan: "30 Days",
+    dataUsage: CHART_DATA,
   },
 ];
 
@@ -118,6 +166,11 @@ const IspPage = () => {
         <div className="flex flex-col gap-6">
           {paginatedData.map((config, index) => (
             <IspConfigCard
+              chartColor="#735CFF"
+              dataUsage={config.dataUsage}
+              plan={config.plan}
+              proxyname="ISP Proxies"
+              image={IspImage}
               configName={config.configName}
               location={config.location}
               autoRenew={config.autoRenew}
