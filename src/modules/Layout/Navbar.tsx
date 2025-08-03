@@ -21,25 +21,39 @@ const Navbar = ({ className }: { className?: string }) => {
   );
   const [openMenu, setOpenMenu] = useState(false);
 
-  function findNavItemByPathName(
+  function findMostSpecificNavItem(
     data: Array<NavModel>,
     pathName: string
-  ): NavModel | undefined {
-    for (const item of data) {
-      if (item.href === pathName) {
-        return item;
-      }
-      if (item.children && item.children.length > 0) {
-        const foundChild = findNavItemByPathName(item.children, pathName);
-        if (foundChild) {
-          return foundChild;
+  ): NavModel | null {
+    let matchedItem: NavModel | null = null;
+
+    function search(items: Array<NavModel>) {
+      for (const item of items) {
+        const allPaths = [item.href, ...(item.aliases ?? [])].filter(Boolean);
+
+        for (const path of allPaths) {
+          if (pathName.startsWith(path!)) {
+            if (
+              !matchedItem ||
+              path!.length > (matchedItem.href?.length ?? 0)
+            ) {
+              matchedItem = item;
+            }
+          }
+        }
+
+        if (item.children) {
+          search(item.children);
         }
       }
     }
+
+    search(data);
+    return matchedItem;
   }
 
   useEffect(() => {
-    const activeItem = findNavItemByPathName(APP_NAVIGATION, pathName);
+    const activeItem = findMostSpecificNavItem(APP_NAVIGATION, pathName);
     setActivePageName(activeItem?.title ?? "Dashboard");
     setActiveNavItem(activeItem ?? null);
   }, [pathName]);
