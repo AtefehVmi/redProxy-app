@@ -61,24 +61,24 @@ Date: ${props.date}`;
   return (
     <div
       className={cn(
-        "rounded w-full h-auto grid grid-cols-7 px-4 py-[19px] gap-x-[67px] !gap-y-2.5",
+        "rounded w-full h-auto md:grid grid-cols-7 px-4 py-[19px] gap-x-[67px] !gap-y-2.5",
         "bg-darkmode-200 border border-darkmode-100"
       )}
     >
       {/*col 1*/}
-      <div className="col-span-3 flex items-center gap-6">
+      <div className="md:col-span-3 flex items-center gap-6">
         <div className="flex items-center gap-6 w-[85%]">
           <div>
             <Image src={props.image} alt="" className="min-w-20 min-h-20" />
           </div>
           <div>
-            <p className="text-white text-base font-semibold whitespace-nowrap">
+            <p className="text-white text-sm md:text-base font-semibold whitespace-nowrap">
               {props.proxyname}
             </p>
 
             <div className="mt-[18px]">
               <p className="text-xs text-grey-400">Plan</p>
-              <p className="mt-0.5 text-xl font-bold text-white whitespace-nowrap">
+              <p className="mt-0.5 text-lg md:text-xl font-bold text-white whitespace-nowrap">
                 {props.plan}
               </p>
             </div>
@@ -88,7 +88,7 @@ Date: ${props.date}`;
         <AreaLineChart color={props.chartColor} data={props.dataUsage} />
       </div>
       {/*col 2*/}
-      <div className="col-span-2 grid grid-cols-3 grid-rows-2 gap-[13px] items-center">
+      <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-3 grid-rows-2 gap-2 md:gap-[13px] items-center mt-6 md:mt-0">
         <div className={containerStyle}>
           <p className={headingStyle}>Location</p>
           <p className={valueStyle}>{props.location}</p>
@@ -117,10 +117,10 @@ Date: ${props.date}`;
         </div>
       </div>
       {/*col 3*/}
-      <div className="col-span-2 flex flex-col justify-center items-end gap-2.5">
+      <div className="md:col-span-2 flex flex-col justify-center md:items-end gap-2.5 mt-6 md:mt-0 w-full">
         <div className="flex items-center gap-1 col-span-2">
           <Button
-            className="col-span-1"
+            className="md:col-span-1 w-1/2 md:w-fit"
             variant="secondary"
             icon={
               <Image
@@ -140,7 +140,7 @@ Date: ${props.date}`;
           </Button>
 
           <Button
-            className="col-span-1"
+            className="md:col-span-1 w-1/2 md:w-fit"
             onClick={(e) => {
               e.stopPropagation();
             }}
@@ -161,9 +161,9 @@ Date: ${props.date}`;
             Proxy List
           </Button>
         ) : props.href ? (
-          <Link className="col-span-2" href={props.href}>
+          <Link className="md:col-span-2" href={props.href}>
             <Button
-              className="px-9"
+              className="px-9 w-full md:w-fit"
               rightIcon={
                 <Image src={rawArrowRightIcon} alt={""} className="w-4 h-4" />
               }

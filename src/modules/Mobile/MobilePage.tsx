@@ -141,16 +141,16 @@ const MobilePage = () => {
 
   return (
     <div className="w-full h-full">
-      <div className="w-full flex justify-between items-center">
+      <div className="w-full flex flex-col md:flex-row justify-between md:items-center">
         <div className="flex flex-col items-start gap-1.5">
-          <p className="text-xl font-semibold text-white">
+          <p className="text-lg md:text-xl font-semibold text-white">
             Your configurations
           </p>
-          <p className="text-sm font-medium text-nav-sub-menu-heading-text">
+          <p className="text-xs md:text-sm font-medium text-nav-sub-menu-heading-text">
             You have {data?.length} active configurations
           </p>
         </div>
-        <Link href={"/plan/mobile"}>
+        <Link className="mt-4 md:mt-0" href={"/plan/mobile"}>
           <Button
             rightIcon={
               <Image src={rawArrowRightIcon} alt={""} className="w-4 h-4" />
