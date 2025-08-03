@@ -52,12 +52,12 @@ const InputText = (props: InputTextProps) => {
     root: cn(
       "flex flex-col gap-2",
       fullWidth && "w-full",
-      focus ? "text-white" : "text-grey-50",
+      focus ? "text-white" : "text-gray-50",
       className,
       error && "text-error-main"
     ),
     label: cn(
-      "text-sm mb-0.5 text-[#B0B0B0]",
+      "text-sm mb-0.5 text-gray-50",
       focus && "text-white",
       error && "text-error-main"
       // success && "text-others-o9"

@@ -18,12 +18,11 @@ type Props = {
   price: number;
   pricePerGb: number;
   plan?: string;
-  selectedPlan: any;
+  selectedPlan?: any;
 };
 
 const paymentOptions = [
   { label: "Balance", value: PAYMENT_METHODS.BALANCE },
-  { label: "Credit Card", value: PAYMENT_METHODS.CARD },
   { label: "Crypto", value: PAYMENT_METHODS.CRYPTO },
 ];
 const OrderSummaryCard: React.FC<Props> = ({
@@ -73,7 +72,7 @@ const OrderSummaryCard: React.FC<Props> = ({
   };
 
   return (
-    <div className="bg-darkmode-200 border border-darkmode-100 rounded p-8">
+    <div className="bg-darkmode-200 border border-darkmode-100 rounded p-6 md:p-8">
       <p className="text-white font-bold text-xl">Order Summary</p>
 
       {bandwidth && (

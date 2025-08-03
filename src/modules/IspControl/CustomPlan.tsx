@@ -26,10 +26,10 @@ const CustomPlan: React.FC<Props> = ({
   setLocation,
 }) => {
   return (
-    <div className="rounded bg-darkmode-200 border border-darkmode-100 p-8">
+    <div className="rounded bg-darkmode-200 border border-darkmode-100 p-6 md:p-8">
       <p className="text-white font-bold text-xl">Custom Plan</p>
 
-      <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-7">
+      <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-7">
         <Autocomplete
           value={plan}
           options={[{ label: "1 Day", value: "1 Day" }]}
