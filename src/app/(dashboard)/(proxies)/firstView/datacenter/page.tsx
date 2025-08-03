@@ -9,16 +9,17 @@ import CheckIcon from "@public/icons/red-check.svg";
 const FirstViewPage = () => {
   return (
     <div className="w-full h-auto">
-      <div className="w-full flex justify-between items-center">
+      <div className="w-full flex flex-col md:flex-row justify-between md:items-center">
         <div className="flex flex-col items-start gap-1.5">
-          <p className="text-xl font-semibold text-white">
+          <p className="text-lg md:text-xl font-semibold text-white">
             New Datacenter Configuration
           </p>
-          <p className="text-sm font-medium text-nav-sub-menu-heading-text">
+          <p className="text-xs md:text-sm font-medium text-nav-sub-menu-heading-text">
             Configure your new proxy settings
           </p>
         </div>
-        <Link href={"/plan/datacenter"}>
+
+        <Link className="mt-4 md:mt-0" href={"/plan/datacenter"}>
           <Button
             rightIcon={<Image src={ArrowRightIcon} alt="" />}
             className="py-2 px-4"

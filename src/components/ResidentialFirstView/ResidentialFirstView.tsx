@@ -39,7 +39,7 @@ const ResidentialFirstView: React.FC<Props> = ({
   return (
     <div
       className={cn(
-        "bg-darkmode-200 border border-darkmode-100 rounded p-8 relative overflow-hidden",
+        "bg-darkmode-200 border border-darkmode-100 rounded py-6 pl-6 pr-4 md:p-8 relative overflow-hidden",
         className
       )}
     >
@@ -51,21 +51,23 @@ const ResidentialFirstView: React.FC<Props> = ({
       ></div>
       <div className="flex items-center gap-5">
         <Image src={image} alt="" />
-        <p className="text-24px font-bold text-white">{title}</p>
+        <p className="text-lg md:text-2xl font-bold text-white">{title}</p>
       </div>
 
-      <p className="mt-6 text-white text-base">{desc}</p>
+      <p className="mt-6 text-white text-sm md:text-base">{desc}</p>
 
       {text1 && (
-        <p className="mt-8 text-grey-400 text-18px font-semibold">{text1}</p>
+        <p className="mt-8 text-grey-400 text-base md:text-lg font-semibold">
+          {text1}
+        </p>
       )}
       {keyFeatures && (
         <div className="mt-6 flex flex-col gap-3">
           {keyFeatures?.map((keyFeature, index) => (
-            <div key={keyFeature.feature} className="flex items-center gap-4">
+            <div key={keyFeature.feature} className="flex items-start gap-4">
               <div
                 className={cn(
-                  "rounded-lg h-7 w-7 flex items-center justify-center",
+                  "rounded-lg min-h-7 min-w-7 flex items-center justify-center",
                   numberColor
                 )}
               >
@@ -81,11 +83,11 @@ const ResidentialFirstView: React.FC<Props> = ({
                 </p>
               </div>
 
-              <div className="flex items-center gap-1">
-                <p className="text-base font-semibold text-white">
+              <div className="flex flex-col md:flex-row md:items-center gap-1">
+                <p className="text-sm md:text-base font-semibold text-white">
                   {keyFeature.feature}
                 </p>
-                <p className="text-base text-grey-300">
+                <p className="text-sm md:text-base text-grey-300">
                   {keyFeature.featureDesc}
                 </p>
               </div>
@@ -95,14 +97,18 @@ const ResidentialFirstView: React.FC<Props> = ({
       )}
 
       {text2 && (
-        <p className="mt-8 text-18px font-semibold text-grey-400">{text2}</p>
+        <p className="mt-8 text-base md:text-lg font-semibold text-grey-400">
+          {text2}
+        </p>
       )}
       {usecases && (
         <div className="mt-6 flex flex-wrap items-center gap-6">
           {usecases?.map((usecase) => (
             <div key={usecase} className="flex items-center gap-3">
               <Image src={checkIcon} alt="" />
-              <p className="text-white text-base font-semibold">{usecase}</p>
+              <p className="text-white text-sm md:text-base font-semibold">
+                {usecase}
+              </p>
             </div>
           ))}
         </div>
