@@ -4,7 +4,7 @@ import cn from "@/utils/cn";
 import { useEffect, useRef, useState } from "react";
 import Button from "@/components/Button/Button";
 import Image from "next/image";
-import bellIcon from "@public/icons/bell.svg";
+import bellIcon from "@public/icons/cowbell.svg";
 import CrossIcon from "@public/icons/cross.svg";
 import RingIcon from "@public/icons/ring.svg";
 
@@ -59,9 +59,9 @@ const NotifDropdown = ({ className }: { className?: string }) => {
   return (
     <div ref={dropdownRef}>
       <Button
+        variant="ghost"
         onClick={() => setIsOpen(!isOpen)}
         className="p-2"
-        variant="tertiary"
       >
         <Image src={bellIcon} alt={""} className="h-4 w-4 cursor-pointer" />
       </Button>
@@ -69,7 +69,7 @@ const NotifDropdown = ({ className }: { className?: string }) => {
       {isOpen && (
         <div
           className={cn(
-            "absolute top-10 right-[165px] lg:right-64.5 w-[356px] z-[1000px]",
+            "absolute top-10 right-0 md:right-[165px] lg:right-64.5 w-[356px] z-[1000px]",
             "bg-darkmode-200 border border-darkmode-100 rounded-xl"
           )}
         >

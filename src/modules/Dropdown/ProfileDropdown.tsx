@@ -47,7 +47,7 @@ const ProfileDropdown = ({ className }: { className?: string }) => {
         onClick={() => setIsOpen(!isOpen)}
         icon={<Image src={personIcon} alt="" className="w-4 h-4 relative" />}
       >
-        <p className="text-white text-sm ml-[7px] font-semibold">
+        <p className="text-white text-sm ml-[7px] font-semibold hidden lg:block">
           {isLoading ? <Loader /> : user?.email}
         </p>
         <Image src={rawArrowDownIcon} alt="" />

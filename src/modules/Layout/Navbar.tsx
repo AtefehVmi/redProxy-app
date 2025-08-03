@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
@@ -10,6 +10,7 @@ import { APP_NAVIGATION, NavModel } from "@/constants/SidebarRoutes";
 import NotifDropdown from "../Dropdown/NotifDropdown";
 import cn from "@/utils/cn";
 import ProfileDropdown from "../Dropdown/ProfileDropdown";
+import MobileSidebar from "./MobileSidebar";
 
 const Navbar = ({ className }: { className?: string }) => {
   const pathName = usePathname();
@@ -18,6 +19,7 @@ const Navbar = ({ className }: { className?: string }) => {
   const [activeNavItem, setActiveNavItem] = React.useState<NavModel | null>(
     null
   );
+  const [openMenu, setOpenMenu] = useState(false);
 
   function findNavItemByPathName(
     data: Array<NavModel>,
@@ -54,20 +56,41 @@ const Navbar = ({ className }: { className?: string }) => {
   return (
     <div
       className={cn(
-        "w-[calc(100vw-var(--app-sidebar-width)-var(--navbar-margin-left)-var(--navbar-margin-right))] h-[var(--app-navbar-height)] fixed top-[var(--navbar-margin-top)] left-[calc(var(--navbar-margin-left)+var(--app-sidebar-width))]",
         className,
-        "flex justify-between items-center"
+        "flex justify-between items-center",
+        "relative h-10 w-full px-8 py-[34px]",
+        "border-b border-darkmode-100 md:border-0"
       )}
     >
       <div className="flex items-center gap-2">
         <Image
+          className="hidden md:block"
           src={iconToUse}
           alt={activePageName}
           width={24}
           height={24}
           unoptimized
         />
-        <p className="text-left text-white text-[24px] font-bold">
+
+        <button onClick={() => setOpenMenu(true)} className="block md:hidden">
+          <Image
+            src={iconToUse}
+            alt={activePageName}
+            width={24}
+            height={24}
+            unoptimized
+            className="min-w-6 min-h-6"
+          />
+        </button>
+
+        {openMenu && (
+          <MobileSidebar
+            className="absolute left-0 top-0 w-full max-w-[324px] h-full"
+            isOpen={openMenu}
+            onClose={() => setOpenMenu(false)}
+          />
+        )}
+        <p className="text-left text-white text-lg md:text-2xl font-bold">
           {activePageName}
         </p>
       </div>

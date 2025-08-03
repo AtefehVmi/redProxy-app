@@ -40,13 +40,6 @@ const config: Config = {
             fontWeight: "600",
           },
         ],
-        "2xl": [
-          "1.375rem",
-          {
-            lineHeight: "1.65rem",
-            fontWeight: "600",
-          },
-        ],
         "3xl": [
           "2rem",
           {
