@@ -2,7 +2,7 @@
 import React from "react";
 import CustomCard from "@/components/CustomCard/customCard";
 import Image from "next/image";
-import growUpIcon from "@public/icons/growup.svg";
+import growUpIcon from "@public/icons/arrow-up.svg";
 import SelectWithCustomCard from "@/components/CustomSelect/SelectWithCustomCard";
 import StackedBarChart from "@/components/Charts/StackedBarChart";
 import cn from "@/utils/cn";
@@ -23,9 +23,9 @@ const CHART_DATA = [
 ];
 
 const colorMapping = {
-  mobile: "#2ECB6D80",
-  residential: "#2ECB6D",
-  datacenter: "#2ECB6D33",
+  mobile: "#FF7F5099",
+  residential: "#FF975C",
+  datacenter: "#FF975C33",
 };
 
 const barKeys = ["mobile", "residential", "datacenter"];
@@ -40,23 +40,28 @@ const UserDataUsage = ({ className }: { className?: string }) => {
         className
       )}
     >
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-start">
         {/*col1*/}
         <div className="flex flex-col items-start">
-          <p className="text-white text-left text-lg">Data usage</p>
-          <p className="text-profile-card-text text-sm mt-[23px]">TOTAL DATA</p>
+          <p className="text-white text-left text-base font-semibold md:text-lg">
+            Data usage
+          </p>
+          <p className="text-gray-500 text-xs md:text-sm mt-[23px]">
+            TOTAL DATA
+          </p>
           <div className="flex justify-center items-center gap-2 mt-[11px]">
-            <p className="text-white text-left text-2xl">786.34 GB</p>
-            <CustomCard
-              borderRadius={"rounded"}
-              borderClassName="
-                                w-[63px] h-[26px] p-px
-                            "
-              containerClassName="flex justify-center items-center gap-px"
+            <p className="text-white text-left text-xl md:text-2xl">
+              786.34 GB
+            </p>
+            <div
+              className={cn(
+                "bg-darkmode-100/60 flex items-center gap-0.5",
+                "rounded py-1.5 px-2"
+              )}
             >
               <Image src={growUpIcon} alt={""} className="w-[13px] h-4" />
               <p className="text-profile-card-text text-sm">{"9.54"}%</p>
-            </CustomCard>
+            </div>
           </div>
         </div>
         {/*col2*/}
@@ -71,7 +76,7 @@ const UserDataUsage = ({ className }: { className?: string }) => {
             onChange={onChartFilterChange}
             className="w-[119px] h-26px"
           />
-          <p className="text-profile-card-text text-sm mt-[45px]">
+          <p className="text-profile-card-text text-sm mt-[45px] hidden md:block">
             January 2024 - December 2024
           </p>
         </div>

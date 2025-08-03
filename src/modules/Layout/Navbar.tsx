@@ -64,7 +64,7 @@ const Navbar = ({ className }: { className?: string }) => {
     >
       <div className="flex items-center gap-2">
         <Image
-          className="hidden md:block"
+          className="hidden lg:block"
           src={iconToUse}
           alt={activePageName}
           width={24}
@@ -72,7 +72,7 @@ const Navbar = ({ className }: { className?: string }) => {
           unoptimized
         />
 
-        <button onClick={() => setOpenMenu(true)} className="block md:hidden">
+        <button onClick={() => setOpenMenu(true)} className="block lg:hidden">
           <Image
             src={iconToUse}
             alt={activePageName}

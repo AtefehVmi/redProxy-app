@@ -22,7 +22,7 @@ const UserBalance = ({ className }: { className?: string }) => {
   return (
     <div
       className={cn(
-        "rounded border border-darkmode-100 bg-darkmode-200 px-4 flex flex-col items-start w-full",
+        "rounded border border-darkmode-100 bg-darkmode-200 px-4 flex flex-col items-start w-full pb-4",
         className
       )}
     >
@@ -104,11 +104,11 @@ const ProxyUsageCard = (props: ProxyUsageCardProps) => {
     >
       <div className="flex items-center gap-2">
         <div className={`w-1.5 h-1.5 rounded-[1px] ${proxyColor}`} />
-        <p className="text-profile-card-text text-sm ml-[7px]">
+        <p className="text-profile-card-text text-sm ml-[7px] whitespace-nowrap">
           {props.proxyName}
         </p>
       </div>
-      <p className="text-white text-sm ml-auto">
+      <p className="text-white text-sm ml-auto whitespace-nowrap">
         {props.proxyType === "DATACENTER"
           ? `${props.balance} IPs`
           : formatBytes(props.balance)}

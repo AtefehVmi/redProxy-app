@@ -35,11 +35,11 @@ const Table = <TData extends object>({
         cellSpacing={0}
         cellPadding={0}
         className={`
-                    h-auto table-auto border-separate w-full overflow-auto
+                    h-auto border-separate min-w-[1000px] w-full overflow-auto ml-auto
                     ${className ?? ""}
                 `}
       >
-        <thead className="sticky top-0 z-[2]">
+        <thead className="w-full">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (

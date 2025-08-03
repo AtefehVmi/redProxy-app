@@ -157,11 +157,11 @@ const Pagination: React.FC<PaginationProps> = ({
   return (
     <div
       className={cn(
-        "flex items-center justify-between p-4 bg-darkmode-200 border border-darkmode-100 mb-8",
+        "flex flex-col lg:flex-row items-center justify-between p-4 bg-darkmode-200 border border-darkmode-100 mb-8",
         noMargin ? "-mt-1 rounded-b-lg" : "mt-8 rounded-lg"
       )}
     >
-      <div className="">
+      <div className="hidden lg:block">
         {totalCount && (
           <p className="text-sm text-grey-400">
             <span className="font-medium">
@@ -185,7 +185,10 @@ const Pagination: React.FC<PaginationProps> = ({
         </button>
 
         <button
-          className="px-2.5 py-1 h-full flex items-center gap-0.5 cursor-pointer bg-darkmode-300 hover:bg-darkmode-200 rounded disabled:cursor-not-allowed *:text-white *:disabled:text-grey-400"
+          className={cn(
+            "px-2.5 py-1 h-full items-center gap-0.5 cursor-pointer bg-darkmode-300 hover:bg-darkmode-200 rounded disabled:cursor-not-allowed *:text-white *:disabled:text-grey-400",
+            "hidden md:flex"
+          )}
           onClick={() => handlePageChange(currentOffset - currentLimit)}
           disabled={currentOffset === 0}
         >
@@ -209,7 +212,10 @@ const Pagination: React.FC<PaginationProps> = ({
         </button>
 
         <button
-          className="px-2.5 py-1 h-full flex items-center gap-0.5 cursor-pointer bg-darkmode-300 hover:bg-darkmode-200 rounded disabled:cursor-not-allowed *:text-white *:disabled:text-grey-400"
+          className={cn(
+            "px-2.5 py-1 h-full items-center gap-0.5 cursor-pointer bg-darkmode-300 hover:bg-darkmode-200 rounded disabled:cursor-not-allowed *:text-white *:disabled:text-grey-400",
+            "hidden md:flex"
+          )}
           onClick={() => handlePageChange((totalPages! - 1) * currentLimit)}
           disabled={
             !isDataAvailable ||
@@ -221,22 +227,35 @@ const Pagination: React.FC<PaginationProps> = ({
         </button>
       </div>
 
-      <div className="flex gap-2 items-center">
-        <select
-          value={currentLimit}
-          onChange={handleSetLimit}
-          className={cn(
-            style.select,
-            "bg-darkmode-100 text-sm text-grey-300 font-semibold"
+      <div className="flex items-center justify-between w-full lg:w-fit mt-4 lg:mt-0">
+        <div className="block lg:hidden">
+          {totalCount && (
+            <p className="text-sm text-grey-400">
+              <span className="font-medium">
+                {isDataAvailable ? currentLimit : 0}
+              </span>{" "}
+              of {totalCount} items
+            </p>
           )}
-        >
-          {[4, 10, 15, 20, 25, 30, 50, 100].map((size) => (
-            <option key={size} value={size}>
-              {size}
-            </option>
-          ))}
-        </select>
-        <p className="text-grey-400 text-sm">ITEMS per Page</p>
+        </div>
+
+        <div className="flex gap-2 items-center">
+          <select
+            value={currentLimit}
+            onChange={handleSetLimit}
+            className={cn(
+              style.select,
+              "bg-darkmode-100 text-sm text-grey-300 font-semibold"
+            )}
+          >
+            {[4, 10, 15, 20, 25, 30, 50, 100].map((size) => (
+              <option key={size} value={size}>
+                {size}
+              </option>
+            ))}
+          </select>
+          <p className="text-grey-400 text-sm">ITEMS per Page</p>
+        </div>
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ import Navbar from "@/modules/Layout/Navbar";
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex w-full h-screen overflow-hidden">
-      <Sidebar className="hidden md:block" />
+      <Sidebar className="hidden lg:block" />
       <div className="grow flex flex-col overflow-auto">
         <Navbar className="z-50" />
         <Suspense>

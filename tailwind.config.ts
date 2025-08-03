@@ -105,6 +105,7 @@ const config: Config = {
           "0px 37.33px 28px -18.67px rgba(0, 0, 0, 0.24), 0px 0px 9.33px 0px rgba(248, 248, 248, 0.15) inset",
         "custom-link": "0px 2px 0px 0px #C6C2BC1A",
       },
+      screens: { 1420: "1420px" },
     },
   },
   plugins: [],
