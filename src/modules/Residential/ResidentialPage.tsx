@@ -9,17 +9,19 @@ import MagicWandIcon from "@public/icons/magic-wand.svg";
 import Image from "next/image";
 import SearchInput from "@/components/SearchInput/SearchInput";
 import SearchIcon from "@public/icons/search.svg";
+import ResidentialConfigTab from "./ResidentialConfigTab";
+import ResidentialPlansTab from "./ResidentialPlansTab";
 
 const tabs = [
   {
     title: "Configurations",
     key: "configs",
-    content: <></>,
+    content: <ResidentialConfigTab />,
   },
   {
     title: "Plans",
     key: "plans",
-    content: <></>,
+    content: <ResidentialPlansTab />,
   },
 ];
 
@@ -89,6 +91,10 @@ const ResidentialPage = () => {
             </div>
           }
         />
+      </div>
+
+      <div className="mt-5">
+        {tabs.find((t) => t.key === activeTab)?.content}
       </div>
     </div>
   );

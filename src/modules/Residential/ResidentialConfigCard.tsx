@@ -70,6 +70,7 @@ PASSWORD: ${props.password}`;
         if (field === "PORT") handleCopy(field, props.port);
         else if (field === "USERNAME") handleCopy(field, props.username);
         else if (field === "PASSWORD") handleCopy(field, props.password);
+        else if (field === "FORMAT") handleCopy(field, props.format);
       }}
     />
   );
@@ -77,7 +78,7 @@ PASSWORD: ${props.password}`;
   return (
     <div
       className={cn(
-        "rounded w-full h-auto grid grid-cols-7 px-4 py-[19px] gap-x-[67px] !gap-y-2.5",
+        "rounded w-full h-auto grid grid-cols-7 px-4 py-[19px] gap-x-8 !gap-y-2.5",
         "bg-darkmode-200 border border-darkmode-100"
       )}
     >
@@ -99,7 +100,7 @@ PASSWORD: ${props.password}`;
         </div>
       </div>
       {/*col 2*/}
-      <div className="col-span-3 grid grid-cols-4 grid-rows-2 gap-[13px] items-center">
+      <div className="col-span-4 grid grid-cols-4 grid-rows-2 gap-2 items-center">
         <div className={containerStyle}>
           <p className={headingStyle}>PORT TYPE</p>
           <p className={valueStyle}>{props.portType}</p>
@@ -110,7 +111,10 @@ PASSWORD: ${props.password}`;
         </div>
         <div className={containerStyle}>
           <p className={headingStyle}>FORMAT</p>
-          <p className={valueStyle}>{props.format}</p>
+          <div className="flex items-center gap-[3px]">
+            <p className={valueStyle}>{props.format}</p>
+            {renderCopyIcon("FORMAT")}
+          </div>
         </div>
         <div className={containerStyle}>
           <p className={headingStyle}>USERNAME</p>
@@ -143,10 +147,10 @@ PASSWORD: ${props.password}`;
         </div>
       </div>
       {/*col 3*/}
-      <div className="col-span-2 flex flex-col justify-center items-end gap-2.5">
-        <div className="flex items-center gap-1 col-span-2">
+      <div className="col-span-1 flex flex-col justify-center items-end gap-2.5">
+        <div className="flex items-center gap-1 w-full">
           <Button
-            className="col-span-1"
+            className="w-1/2"
             variant="secondary"
             icon={
               <Image
@@ -164,7 +168,7 @@ PASSWORD: ${props.password}`;
           </Button>
 
           <Button
-            className="col-span-1"
+            className="w-1/2"
             onClick={(e) => {
               e.stopPropagation();
             }}
@@ -174,14 +178,14 @@ PASSWORD: ${props.password}`;
             <p className="text-xs font-medium text-white">Delete</p>
           </Button>
         </div>
-        <Link href={"/viewConfig/residential"}>
+        <Link className="w-full" href={"/viewConfig/residential"}>
           <Button
             rightIcon={
               <Image src={rawArrowRightIcon} alt={""} className="w-4 h-4" />
             }
-            className="col-span-2"
+            className="w-full"
           >
-            View configuration
+            Proxy List
           </Button>
         </Link>
       </div>
