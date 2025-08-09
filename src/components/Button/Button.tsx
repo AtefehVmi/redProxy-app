@@ -21,13 +21,13 @@ const Button = ({
   ...props
 }: ButtonProps & Omit<React.ComponentProps<"button">, keyof ButtonProps>) => {
   const baseStyle = cn(
-    "rounded-md px-[9.5px] py-2 text-xs font-semibold",
+    "rounded-md px-[9.5px] py-2 text-xs font-semibold relative overflow-hidden group",
     icon && "flex items-center justify-center gap-1",
     rightIcon && "flex items-center justify-center gap-1"
   );
   const variantStyle = cn(
     variant === "primary" &&
-      "bg-darkmode-100 text-white hover:bg-darkmode-100/80 gradient-border",
+      "bg-darkmode-100 text-white hover:bg-orange-200 gradient-border focus:bg-[#EB7F43] disabled:bg-darkmode-200",
     variant === "text" &&
       "bg-transparent text-white hover:bg-darkmode-200 disabled:text-grey-400 focus:bg-darkmode-100",
     variant === "secondary" &&
@@ -42,6 +42,9 @@ const Button = ({
       {...props}
       className={cn(baseStyle, variantStyle, className)}
     >
+      {variant === "primary" && (
+        <div className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 bg-white w-20 h-6 rounded-full opacity-0 group-hover:opacity-60 blur-lg group-focus:opacity-60"></div>
+      )}
       {icon}
       {children}
       {rightIcon}

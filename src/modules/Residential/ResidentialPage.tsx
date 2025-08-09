@@ -1,121 +1,44 @@
 "use client";
 
 import React from "react";
-import { useSearchParams } from "next/navigation";
-import ResidentialFirstView from "@/components/ResidentialFirstView/ResidentialFirstView";
-import ResidentialImage from "@public/icons/residential.svg";
-import CheckIcon from "@public/icons/blue-check.svg";
-import BandwidthStatCards from "./BandwidthStatCards";
-import StatCard from "./StatCard";
-import IpRoyalIcon from "@public/icons/ip-royal.svg";
-import NetNutIcon from "@public/icons/net-nut.svg";
-import OxyLabsIcon from "@public/icons/oxy-labs.svg";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import cn from "@/utils/cn";
+import Button from "@/components/Button/Button";
+import ShoppingCartIcon from "@public/icons/shopping-cart.svg";
+import MagicWandIcon from "@public/icons/magic-wand.svg";
+import Image from "next/image";
+import SearchInput from "@/components/SearchInput/SearchInput";
+import SearchIcon from "@public/icons/search.svg";
 
-const CHART_DATA = [
+const tabs = [
   {
-    month: "Page A",
-    usage: 2400,
+    title: "Configurations",
+    key: "configs",
+    content: <></>,
   },
   {
-    month: "Page B",
-    usage: 1398,
-  },
-  {
-    month: "Page C",
-    usage: 3800,
-  },
-  {
-    month: "Page D",
-    usage: 3908,
-  },
-  {
-    month: "Page E",
-    usage: 4800,
-  },
-  {
-    month: "Page F",
-    usage: 3800,
-  },
-  {
-    month: "Page G",
-    usage: 4300,
-  },
-];
-
-const data = [
-  {
-    configName: "Residential for reddit",
-    dataUsed: 4920000000,
-    dataUsage: CHART_DATA,
-    portType: "SOCKS5",
-    geoLocation: "Germany",
-    format: "hostname:port:username:password",
-    username: "elixrgfx@protonmail.com",
-    rotation: "Sticky",
-    quantityGenerated: 720,
-    port: 6608,
-    password: "prrrrrjhhkjdsfiued",
-  },
-  {
-    configName: "Residential for reddit",
-    dataUsed: 4920000000,
-    dataUsage: CHART_DATA,
-    portType: "SOCKS5",
-    geoLocation: "Germany",
-    format: "hostname:port:username:password",
-    username: "elixrgfx@protonmail.com",
-    rotation: "Sticky",
-    quantityGenerated: 720,
-    port: 6608,
-    password: "prrrrrjhhkjdsfiued",
-  },
-  {
-    configName: "Residential for reddit",
-    dataUsed: 4920000000,
-    dataUsage: CHART_DATA,
-    portType: "SOCKS5",
-    geoLocation: "Germany",
-    format: "hostname:port:username:password",
-    username: "elixrgfx@protonmail.com",
-    rotation: "Sticky",
-    quantityGenerated: 720,
-    port: 6608,
-    password: "prrrrrjhhkjdsfiued",
-  },
-  {
-    configName: "Residential for reddit",
-    dataUsed: 4920000000,
-    dataUsage: CHART_DATA,
-    portType: "SOCKS5",
-    geoLocation: "Germany",
-    format: "hostname:port:username:password",
-    username: "elixrgfx@protonmail.com",
-    rotation: "Sticky",
-    quantityGenerated: 720,
-    port: 6608,
-    password: "prrrrrjhhkjdsfiued",
-  },
-  {
-    configName: "Residential for reddit",
-    dataUsed: 4920000000,
-    dataUsage: CHART_DATA,
-    portType: "SOCKS5",
-    geoLocation: "Germany",
-    format: "hostname:port:username:password",
-    username: "elixrgfx@protonmail.com",
-    rotation: "Sticky",
-    quantityGenerated: 720,
-    port: 6608,
-    password: "prrrrrjhhkjdsfiued",
+    title: "Plans",
+    key: "plans",
+    content: <></>,
   },
 ];
 
 const ResidentialPage = () => {
   const params = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
+
   const limit = params.get("limit") ? parseInt(params.get("limit")!) : 4;
   const offset = params.get("offset") ? parseInt(params.get("offset")!) : 0;
 
-  const paginatedData = data.slice(offset, offset + limit);
+  // const paginatedData = data.slice(offset, offset + limit);
+
+  const activeTab = params.get("tab") || tabs[0].key;
+  const handleTabClick = (tabKey: string) => {
+    const newParams = new URLSearchParams(params.toString());
+    newParams.set("tab", tabKey);
+    router.push(`${pathname}?${newParams.toString()}`);
+  };
 
   return (
     <div className="w-full h-full">
@@ -126,50 +49,45 @@ const ResidentialPage = () => {
         Configurate your new proxy settings
       </p>
 
-      <ResidentialFirstView
-        numberColor="bg-blue-100"
-        color="bg-blue-100/15"
-        desc="A Residential Proxy is an intermediary server that  routes your internet traffic through a real residential IP address  provided by an Internet Service Provider (ISP). Unlike datacenter  proxies (which come from cloud servers), residential proxies use IPs  assigned to actual home devices, making them appear as legitimate,  organic users rather than bots or automated traffic."
-        title="Residential Proxy"
-        className="my-8"
-        image={ResidentialImage}
-        checkIcon={CheckIcon}
-      />
+      <div className="flex items-center justify-end border-b border-darkmode-100 pb-6 mb-6">
+        <div className="flex items-center gap-3">
+          <Button
+            icon={<Image src={ShoppingCartIcon} alt="" />}
+            variant="secondary"
+          >
+            Purchase Plan
+          </Button>
+          <Button icon={<Image src={MagicWandIcon} alt="" />}>
+            Generate New
+          </Button>
+        </div>
+      </div>
 
-      <div className="grid grid-cols-9 gap-6">
-        <BandwidthStatCards
-          className="col-span-3"
-          total_gb="345"
-          netNut="12"
-          ipRoyal="12"
-          oxyLabs="12"
-        />
+      <div className="flex items-center justify-between">
+        <div className="bg-darkmode-200 rounded p-2 w-fit grid grid-cols-2 gap-2.5">
+          {tabs.map((item) => (
+            <button
+              key={item.key}
+              onClick={() => handleTabClick(item.key)}
+              className={cn(
+                "rounded border px-3 py-1.5 text-white text-sm",
+                activeTab === item.key
+                  ? "bg-darkmode-100 border-darkmode-100 cursor-not-allowed"
+                  : "bg-darkmode-300 border-darkmode-300 cursor-pointer"
+              )}
+            >
+              {item.title}
+            </button>
+          ))}
+        </div>
 
-        <StatCard
-          icon={IpRoyalIcon}
-          name="IP Royal"
-          gb={24}
-          percent={60}
-          dataUsage={CHART_DATA}
-          className="col-span-2"
-        />
-
-        <StatCard
-          icon={NetNutIcon}
-          name="Net Nut"
-          gb={24}
-          percent={-20}
-          dataUsage={CHART_DATA}
-          className="col-span-2"
-        />
-
-        <StatCard
-          icon={OxyLabsIcon}
-          name="Oxylabs"
-          plan="10 Plans"
-          percent={40}
-          dataUsage={CHART_DATA}
-          className="col-span-2"
+        <SearchInput
+          placeholder="Search"
+          endAdornment={
+            <div className="border-l border-darkmode-200">
+              <Image src={SearchIcon} alt="" className="ml-3" />
+            </div>
+          }
         />
       </div>
     </div>
