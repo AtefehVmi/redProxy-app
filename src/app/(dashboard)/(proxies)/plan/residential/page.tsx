@@ -1,8 +1,8 @@
-import ResidentialFirstView from "@/modules/Residential/PlanPage/ResidentialFirstView";
 import ResidentialImage from "@public/icons/residential.svg";
 import CheckIcon from "@public/icons/blue-check.svg";
 import ResidentialCards from "@/modules/Residential/PlanPage/ResidentialCards";
 import PreviousPlansCard from "@/modules/Residential/PlanPage/PreviousPlansCard";
+import FirstView from "@/modules/Residential/PlanPage/FirstView";
 
 const PlanPage = () => {
   return (
@@ -14,7 +14,7 @@ const PlanPage = () => {
         </p>
       </div>
 
-      <ResidentialFirstView
+      <FirstView
         numberColor="bg-blue-100"
         color="bg-blue-100/15"
         desc="Create a fresh new plan, or top up your previous plans from below (without extending their expiry dates)."

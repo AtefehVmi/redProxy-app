@@ -22,7 +22,7 @@ type Props = {
   resiCards?: React.ReactNode;
 };
 
-const ResidentialFirstView: React.FC<Props> = ({
+const FirstView: React.FC<Props> = ({
   className,
   image,
   title,
@@ -118,4 +118,4 @@ const ResidentialFirstView: React.FC<Props> = ({
     </div>
   );
 };
-export default ResidentialFirstView;
+export default FirstView;

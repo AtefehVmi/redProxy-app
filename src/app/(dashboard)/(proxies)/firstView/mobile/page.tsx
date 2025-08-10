@@ -2,9 +2,9 @@ import Button from "@/components/Button/Button";
 import Link from "next/link";
 import ArrowRightIcon from "@public/icons/arrow-small-right.svg";
 import Image from "next/image";
-import ResidentialFirstView from "@/modules/Residential/PlanPage/ResidentialFirstView";
 import MobileImage from "@public/icons/mobile.svg";
 import CheckIcon from "@public/icons/yellow-check.svg";
+import FirstView from "@/modules/Residential/PlanPage/FirstView";
 
 const FirstViewPage = () => {
   return (
@@ -28,7 +28,7 @@ const FirstViewPage = () => {
         </Link>
       </div>
 
-      <ResidentialFirstView
+      <FirstView
         numberColor="bg-yellow-100"
         color="bg-yellow-100/15"
         text1="Key Features of LTE / Mobile Proxies"
