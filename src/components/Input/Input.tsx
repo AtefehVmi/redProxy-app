@@ -52,13 +52,14 @@ const InputText = (props: InputTextProps) => {
     root: cn(
       "flex flex-col gap-2",
       fullWidth && "w-full",
-      focus ? "text-white" : "text-grey-50",
+      focus ? "text-white" : "text-gray-50",
       className,
       error && "text-error-main"
     ),
     label: cn(
-      "text-sm mb-0.5"
-      // error && "text-others-o10",
+      "text-sm mb-0.5 text-gray-50",
+      focus && "text-white",
+      error && "text-error-main"
       // success && "text-others-o9"
     ),
     description: cn(
@@ -81,7 +82,7 @@ const InputText = (props: InputTextProps) => {
       disabled && "text-neutral-700",
       startAdornment && "pl-10",
       endAdornment && "pr-9",
-      error && "border-error-main"
+      error && "border-error-main text-white"
     ),
     startAdornment:
       "absolute z-10 left-3 top-1/2 -translate-y-1/2 flex items-center justify-center w-6 h-6",

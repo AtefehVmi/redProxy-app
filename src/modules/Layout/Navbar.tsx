@@ -1,17 +1,16 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 import dashboardIcon from "@public/icons/dashboard.svg";
-import personIcon from "@public/icons/user.svg";
-import rawArrowDownIcon from "@public/icons/down.svg";
 
 import { APP_NAVIGATION, NavModel } from "@/constants/SidebarRoutes";
-import Button from "@/components/Button/Button";
 import NotifDropdown from "../Dropdown/NotifDropdown";
 import cn from "@/utils/cn";
+import ProfileDropdown from "../Dropdown/ProfileDropdown";
+import MobileSidebar from "./MobileSidebar";
 
 const Navbar = ({ className }: { className?: string }) => {
   const pathName = usePathname();
@@ -20,26 +19,41 @@ const Navbar = ({ className }: { className?: string }) => {
   const [activeNavItem, setActiveNavItem] = React.useState<NavModel | null>(
     null
   );
+  const [openMenu, setOpenMenu] = useState(false);
 
-  function findNavItemByPathName(
+  function findMostSpecificNavItem(
     data: Array<NavModel>,
     pathName: string
-  ): NavModel | undefined {
-    for (const item of data) {
-      if (item.href === pathName) {
-        return item;
-      }
-      if (item.children && item.children.length > 0) {
-        const foundChild = findNavItemByPathName(item.children, pathName);
-        if (foundChild) {
-          return foundChild;
+  ): NavModel | null {
+    let matchedItem: NavModel | null = null;
+
+    function search(items: Array<NavModel>) {
+      for (const item of items) {
+        const allPaths = [item.href, ...(item.aliases ?? [])].filter(Boolean);
+
+        for (const path of allPaths) {
+          if (pathName.startsWith(path!)) {
+            if (
+              !matchedItem ||
+              path!.length > (matchedItem.href?.length ?? 0)
+            ) {
+              matchedItem = item;
+            }
+          }
+        }
+
+        if (item.children) {
+          search(item.children);
         }
       }
     }
+
+    search(data);
+    return matchedItem;
   }
 
   useEffect(() => {
-    const activeItem = findNavItemByPathName(APP_NAVIGATION, pathName);
+    const activeItem = findMostSpecificNavItem(APP_NAVIGATION, pathName);
     setActivePageName(activeItem?.title ?? "Dashboard");
     setActiveNavItem(activeItem ?? null);
   }, [pathName]);
@@ -56,31 +70,47 @@ const Navbar = ({ className }: { className?: string }) => {
   return (
     <div
       className={cn(
-        "w-[calc(100vw-var(--app-sidebar-width)-var(--navbar-margin-left)-var(--navbar-margin-right))] h-[var(--app-navbar-height)] fixed top-[var(--navbar-margin-top)] left-[calc(var(--navbar-margin-left)+var(--app-sidebar-width))]",
         className,
-        "flex justify-between items-center"
+        "flex justify-between items-center",
+        "relative h-10 w-full px-8 py-[34px]",
+        "border-b border-darkmode-100 md:border-0"
       )}
     >
       <div className="flex items-center gap-2">
         <Image
+          className="hidden lg:block"
           src={iconToUse}
           alt={activePageName}
           width={24}
           height={24}
           unoptimized
         />
-        <p className="text-left text-white text-[24px] font-bold">
+
+        <button onClick={() => setOpenMenu(true)} className="block lg:hidden">
+          <Image
+            src={iconToUse}
+            alt={activePageName}
+            width={24}
+            height={24}
+            unoptimized
+            className="min-w-6 min-h-6"
+          />
+        </button>
+
+        {openMenu && (
+          <MobileSidebar
+            className="absolute left-0 top-0 w-full max-w-[324px] h-full"
+            isOpen={openMenu}
+            onClose={() => setOpenMenu(false)}
+          />
+        )}
+        <p className="text-left text-white text-lg md:text-2xl font-bold">
           {activePageName}
         </p>
       </div>
       <div className="flex items-center gap-3 relative">
         <NotifDropdown />
-        <Button icon={<Image src={personIcon} alt="" className="w-4 h-4" />}>
-          <p className="text-white text-sm ml-[7px] font-semibold">
-            Mike Wazowski
-          </p>
-          <Image src={rawArrowDownIcon} alt="" />
-        </Button>
+        <ProfileDropdown />
       </div>
     </div>
   );

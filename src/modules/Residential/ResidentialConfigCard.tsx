@@ -1,14 +1,17 @@
 "use client";
 import React, { useState } from "react";
 import { formatBytes } from "@/utils/converter";
-import CustomCard from "@/components/CustomCard/customCard";
 import Image from "next/image";
-import ConfigCardButton from "@/components/CustomButton/ConfigCardButton";
+import rawArrowRightIcon from "@public/icons/arrow-small-right.svg";
 
-import copyIcon from "@public/icons/copy.svg";
-import trashIcon from "@public/icons/trash.svg";
-import CheckIcon from "@public/icons/check.svg";
+import copyIcon from "@public/icons/copy-white.svg";
+import copyItemIcon from "@public/icons/copy.svg";
+import trashIcon from "@public/icons/bin.svg";
+import CheckIcon from "@public/icons/check-icon.svg";
 import AreaLineChart from "@/components/Charts/AreaLineChart";
+import cn from "@/utils/cn";
+import Button from "@/components/Button/Button";
+import Link from "next/link";
 
 interface ResidentialConfigCardProps {
   configName: string;
@@ -60,25 +63,27 @@ PASSWORD: ${props.password}`;
 
   const renderCopyIcon = (field: string) => (
     <Image
-      src={copiedField === field ? CheckIcon : copyIcon}
+      src={copiedField === field ? CheckIcon : copyItemIcon}
       alt=""
       className="w-4 h-4 cursor-pointer transition-all duration-300 active:scale-90"
       onClick={() => {
         if (field === "PORT") handleCopy(field, props.port);
         else if (field === "USERNAME") handleCopy(field, props.username);
         else if (field === "PASSWORD") handleCopy(field, props.password);
+        else if (field === "FORMAT") handleCopy(field, props.format);
       }}
     />
   );
 
   return (
-    <CustomCard
-      borderRadius={"rounded"}
-      borderClassName={"w-full h-auto"}
-      containerClassName="grid grid-cols-5 px-4 py-[19px] gap-x-[67px] !gap-y-2.5"
+    <div
+      className={cn(
+        "rounded w-full h-auto grid xl:grid-cols-7 px-4 py-[19px] gap-x-8 !gap-y-2.5",
+        "bg-darkmode-200 border border-darkmode-100"
+      )}
     >
       {/*col 1*/}
-      <div className="col-span-1 grid grid-cols-3 grid-rows-3">
+      <div className="xl:col-span-2 grid grid-cols-3 grid-rows-3">
         <p className="col-span-3 row-span-1 mb-[13px] text-white text-base font-semibold">
           {props.configName}
         </p>
@@ -91,11 +96,14 @@ PASSWORD: ${props.password}`;
           </p>
         </div>
         <div className="col-span-2 row-span-2">
-          <AreaLineChart data={props.dataUsage} />
+          <AreaLineChart color="#5CA7FF" data={props.dataUsage} />
         </div>
       </div>
+
+      <div className="block xl:hidden w-full bg-darkmode-100 h-px my-4"></div>
+
       {/*col 2*/}
-      <div className="col-span-3 grid grid-cols-4 grid-rows-2 gap-[13px] items-center">
+      <div className="xl:col-span-4 grid md:grid-cols-2 xl:grid-cols-4 grid-rows-2 gap-2 items-center">
         <div className={containerStyle}>
           <p className={headingStyle}>PORT TYPE</p>
           <p className={valueStyle}>{props.portType}</p>
@@ -106,7 +114,10 @@ PASSWORD: ${props.password}`;
         </div>
         <div className={containerStyle}>
           <p className={headingStyle}>FORMAT</p>
-          <p className={valueStyle}>{props.format}</p>
+          <div className="flex items-center gap-[3px]">
+            <p className={valueStyle}>{props.format}</p>
+            {renderCopyIcon("FORMAT")}
+          </div>
         </div>
         <div className={containerStyle}>
           <p className={headingStyle}>USERNAME</p>
@@ -138,22 +149,53 @@ PASSWORD: ${props.password}`;
           </div>
         </div>
       </div>
+
+      <div className="block xl:hidden w-full bg-darkmode-100 h-px my-4"></div>
+
       {/*col 3*/}
-      <div className="col-span-1 flex flex-col justify-center items-end gap-2.5">
-        <ConfigCardButton onClick={handleCopyAll}>
-          <Image
-            src={copiedField === "ALL" ? CheckIcon : copyIcon}
-            alt=""
-            className="w-4 h-4"
-          />
-          <p className="text-xs font-medium text-white">Copy all lines</p>
-        </ConfigCardButton>
-        <ConfigCardButton>
-          <Image src={trashIcon} alt={""} className="w-4 h-4" />
-          <p className="text-xs font-medium text-white">Delete configuration</p>
-        </ConfigCardButton>
+      <div className="xl:col-span-1 flex flex-col justify-center items-end gap-2.5">
+        <div className="flex items-center gap-1 w-full">
+          <Button
+            className="w-1/2"
+            variant="secondary"
+            icon={
+              <Image
+                src={copiedField === "ALL" ? CheckIcon : copyIcon}
+                alt=""
+                className="w-4 h-4"
+              />
+            }
+            onClick={(e) => {
+              e.stopPropagation();
+              handleCopyAll();
+            }}
+          >
+            <p className="text-xs font-medium text-white">Copy</p>
+          </Button>
+
+          <Button
+            className="w-1/2"
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+            variant="secondary"
+            icon={<Image src={trashIcon} alt={""} className="w-4 h-4" />}
+          >
+            <p className="text-xs font-medium text-white">Delete</p>
+          </Button>
+        </div>
+        <Link className="w-full" href={"/viewConfig/residential"}>
+          <Button
+            rightIcon={
+              <Image src={rawArrowRightIcon} alt={""} className="w-4 h-4" />
+            }
+            className="w-full"
+          >
+            Proxy List
+          </Button>
+        </Link>
       </div>
-    </CustomCard>
+    </div>
   );
 };
 

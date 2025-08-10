@@ -5,35 +5,32 @@ import Link from "next/link";
 import SidebarNavLink from "@/components/Sidebar/SidebarNavLink";
 import { APP_NAVIGATION, APP_ROUTES } from "@/constants/SidebarRoutes";
 import BrandLogo from "@/components/Sidebar/BrandLogo";
+import cn from "@/utils/cn";
 
-const Sidebar = () => {
+const Sidebar = ({ className }: { className?: string }) => {
   const matchPathMap: Record<string, string[]> = {
     [APP_ROUTES.residentialProxy]: [
-      "/createConfig/residential",
+      "/viewConfig/residential",
       "/plan/residential",
       "/firstView/residential",
     ],
     [APP_ROUTES.datacenterProxy]: [
-      "/createConfig/datacenter",
+      "/viewConfig/datacenter",
       "/plan/datacenter",
       "/firstView/datacenter",
     ],
-    [APP_ROUTES.mobileProxy]: [
-      "/createConfig/mobile",
-      "/plan/mobile",
-      "/firstView/mobile",
-    ],
-    [APP_ROUTES.ispProxy]: ["/createConfig/isp", "/plan/isp", "/firstView/isp"],
+    [APP_ROUTES.mobileProxy]: ["/plan/mobile", "/firstView/mobile"],
+    [APP_ROUTES.ispProxy]: ["/plan/isp", "/firstView/isp", "/viewConfig/isp"],
   };
 
   return (
     <aside
-      className="
-        h-screen w-[var(--app-sidebar-width)] border-r border-solid border-white/10 bg-sidebar-bg
-        pt-6 pl-5 pr-6 fixed left-0 top-0
-      "
+      className={cn(
+        "h-screen max-w-[270px] w-full border-r border-solid border-white/10 bg-sidebar-bg pt-6 px-6",
+        className
+      )}
     >
-      <header className="flex h-[var(--app-navbar-height)] items-center justify-start pl-[7px]">
+      <header className="flex items-center justify-start pl-[7px]">
         <Link href={APP_ROUTES.dashboard}>
           <BrandLogo />
         </Link>

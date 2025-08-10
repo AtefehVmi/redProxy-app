@@ -1,15 +1,22 @@
-'use client'
-import React from 'react';
+"use client";
+import React from "react";
+import Loader from "../Loader/Loader";
 
 export interface CustomLinkProps {
   className?: string;
   children: React.ReactNode;
   onClick?: () => void;
   type?: "button" | "submit" | "reset";
+  loading?: boolean;
 }
 
-function CustomButton({className, children, onClick, type="button"}: CustomLinkProps) {
-
+function CustomButton({
+  className,
+  children,
+  onClick,
+  type = "button",
+  loading,
+}: CustomLinkProps) {
   function handleClick() {
     if (onClick) {
       onClick();
@@ -29,8 +36,9 @@ function CustomButton({className, children, onClick, type="button"}: CustomLinkP
       type={type}
     >
       {children}
+      {loading && <Loader />}
     </button>
-  )
+  );
 }
 
 export default CustomButton;

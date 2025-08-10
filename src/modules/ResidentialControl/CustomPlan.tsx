@@ -6,17 +6,23 @@ import InputText from "@/components/Input/Input";
 import React from "react";
 import Autocomplete from "@/components/AutoComplete/Autocomplete";
 
-type Props = { bandwidth: number; setBandwidth: (bandwidth: number) => void };
+type Props = {
+  bandwidth: number;
+  setBandwidth: (bandwidth: number) => void;
+  plan: any;
+};
 
-const CustomPlan: React.FC<Props> = ({ bandwidth, setBandwidth }) => {
+const CustomPlan: React.FC<Props> = ({ bandwidth, setBandwidth, plan }) => {
   return (
     <div className="rounded bg-darkmode-200 border border-darkmode-100 p-8">
       <p className="text-white font-bold text-xl">Custom Plan</p>
 
       <div className="mt-8 flex flex-col gap-y-7">
         <Autocomplete
-          value={"Bandwidth"}
-          options={[{ label: "Bandwidth", value: "Bandwidth" }]}
+          value={plan?.plans?.[0]?.name}
+          options={[
+            { label: plan?.plans?.[0]?.name, value: plan?.plans?.[0]?.name },
+          ]}
           onChange={() => {}}
           label={"Bandwidth *"}
           startAdornment={<Image src={BandwidthIcon} alt="" />}

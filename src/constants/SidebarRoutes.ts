@@ -6,6 +6,7 @@ export const APP_ROUTES = {
   ispProxy: "/proxy/isp",
   setting: "/setting",
   transactions: "/transaction",
+  profile: "/profile",
 } as const;
 
 /**
@@ -27,10 +28,12 @@ export interface NavModel {
   title: string;
   iconSrc?: string;
   href?: string;
+  aliases?: string[];
   children?: Array<{
     title: string;
     iconSrc: string;
     href: string;
+    aliases?: string[];
   }>;
 }
 
@@ -48,24 +51,32 @@ export const APP_NAVIGATION = [
         iconSrc: "/icons/resi-small-icon.svg",
         navbarIconSrc: "/icons/resi-icon.svg",
         href: APP_ROUTES.residentialProxy,
+        aliases: ["/plan/residential"],
       },
       {
         title: "ISP Proxies",
         iconSrc: "/icons/isp-small-icon.svg",
         navbarIconSrc: "/icons/isp-icon.svg",
         href: APP_ROUTES.ispProxy,
+        aliases: ["/plan/isp", "/firstView/isp", "/viewConfig/isp"],
       },
       {
         title: "Datacenter Proxies",
         iconSrc: "/icons/datacenter-small-icon.svg",
         navbarIconSrc: "/icons/datacenter-icon.svg",
         href: APP_ROUTES.datacenterProxy,
+        aliases: [
+          "/plan/datacenter",
+          "/firstView/datacenter",
+          "/viewConfig/datacenter",
+        ],
       },
       {
         title: "LTE/Mobile Proxies",
         iconSrc: "/icons/mobile-small-icon.svg",
         navbarIconSrc: "/icons/mobile-icon.svg",
         href: APP_ROUTES.mobileProxy,
+        aliases: ["/plan/mobile", "/firstView/mobile"],
       },
     ],
   },
@@ -73,9 +84,9 @@ export const APP_NAVIGATION = [
     title: "ACCOUNT",
     children: [
       {
-        title: "Settings",
-        iconSrc: "/icons/settings-small-icon.svg",
-        href: APP_ROUTES.setting,
+        title: "Profile",
+        iconSrc: "/icons/sidebar-user.svg",
+        href: APP_ROUTES.profile,
       },
       {
         title: "Transactions",

@@ -19,13 +19,6 @@ const config: Config = {
         bold: "700",
       },
       fontSize: {
-        xs: [
-          "0.625rem",
-          {
-            lineHeight: "0.75rem",
-            fontWeight: "500",
-          },
-        ],
         "base-500": [
           "0.875rem",
           {
@@ -40,24 +33,10 @@ const config: Config = {
             fontWeight: "600",
           },
         ],
-        lg: [
-          "1rem",
-          {
-            lineHeight: "1.2rem",
-            fontWeight: "600",
-          },
-        ],
         xl: [
           "1.25rem",
           {
             lineHeight: "1.5rem",
-            fontWeight: "600",
-          },
-        ],
-        "2xl": [
-          "1.375rem",
-          {
-            lineHeight: "1.65rem",
             fontWeight: "600",
           },
         ],
@@ -101,10 +80,12 @@ const config: Config = {
         "grey-200": "#E5E7EB",
         "grey-500": "#6D7280",
         "grey-300": "#D2D5DA",
+        "grey-100": "#FAFAFA",
         "darkmode-100": "#26292B",
         "darkmode-200": "#15191B",
         "darkmode-300": "#0E1214",
         "orange-200": "#FF975C",
+        "orange-100": "#FFA15C",
         "blue-100": "#5CA7FF",
         "indigo-100": "#735CFF",
         "yellow-100": "#FFF85C",
@@ -124,6 +105,7 @@ const config: Config = {
           "0px 37.33px 28px -18.67px rgba(0, 0, 0, 0.24), 0px 0px 9.33px 0px rgba(248, 248, 248, 0.15) inset",
         "custom-link": "0px 2px 0px 0px #C6C2BC1A",
       },
+      screens: { 1420: "1420px" },
     },
   },
   plugins: [],

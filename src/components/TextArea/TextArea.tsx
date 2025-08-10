@@ -11,6 +11,7 @@ interface TextAreaProps {
   labelClassName?: string;
   textAreaClassName?: string;
   buttons?: ReactNode;
+  className?: string;
 }
 
 const TextArea = (props: TextAreaProps) => {
@@ -33,7 +34,9 @@ const TextArea = (props: TextAreaProps) => {
     <div
       className={`${
         props.containerClassName ?? ""
-      } relative flex flex-col bg-darkmode-300 rounded-xl border border-darkmode-100`}
+      } relative flex flex-col bg-darkmode-300 rounded-xl border border-darkmode-100 ${
+        props.className
+      }`}
     >
       <div className="flex items-center justify-between p-6 border-b border-darkmode-100">
         {props.label && (

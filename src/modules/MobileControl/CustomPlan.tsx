@@ -30,10 +30,10 @@ const CustomPlan: React.FC<Props> = ({
   port,
 }) => {
   return (
-    <div className="rounded bg-darkmode-200 border border-darkmode-100 p-8">
+    <div className="rounded bg-darkmode-200 border border-darkmode-100 p-6 md:p-8">
       <p className="text-white font-bold text-xl">Custom Plan</p>
 
-      <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-7">
+      <div className="mt-8 grid md:grid-cols-2 gap-x-4 gap-y-7">
         <Autocomplete
           placeholder="Select"
           value={country}

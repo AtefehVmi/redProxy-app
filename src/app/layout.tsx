@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-
-
+import { ReactQueryClientProvider } from "@/providers";
+import { ToastContainer } from "react-toastify";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "moproxy app",
@@ -16,7 +17,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="bg-main-bg">{children}</body>
+      <body className="bg-main-bg">
+        <ToastContainer position="bottom-center" autoClose={5000} />
+        <Suspense>
+          <ReactQueryClientProvider>{children}</ReactQueryClientProvider>
+        </Suspense>
+      </body>
     </html>
   );
 }

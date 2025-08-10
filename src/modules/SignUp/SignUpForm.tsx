@@ -1,19 +1,80 @@
-import React from "react";
+"use client";
+
+import React, { useEffect } from "react";
 import CustomCard from "@/components/CustomCard/customCard";
 import Image from "next/image";
 import authLogo from "@public/icons/auth_form_logo.svg";
-import Input from "@/components/Input/Input";
 import Link from "next/link";
 import CustomButton from "@/components/CustomButton/CustomButton";
 import AuthFormDivider from "@/components/AuthFormDivider/AuthFormDivider";
 import googleLogo from "@public/icons/google-logo.svg";
 import xLogo from "@public/icons/x_logo.svg";
+import InputText from "@/components/Input/Input";
+import z from "zod";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import useFetch from "@/hooks/UseFetch";
+import { regisetrUser } from "@/service/api";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import { generateCaptcha } from "@/utils/generateCaptcha";
+
+const signUpSchema = z
+  .object({
+    email: z.string().email("Invalid email address"),
+    password: z.string().min(6, "Password must be at least 6 characters"),
+    confirmPassword: z.string().min(6),
+    captcha: z.string().nonempty("Captcha is required"),
+  })
+  .refine((val) => val.password === val.confirmPassword, {
+    message: "Passwords must match",
+    path: ["confirmPassword"],
+  });
+
+type SignUpFormData = z.infer<typeof signUpSchema>;
 
 const SignUpForm = () => {
-  const inputMainContainerStyle = "h-[62px] ";
-  const inputContainerStyle = "h-auto w-full";
-  const inputLabelStyle = "text-sm font-medium mb-[5px]";
-  const inputStyle = "!h-[43px] text-profile-card-text text-xs px-4 py-[14px]";
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+    watch,
+    trigger,
+  } = useForm<SignUpFormData>({ resolver: zodResolver(signUpSchema) });
+
+  const { loading, fetch: registerFetch } = useFetch(regisetrUser, false, {
+    toastOnError: true,
+  });
+
+  const router = useRouter();
+
+  // const updateCaptcha = (token: string) => {
+  //   setValue("captcha", token, { shouldValidate: true });
+  // };
+
+  useEffect(() => {
+    setValue("captcha", generateCaptcha(), { shouldValidate: true });
+  }, []);
+
+  const onSubmit: SubmitHandler<SignUpFormData> = async (data) => {
+    const captcha = generateCaptcha();
+    setValue("captcha", captcha);
+
+    await registerFetch({ ...data, captcha })
+      .then(() => {
+        localStorage.setItem("email", data.email);
+        toast.success(
+          "Account created successfully. Please check your email to activate your account."
+        );
+        router.push("/login");
+      })
+      .catch((error) => {
+        toast.error("Login failed", error);
+      });
+  };
+
+  const values = watch();
 
   return (
     <CustomCard
@@ -35,19 +96,56 @@ const SignUpForm = () => {
         <p className="text-base-500 text-nav-sub-menu-heading-text mt-[13px] mb-8">
           The proxy gateway for professionals
         </p>
-        <form className="w-full h-auto flex flex-col gap-4 items-center mb-4">
-          <Input
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="w-full h-auto flex flex-col gap-4 items-center mb-4"
+        >
+          <InputText
+            error={!!errors.email?.message}
+            value={values.email}
+            description={errors.email?.message}
+            {...register("email")}
+            onChange={({ target: { value } }) => {
+              setValue("email", value);
+              trigger("email");
+            }}
+            className="w-full"
             type={"email"}
             label={"Email"}
             placeholder={"johndoe@gmail.com"}
           />
-          <Input
+          <InputText
+            error={!!errors.password?.message}
+            value={values.password}
+            description={errors.password?.message}
+            {...register("password")}
+            onChange={({ target: { value } }) => {
+              setValue("password", value);
+              trigger("password");
+            }}
+            className="w-full"
             type={"password"}
             label={"Password"}
             placeholder={"***********"}
           />
-          <Input type={"password"} label={"Confirm password"} />
-          <CustomButton className="w-full h-[47px] text-white/50 mt-4 !bg-custom-link-hover-bg hover:!bg-[#FBFAF908]">
+          <InputText
+            error={!!errors.confirmPassword?.message}
+            value={values.confirmPassword}
+            description={errors.confirmPassword?.message}
+            {...register("confirmPassword")}
+            onChange={({ target: { value } }) => {
+              setValue("confirmPassword", value);
+              trigger("confirmPassword");
+            }}
+            className="w-full"
+            type={"password"}
+            label={"Confirm password"}
+          />
+          <CustomButton
+            loading={loading}
+            type="submit"
+            className="w-full h-[47px] text-white/50 mt-4 !bg-custom-link-hover-bg hover:!bg-[#FBFAF908]"
+          >
             Sign up
           </CustomButton>
         </form>
