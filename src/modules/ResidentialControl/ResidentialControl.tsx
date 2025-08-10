@@ -34,16 +34,6 @@ const ResidentialControl = ({ className }: { className?: string }) => {
           className="mt-4"
         />
       </div>
-
-      <div className="col-span-3">
-        <OrderSummaryCard
-          selectedPlan={plan}
-          price={price}
-          pricePerGb={Number(plan?.plans?.[0].price) ?? 2}
-          bandwidth={bandwidth}
-          coupon={coupon}
-        />
-      </div>
     </div>
   );
 };

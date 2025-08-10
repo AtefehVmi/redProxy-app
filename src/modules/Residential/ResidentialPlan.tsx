@@ -31,8 +31,12 @@ const ResidentialPlan = ({
 }: Props) => {
   return (
     <div
+      onClick={(e) => {
+        e.stopPropagation();
+        onSelect(id);
+      }}
       className={cn(
-        "bg-darkmode-300 p-4",
+        "bg-darkmode-300 p-4 cursor-pointer",
         recommend ? "border-gradient" : "border border-darkmode-100 rounded-lg"
       )}
     >
@@ -86,10 +90,6 @@ const ResidentialPlan = ({
       </div>
 
       <Button
-        onClick={(e) => {
-          e.stopPropagation();
-          onSelect(id);
-        }}
         variant="ghost"
         className="mt-6 w-full"
         rightIcon={<Image src={isSelected ? SelectedIcon : ArrowIcon} alt="" />}

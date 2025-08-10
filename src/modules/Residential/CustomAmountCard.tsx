@@ -14,14 +14,14 @@ const CustomAmountCard = ({ className }: { className?: string }) => {
     >
       <p className="text-white font-semibold text-base">Custom Amount</p>
 
-      <div className="flex items-end gap-4 mt-6 w-full">
+      <div className="flex flex-col md:flex-row md:items-end gap-4 mt-6 w-full">
         <InputText
           startAdornment={<Image src={LayerIcon} alt="" />}
           label="Bandwidth *"
           placeholder="Enter Bandwidth"
-          className="w-4/5"
+          className="w-full md:w-4/5"
         />
-        <Button className="w-1/5 text-base py-3">Continue</Button>
+        <Button className="w-full md:w-1/5 text-base py-3">Continue</Button>
       </div>
     </div>
   );
