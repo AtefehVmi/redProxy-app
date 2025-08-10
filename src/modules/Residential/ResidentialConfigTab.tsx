@@ -1,7 +1,8 @@
 import { useSearchParams } from "next/navigation";
-import IspConfigCard from "../IspConfigCard/IspConfigCard";
 import Pagination from "@/components/Pagination/Pagination";
 import ResidentialConfigCard from "./ResidentialConfigCard";
+import NoDataImage from "@public/image/config.png";
+import Image from "next/image";
 
 const CHART_DATA = [
   {
@@ -72,24 +73,35 @@ const ResidentialConfigTab = () => {
 
   return (
     <div>
-      <div className="flex flex-col gap-6">
-        {paginatedData.map((config, index) => (
-          <ResidentialConfigCard
-            key={index}
-            configName={config.configName}
-            dataUsage={config.dataUsage}
-            portType={config.portType}
-            geoLocation={config.location}
-            rotation={config.rotation}
-            quantityGenerated={config.quantity}
-            format={config.format}
-            port={config.port}
-            username={config.username}
-            password={config.password}
-            dataUsed={config.dataUsed}
-          />
-        ))}
-      </div>
+      {paginatedData.length === 0 ? (
+        <div className="flex items-center justify-center h-[560px]">
+          <div>
+            <Image quality={100} priority src={NoDataImage} alt="" />
+            <p className="mt-6 text-base font-semibold text-white">
+              There are no Configurations.
+            </p>
+          </div>
+        </div>
+      ) : (
+        <div className="flex flex-col gap-6">
+          {paginatedData.map((config, index) => (
+            <ResidentialConfigCard
+              key={index}
+              configName={config.configName}
+              dataUsage={config.dataUsage}
+              portType={config.portType}
+              geoLocation={config.location}
+              rotation={config.rotation}
+              quantityGenerated={config.quantity}
+              format={config.format}
+              port={config.port}
+              username={config.username}
+              password={config.password}
+              dataUsed={config.dataUsed}
+            />
+          ))}
+        </div>
+      )}
 
       <Pagination
         totalCount={data.length}

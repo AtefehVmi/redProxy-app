@@ -1,6 +1,8 @@
 import { useSearchParams } from "next/navigation";
 import ResidentialPlanCard from "./ResidentialPlanCard";
 import Pagination from "@/components/Pagination/Pagination";
+import Image from "next/image";
+import NoDataImage from "@public/image/plans.png";
 
 const data = [
   {
@@ -78,19 +80,30 @@ const ResidentialPlansTab = () => {
 
   return (
     <div>
-      <div className="grid grid-cols-4 gap-y-5 gap-x-4">
-        {paginatedData?.map((item) => (
-          <ResidentialPlanCard
-            key={item.id}
-            name={item.name}
-            desc={item.desc}
-            purchaseDate={item.purchase_date}
-            expireDate={item.expire_date}
-            remainingGb={item.remainingGb}
-            planId={item.id}
-          />
-        ))}
-      </div>
+      {paginatedData.length === 0 ? (
+        <div className="flex items-center justify-center h-[560px]">
+          <div>
+            <Image quality={100} priority src={NoDataImage} alt="" />
+            <p className="mt-6 text-base font-semibold text-white">
+              There are no Plans.
+            </p>
+          </div>
+        </div>
+      ) : (
+        <div className="grid grid-cols-4 gap-y-5 gap-x-4">
+          {paginatedData?.map((item) => (
+            <ResidentialPlanCard
+              key={item.id}
+              name={item.name}
+              desc={item.desc}
+              purchaseDate={item.purchase_date}
+              expireDate={item.expire_date}
+              remainingGb={item.remainingGb}
+              planId={item.id}
+            />
+          ))}
+        </div>
+      )}
 
       <Pagination
         totalCount={data.length}
