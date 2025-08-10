@@ -1,4 +1,104 @@
+import { useSearchParams } from "next/navigation";
+import ResidentialPlanCard from "./ResidentialPlanCard";
+import Pagination from "@/components/Pagination/Pagination";
+
+const data = [
+  {
+    name: "Universal Scraper API",
+    desc: "Scraping Pool",
+    purchase_date: "01 April 2026",
+    expire_date: "12 April 2026",
+    remainingGb: 12,
+    id: 1,
+  },
+  {
+    name: "Universal Scraper API",
+    desc: "Scraping Pool",
+    purchase_date: "01 April 2026",
+    expire_date: "12 April 2026",
+    remainingGb: 12,
+    id: 1,
+  },
+  {
+    name: "Universal Scraper API",
+    desc: "Scraping Pool",
+    purchase_date: "01 April 2026",
+    expire_date: "12 April 2026",
+    remainingGb: 12,
+    id: 1,
+  },
+  {
+    name: "Universal Scraper API",
+    desc: "Scraping Pool",
+    purchase_date: "01 April 2026",
+    expire_date: "12 April 2026",
+    remainingGb: 12,
+    id: 1,
+  },
+  {
+    name: "Universal Scraper API",
+    desc: "Scraping Pool",
+    purchase_date: "01 April 2026",
+    expire_date: "12 April 2026",
+    remainingGb: 12,
+    id: 1,
+  },
+  {
+    name: "Universal Scraper API",
+    desc: "Scraping Pool",
+    purchase_date: "01 April 2026",
+    expire_date: "12 April 2026",
+    remainingGb: 12,
+    id: 1,
+  },
+  {
+    name: "Universal Scraper API",
+    desc: "Scraping Pool",
+    purchase_date: "01 April 2026",
+    expire_date: "12 April 2026",
+    remainingGb: 12,
+    id: 1,
+  },
+  {
+    name: "Universal Scraper API",
+    desc: "Scraping Pool",
+    purchase_date: "01 April 2026",
+    expire_date: "12 April 2026",
+    remainingGb: 12,
+    id: 1,
+  },
+];
+
 const ResidentialPlansTab = () => {
-  return <div> </div>;
+  const params = useSearchParams();
+  const limit = params.get("limit") ? parseInt(params.get("limit")!) : 8;
+  const offset = params.get("offset") ? parseInt(params.get("offset")!) : 0;
+
+  const paginatedData = data.slice(offset, offset + limit);
+
+  return (
+    <div>
+      <div className="grid grid-cols-4 gap-y-5 gap-x-4">
+        {paginatedData?.map((item) => (
+          <ResidentialPlanCard
+            key={item.id}
+            name={item.name}
+            desc={item.desc}
+            purchaseDate={item.purchase_date}
+            expireDate={item.expire_date}
+            remainingGb={item.remainingGb}
+            planId={item.id}
+          />
+        ))}
+      </div>
+
+      <Pagination
+        totalCount={data.length}
+        limit={limit}
+        offset={offset}
+        isDataAvailable={data?.length >= limit}
+      />
+    </div>
+  );
 };
 export default ResidentialPlansTab;

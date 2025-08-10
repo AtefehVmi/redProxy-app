@@ -11,15 +11,27 @@ import SearchInput from "@/components/SearchInput/SearchInput";
 import SearchIcon from "@public/icons/search.svg";
 import ResidentialConfigTab from "./ResidentialConfigTab";
 import ResidentialPlansTab from "./ResidentialPlansTab";
+import ConfigIcon from "@public/icons/globe.svg";
+import PlansIcon from "@public/icons/plans.svg";
 
 const tabs = [
   {
-    title: "Configurations",
+    title: (
+      <div className="flex items-center gap-1">
+        <Image className="min-w-5 min-h-5" src={ConfigIcon} alt="" />{" "}
+        <p className="text-sm">Configurations</p>
+      </div>
+    ),
     key: "configs",
     content: <ResidentialConfigTab />,
   },
   {
-    title: "Plans",
+    title: (
+      <div className="flex items-center gap-1 justify-center">
+        <Image className="min-w-5 min-h-5" src={PlansIcon} alt="" />
+        <p className="text-sm">Plans</p>
+      </div>
+    ),
     key: "plans",
     content: <ResidentialPlansTab />,
   },
@@ -29,11 +41,6 @@ const ResidentialPage = () => {
   const params = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
-
-  const limit = params.get("limit") ? parseInt(params.get("limit")!) : 4;
-  const offset = params.get("offset") ? parseInt(params.get("offset")!) : 0;
-
-  // const paginatedData = data.slice(offset, offset + limit);
 
   const activeTab = params.get("tab") || tabs[0].key;
   const handleTabClick = (tabKey: string) => {
