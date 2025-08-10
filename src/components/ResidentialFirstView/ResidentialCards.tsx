@@ -5,7 +5,7 @@ import GenericIcon from "@public/icons/plans.svg";
 
 const ResidentialCards = () => {
   return (
-    <div className="grid grid-cols-3 gap-6">
+    <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
       <ResidentialCard
         start_price={12}
         icon={ScrapingIcon}

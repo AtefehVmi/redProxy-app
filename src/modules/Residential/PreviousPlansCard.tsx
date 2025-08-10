@@ -11,6 +11,7 @@ import Pagination from "@/components/Pagination/Pagination";
 import { useSearchParams } from "next/navigation";
 import NoDataImage from "@public/image/plans.png";
 import { useState } from "react";
+import StatusFilterButton from "./StatusFilterButton";
 
 const filterOptions = [
   { label: "All" },
@@ -103,7 +104,7 @@ const PreviousPlansCard = () => {
           <p className="text-white font-bold text-xl">Previous Plans</p>
         </div>
 
-        <div className={cn("flex items-center gap-2.5")}>
+        <div className={cn("hidden lg:flex items-center gap-2.5")}>
           {filterOptions.map((item) => (
             <button
               onClick={() => setActiveFilter(item.label)}
@@ -122,6 +123,8 @@ const PreviousPlansCard = () => {
             </button>
           ))}
         </div>
+
+        <StatusFilterButton className="lg:hidden" value="" field="" />
       </div>
 
       <div className="mt-6">
