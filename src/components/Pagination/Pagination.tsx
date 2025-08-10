@@ -17,6 +17,7 @@ interface PaginationProps {
   totalCount?: number;
   isDataAvailable: boolean;
   noMargin?: boolean;
+  className?: string;
 }
 
 const Pagination: React.FC<PaginationProps> = ({
@@ -24,6 +25,7 @@ const Pagination: React.FC<PaginationProps> = ({
   offset,
   totalCount,
   isDataAvailable,
+  className,
   noMargin = false,
 }) => {
   const router = useRouter();
@@ -158,7 +160,8 @@ const Pagination: React.FC<PaginationProps> = ({
     <div
       className={cn(
         "flex flex-col lg:flex-row items-center justify-between p-4 bg-darkmode-200 border border-darkmode-100 mb-8",
-        noMargin ? "-mt-1 rounded-b-lg" : "mt-8 rounded-lg"
+        noMargin ? "-mt-1 rounded-b-lg" : "mt-8 rounded-lg",
+        className
       )}
     >
       <div className="hidden lg:block">

@@ -2,6 +2,7 @@ import ResidentialCards from "@/components/ResidentialFirstView/ResidentialCards
 import ResidentialFirstView from "@/components/ResidentialFirstView/ResidentialFirstView";
 import ResidentialImage from "@public/icons/residential.svg";
 import CheckIcon from "@public/icons/blue-check.svg";
+import PreviousPlansCard from "@/modules/Residential/PreviousPlansCard";
 
 const PlanPage = () => {
   return (
@@ -23,6 +24,8 @@ const PlanPage = () => {
         checkIcon={CheckIcon}
         resiCards={<ResidentialCards />}
       />
+
+      <PreviousPlansCard />
     </div>
   );
 };
