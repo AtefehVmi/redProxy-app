@@ -16,10 +16,10 @@ const PurchaseNewPlan = ({ className }: { className?: string }) => {
   };
 
   return (
-    <div className={cn("grid grid-cols-9 gap-4", className)}>
-      <div className="col-span-6">
+    <div className={cn("grid xl:grid-cols-9 gap-4", className)}>
+      <div className="xl:col-span-6">
         <div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid md:grid-cols-2 gap-4">
             <ResidentialPlan
               id={1}
               gb={1}
@@ -42,7 +42,7 @@ const PurchaseNewPlan = ({ className }: { className?: string }) => {
             />
           </div>
 
-          <div className="grid grid-cols-3 mt-6 gap-4">
+          <div className="grid md:grid-cols-3 mt-6 gap-4">
             <ResidentialPlan
               id={3}
               isSelected={selectedPlanId === 3}
@@ -76,7 +76,7 @@ const PurchaseNewPlan = ({ className }: { className?: string }) => {
         <CustomPlanCard className="mt-8" />
         <CustomAmountCard className="mt-8" />
       </div>
-      <div className="col-span-3">
+      <div className="xl:col-span-3">
         <CouponCard />
 
         <OrderSummaryCard price={4.0} residentialPlan={1} className="mt-4" />
