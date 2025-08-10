@@ -1,8 +1,9 @@
 import Image, { StaticImageData } from "next/image";
 import React from "react";
 import CaretRightIcon from "@public/icons/caret-right.svg";
-import Button from "../Button/Button";
+import Button from "../../components/Button/Button";
 import ArrowIcon from "@public/icons/arrow-small-right.svg";
+import Link from "next/link";
 
 type Props = {
   icon: StaticImageData;
@@ -45,12 +46,14 @@ const ResidentialCard: React.FC<Props> = ({
             </p>
           </div>
 
-          <Button
-            className="w-2/5 px-3 py-2.5 text-base"
-            rightIcon={<Image src={ArrowIcon} alt="" />}
-          >
-            Purchase
-          </Button>
+          <Link className="w-2/5" href={"/purchase/residential"}>
+            <Button
+              className="px-3 py-2.5 text-base"
+              rightIcon={<Image src={ArrowIcon} alt="" />}
+            >
+              Purchase
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
