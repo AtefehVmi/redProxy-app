@@ -6,7 +6,7 @@ import { useState } from "react";
 import CustomPlanCard from "./CustomPlanCard";
 import CustomAmountCard from "./CustomAmountCard";
 import CouponCard from "./CouponCard";
-import OrderSummaryCard from "../Shared/OrderSummaryCard";
+import OrderSummaryCard from "../../Shared/OrderSummaryCard";
 
 const PurchaseNewPlan = ({ className }: { className?: string }) => {
   const [selectedPlanId, setSelectedPlanId] = useState<number | null>(null);

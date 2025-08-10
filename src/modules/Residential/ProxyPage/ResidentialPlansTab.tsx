@@ -1,8 +1,8 @@
 import { useSearchParams } from "next/navigation";
-import ResidentialPlanCard from "./ResidentialPlanCard";
 import Pagination from "@/components/Pagination/Pagination";
 import Image from "next/image";
 import NoDataImage from "@public/image/plans.png";
+import ResidentialPlanCard from "../ResidentialPlanCard";
 
 const data = [
   {

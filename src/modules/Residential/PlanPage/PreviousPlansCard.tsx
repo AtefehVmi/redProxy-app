@@ -6,12 +6,12 @@ import GamingIcon from "@public/icons/gamepad.svg";
 import GenericIcon from "@public/icons/plans.svg";
 import Image from "next/image";
 import cn from "@/utils/cn";
-import ResidentialPlanCard from "./ResidentialPlanCard";
 import Pagination from "@/components/Pagination/Pagination";
 import { useSearchParams } from "next/navigation";
 import NoDataImage from "@public/image/plans.png";
 import { useState } from "react";
-import StatusFilterButton from "./StatusFilterButton";
+import StatusFilterButton from "../StatusFilterButton";
+import ResidentialPlanCard from "../ResidentialPlanCard";
 
 const filterOptions = [
   { label: "All" },

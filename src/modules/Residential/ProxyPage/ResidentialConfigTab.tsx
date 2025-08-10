@@ -1,8 +1,8 @@
 import { useSearchParams } from "next/navigation";
 import Pagination from "@/components/Pagination/Pagination";
-import ResidentialConfigCard from "./ResidentialConfigCard";
 import NoDataImage from "@public/image/config.png";
 import Image from "next/image";
+import ResidentialConfigCard from "./ResidentialConfigCard";
 
 const CHART_DATA = [
   {

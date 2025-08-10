@@ -1,9 +1,9 @@
 import Image, { StaticImageData } from "next/image";
 import React from "react";
 import CaretRightIcon from "@public/icons/caret-right.svg";
-import Button from "../../components/Button/Button";
 import ArrowIcon from "@public/icons/arrow-small-right.svg";
 import Link from "next/link";
+import Button from "@/components/Button/Button";
 
 type Props = {
   icon: StaticImageData;

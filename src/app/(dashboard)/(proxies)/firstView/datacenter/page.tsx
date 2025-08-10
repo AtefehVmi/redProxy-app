@@ -2,7 +2,7 @@ import Button from "@/components/Button/Button";
 import Link from "next/link";
 import ArrowRightIcon from "@public/icons/arrow-small-right.svg";
 import Image from "next/image";
-import ResidentialFirstView from "@/modules/Residential/ResidentialFirstView";
+import ResidentialFirstView from "@/modules/Residential/PlanPage/ResidentialFirstView";
 import DatacenterImage from "@public/icons/datacenter.svg";
 import CheckIcon from "@public/icons/red-check.svg";
 

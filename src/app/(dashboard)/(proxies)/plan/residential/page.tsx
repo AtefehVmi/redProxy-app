@@ -1,8 +1,8 @@
-import ResidentialCards from "@/modules/Residential/ResidentialCards";
-import ResidentialFirstView from "@/modules/Residential/ResidentialFirstView";
+import ResidentialFirstView from "@/modules/Residential/PlanPage/ResidentialFirstView";
 import ResidentialImage from "@public/icons/residential.svg";
 import CheckIcon from "@public/icons/blue-check.svg";
-import PreviousPlansCard from "@/modules/Residential/PreviousPlansCard";
+import ResidentialCards from "@/modules/Residential/PlanPage/ResidentialCards";
+import PreviousPlansCard from "@/modules/Residential/PlanPage/PreviousPlansCard";
 
 const PlanPage = () => {
   return (

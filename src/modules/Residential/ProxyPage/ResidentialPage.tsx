@@ -9,13 +9,12 @@ import MagicWandIcon from "@public/icons/magic-wand.svg";
 import Image from "next/image";
 import SearchInput from "@/components/SearchInput/SearchInput";
 import SearchIcon from "@public/icons/search.svg";
-import ResidentialConfigTab from "./ResidentialConfigTab";
-import ResidentialPlansTab from "./ResidentialPlansTab";
 import ConfigIcon from "@public/icons/globe.svg";
 import PlansIcon from "@public/icons/plans.svg";
-import SettingsIcon from "@public/icons/settings-sliders.svg";
-import StatusFilterButton from "./StatusFilterButton";
+import StatusFilterButton from "../StatusFilterButton";
 import Link from "next/link";
+import ResidentialConfigTab from "./ResidentialConfigTab";
+import ResidentialPlansTab from "./ResidentialPlansTab";
 
 const tabs = [
   {

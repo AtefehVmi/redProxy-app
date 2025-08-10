@@ -1,7 +1,7 @@
-import ResidentialCard from "./ResidentialCard";
 import ScrapingIcon from "@public/icons/globe.svg";
 import GamingIcon from "@public/icons/gamepad.svg";
 import GenericIcon from "@public/icons/plans.svg";
+import ResidentialCard from "./ResidentialCard";
 
 const ResidentialCards = () => {
   return (
