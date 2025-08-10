@@ -13,6 +13,7 @@ import ResidentialConfigTab from "./ResidentialConfigTab";
 import ResidentialPlansTab from "./ResidentialPlansTab";
 import ConfigIcon from "@public/icons/globe.svg";
 import PlansIcon from "@public/icons/plans.svg";
+import SettingsIcon from "@public/icons/settings-sliders.svg";
 
 const tabs = [
   {
@@ -90,14 +91,27 @@ const ResidentialPage = () => {
           ))}
         </div>
 
-        <SearchInput
-          placeholder="Search"
-          endAdornment={
-            <div className="border-l border-darkmode-200">
-              <Image src={SearchIcon} alt="" className="ml-3" />
-            </div>
-          }
-        />
+        <div className="flex items-center gap-2">
+          <SearchInput
+            placeholder="Search"
+            endAdornment={
+              <div className="border-l border-darkmode-200">
+                <Image src={SearchIcon} alt="" className="ml-3" />
+              </div>
+            }
+          />
+
+          {activeTab === "plans" ? (
+            <Button
+              className="px-4 py-3 text-base"
+              rightIcon={<Image src={SettingsIcon} alt="" />}
+            >
+              Status
+            </Button>
+          ) : (
+            ""
+          )}
+        </div>
       </div>
 
       <div className="mt-5">

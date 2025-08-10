@@ -80,7 +80,11 @@ const ResidentialPlanCard: React.FC<Props> = ({
             </div>
 
             <button onClick={() => setShowGb(!showGb)}>
-              {showGb ? `${remainingGb}` : <Image src={EyeIcon} alt="" />}
+              {showGb ? (
+                <p className="text-white">{remainingGb}</p>
+              ) : (
+                <Image src={EyeIcon} alt="" />
+              )}
             </button>
           </div>
         </div>
