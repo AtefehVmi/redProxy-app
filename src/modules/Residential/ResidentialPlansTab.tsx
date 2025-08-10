@@ -90,7 +90,7 @@ const ResidentialPlansTab = () => {
           </div>
         </div>
       ) : (
-        <div className="grid grid-cols-4 gap-y-5 gap-x-4">
+        <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-y-5 gap-x-4">
           {paginatedData?.map((item) => (
             <ResidentialPlanCard
               key={item.id}
