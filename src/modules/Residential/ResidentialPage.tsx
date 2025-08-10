@@ -15,6 +15,7 @@ import ConfigIcon from "@public/icons/globe.svg";
 import PlansIcon from "@public/icons/plans.svg";
 import SettingsIcon from "@public/icons/settings-sliders.svg";
 import StatusFilterButton from "./StatusFilterButton";
+import Link from "next/link";
 
 const tabs = [
   {
@@ -62,12 +63,14 @@ const ResidentialPage = () => {
 
       <div className="flex items-center md:justify-end border-b border-darkmode-100 pb-6 mb-6 mt-4 md:mt-0">
         <div className="flex items-center gap-3">
-          <Button
-            icon={<Image src={ShoppingCartIcon} alt="" />}
-            variant="secondary"
-          >
-            Purchase Plan
-          </Button>
+          <Link href={"/plan/residential"}>
+            <Button
+              icon={<Image src={ShoppingCartIcon} alt="" />}
+              variant="secondary"
+            >
+              Purchase Plan
+            </Button>
+          </Link>
           <Button icon={<Image src={MagicWandIcon} alt="" />}>
             Generate New
           </Button>

@@ -1,18 +1,28 @@
-import ResidentialControl from "@/modules/ResidentialControl/ResidentialControl";
+import ResidentialCards from "@/components/ResidentialFirstView/ResidentialCards";
+import ResidentialFirstView from "@/components/ResidentialFirstView/ResidentialFirstView";
+import ResidentialImage from "@public/icons/residential.svg";
+import CheckIcon from "@public/icons/blue-check.svg";
 
 const PlanPage = () => {
   return (
     <div className="w-full h-auto">
       <div className="flex flex-col items-start gap-1.5">
-        <p className="text-xl font-semibold text-white">
-          New Residential Configuration
-        </p>
+        <p className="text-xl font-semibold text-white">Purchase a new plan</p>
         <p className="text-sm font-medium text-nav-sub-menu-heading-text">
-          Configure your new proxy settings
+          Or top up your previous plans
         </p>
       </div>
 
-      <ResidentialControl className="my-8" />
+      <ResidentialFirstView
+        numberColor="bg-blue-100"
+        color="bg-blue-100/15"
+        desc="Create a fresh new plan, or top up your previous plans from below (without extending their expiry dates)."
+        title="Residential Proxy"
+        className="my-8"
+        image={ResidentialImage}
+        checkIcon={CheckIcon}
+        resiCards={<ResidentialCards />}
+      />
     </div>
   );
 };
