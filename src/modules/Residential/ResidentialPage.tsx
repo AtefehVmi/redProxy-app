@@ -14,11 +14,12 @@ import ResidentialPlansTab from "./ResidentialPlansTab";
 import ConfigIcon from "@public/icons/globe.svg";
 import PlansIcon from "@public/icons/plans.svg";
 import SettingsIcon from "@public/icons/settings-sliders.svg";
+import StatusFilterButton from "./StatusFilterButton";
 
 const tabs = [
   {
     title: (
-      <div className="flex items-center gap-1">
+      <div className="flex items-center justify-center gap-1">
         <Image className="min-w-5 min-h-5" src={ConfigIcon} alt="" />{" "}
         <p className="text-sm">Configurations</p>
       </div>
@@ -59,7 +60,7 @@ const ResidentialPage = () => {
         Configurate your new proxy settings
       </p>
 
-      <div className="flex items-center justify-end border-b border-darkmode-100 pb-6 mb-6">
+      <div className="flex items-center md:justify-end border-b border-darkmode-100 pb-6 mb-6 mt-4 md:mt-0">
         <div className="flex items-center gap-3">
           <Button
             icon={<Image src={ShoppingCartIcon} alt="" />}
@@ -73,8 +74,8 @@ const ResidentialPage = () => {
         </div>
       </div>
 
-      <div className="flex items-center justify-between">
-        <div className="bg-darkmode-200 rounded p-2 w-fit grid grid-cols-2 gap-2.5">
+      <div className="flex flex-col md:flex-row md:items-center justify-between">
+        <div className="bg-darkmode-200 rounded p-2 w-full md:w-fit grid grid-cols-2 gap-2.5">
           {tabs.map((item) => (
             <button
               key={item.key}
@@ -91,8 +92,9 @@ const ResidentialPage = () => {
           ))}
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 mt-6 md:mt-0">
           <SearchInput
+            className="w-full"
             placeholder="Search"
             endAdornment={
               <div className="border-l border-darkmode-200">
@@ -101,15 +103,8 @@ const ResidentialPage = () => {
             }
           />
 
-          {activeTab === "plans" ? (
-            <Button
-              className="px-4 py-3 text-base"
-              rightIcon={<Image src={SettingsIcon} alt="" />}
-            >
-              Status
-            </Button>
-          ) : (
-            ""
+          {activeTab === "plans" && (
+            <StatusFilterButton field="status" value="active" />
           )}
         </div>
       </div>

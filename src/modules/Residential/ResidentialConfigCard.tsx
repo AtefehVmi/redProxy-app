@@ -78,12 +78,12 @@ PASSWORD: ${props.password}`;
   return (
     <div
       className={cn(
-        "rounded w-full h-auto grid grid-cols-7 px-4 py-[19px] gap-x-8 !gap-y-2.5",
+        "rounded w-full h-auto grid xl:grid-cols-7 px-4 py-[19px] gap-x-8 !gap-y-2.5",
         "bg-darkmode-200 border border-darkmode-100"
       )}
     >
       {/*col 1*/}
-      <div className="col-span-2 grid grid-cols-3 grid-rows-3">
+      <div className="xl:col-span-2 grid grid-cols-3 grid-rows-3">
         <p className="col-span-3 row-span-1 mb-[13px] text-white text-base font-semibold">
           {props.configName}
         </p>
@@ -99,8 +99,11 @@ PASSWORD: ${props.password}`;
           <AreaLineChart color="#5CA7FF" data={props.dataUsage} />
         </div>
       </div>
+
+      <div className="block xl:hidden w-full bg-darkmode-100 h-px my-4"></div>
+
       {/*col 2*/}
-      <div className="col-span-4 grid grid-cols-4 grid-rows-2 gap-2 items-center">
+      <div className="xl:col-span-4 grid md:grid-cols-2 xl:grid-cols-4 grid-rows-2 gap-2 items-center">
         <div className={containerStyle}>
           <p className={headingStyle}>PORT TYPE</p>
           <p className={valueStyle}>{props.portType}</p>
@@ -146,8 +149,11 @@ PASSWORD: ${props.password}`;
           </div>
         </div>
       </div>
+
+      <div className="block xl:hidden w-full bg-darkmode-100 h-px my-4"></div>
+
       {/*col 3*/}
-      <div className="col-span-1 flex flex-col justify-center items-end gap-2.5">
+      <div className="xl:col-span-1 flex flex-col justify-center items-end gap-2.5">
         <div className="flex items-center gap-1 w-full">
           <Button
             className="w-1/2"
