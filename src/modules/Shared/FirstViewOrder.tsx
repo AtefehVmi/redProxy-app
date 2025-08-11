@@ -75,7 +75,7 @@ const FirstViewOrder = ({
         </div>
 
         <div className="mt-8 bg-darkmode-300 border border-darkmode-100 rounded-lg p-4 mx-8">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-wrap items-center justify-between">
             <div className="flex items-center gap-2">
               <div className={cn("rounded", bestPlanColor)}>
                 <Image src={PlanIcon} alt="" className="m-1.5" />
@@ -87,7 +87,7 @@ const FirstViewOrder = ({
             <div
               className={cn(
                 "bg-darkmode-300 border border-orange-200 px-3 py-1.5 rounded-full",
-                "flex items-center gap-1"
+                "flex items-center gap-1 mt-2 2xl:mt-0"
               )}
             >
               <Image src={TagIcon} alt="" />
@@ -118,7 +118,7 @@ const FirstViewOrder = ({
         </div>
       </div>
 
-      <div className="flex items-center justify-center mb-9">
+      <div className="flex items-center justify-center mb-9 mt-8 xl:mt-0">
         <Button
           className="text-base py-3 px-11"
           icon={<Image src={ShoppingCartIcon} alt="" />}
