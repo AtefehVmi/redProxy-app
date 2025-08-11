@@ -45,6 +45,7 @@ const ResidentialPage = () => {
   const router = useRouter();
 
   const activeTab = params.get("tab") || tabs[0].key;
+
   const handleTabClick = (tabKey: string) => {
     const newParams = new URLSearchParams(params.toString());
     newParams.set("tab", tabKey);
@@ -109,10 +110,6 @@ const ResidentialPage = () => {
             <StatusFilterButton field="status" value="active" />
           )}
         </div>
-      </div>
-
-      <div className="mt-5">
-        {tabs.find((t) => t.key === activeTab)?.content}
       </div>
     </div>
   );
