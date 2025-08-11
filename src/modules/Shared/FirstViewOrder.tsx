@@ -8,6 +8,7 @@ import TagIcon from "@public/icons/tag.svg";
 import CountriesImage from "@public/icons/countries.svg";
 import Button from "@/components/Button/Button";
 import ShoppingCartIcon from "@public/icons/shopping-cart.svg";
+import BlackPlanIcon from "@public/icons/black-cube.svg";
 
 type Props = {
   className?: string;
@@ -78,7 +79,13 @@ const FirstViewOrder = ({
           <div className="flex flex-wrap items-center justify-between">
             <div className="flex items-center gap-2">
               <div className={cn("rounded", bestPlanColor)}>
-                <Image src={PlanIcon} alt="" className="m-1.5" />
+                <Image
+                  src={
+                    bestPlanColor === "bg-yellow-100" ? BlackPlanIcon : PlanIcon
+                  }
+                  alt=""
+                  className="m-1.5 w-4 h-4"
+                />
               </div>
 
               <p className="text-lg text-white font-semibold">{planName}</p>
