@@ -9,6 +9,7 @@ import CountriesImage from "@public/icons/countries.svg";
 import Button from "@/components/Button/Button";
 import ShoppingCartIcon from "@public/icons/shopping-cart.svg";
 import BlackPlanIcon from "@public/icons/black-cube.svg";
+import Link from "next/link";
 
 type Props = {
   className?: string;
@@ -125,12 +126,14 @@ const FirstViewOrder = ({
       </div>
 
       <div className="flex items-center justify-center mb-9 mt-8 xl:mt-0">
-        <Button
-          className="text-base py-3 px-11"
-          icon={<Image src={ShoppingCartIcon} alt="" />}
-        >
-          Order Now
-        </Button>
+        <Link href={"/plan/isp"}>
+          <Button
+            className="text-base py-3 px-11"
+            icon={<Image src={ShoppingCartIcon} alt="" />}
+          >
+            Order Now
+          </Button>
+        </Link>
       </div>
     </div>
   );

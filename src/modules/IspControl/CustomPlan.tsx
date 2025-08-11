@@ -7,6 +7,8 @@ import React, { useState } from "react";
 import RadioCard from "../Shared/RadioCard";
 import USFlag from "@public/icons/us.svg";
 import ChevronIcon from "@public/icons/angle-small-down.svg";
+import SearchInput from "@/components/SearchInput/SearchInput";
+import SearchIcon from "@public/icons/search.svg";
 
 type Props = {
   plan: string;
@@ -134,12 +136,12 @@ const CustomPlan: React.FC<Props> = ({
 
   return (
     <div className="rounded bg-darkmode-200 border border-darkmode-100 p-6 md:p-8">
-      <p className="text-white font-bold text-xl">Custom Plan</p>
+      <p className="text-white font-bold text-lg md:text-xl">Custom Plan</p>
 
       <div className="border border-darkmode-100 rounded p-[18px] mt-8">
         <p className="text-sm text-white font-semibold">Choose Plan</p>
         <RadioCard<number>
-          className="grid grid-cols-6 gap-3 mt-4"
+          className="grid grid-cols-2 lg:grid-cols-6 gap-3 mt-4"
           selected={selectedPlan}
           onChange={setSelectedPlan}
           options={planOptions}
@@ -148,10 +150,22 @@ const CustomPlan: React.FC<Props> = ({
       </div>
 
       <div className="border border-darkmode-100 rounded p-[18px] mt-8">
-        <p className="text-sm text-white font-semibold">Choose a Location</p>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-col md:flex-row md:items-center justify-between">
+          <p className="text-sm text-white font-semibold">Choose a Location</p>
+          <SearchInput
+            paddingY="py-2"
+            className="w-full md:w-[220px] mt-2 md:mt-0"
+            placeholder="Search"
+            endAdornment={
+              <div className="border-l border-darkmode-200">
+                <Image src={SearchIcon} alt="" className="ml-3" />
+              </div>
+            }
+          />
+        </div>
+        <div className="flex flex-col md:flex-row md:items-center gap-3">
           <RadioCard<string>
-            className="grid grid-cols-4 gap-3 mt-4 w-full"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mt-4 w-full"
             selected={selectedlocation}
             onChange={setSelectedLocation}
             options={locationOptions}
@@ -173,19 +187,20 @@ const CustomPlan: React.FC<Props> = ({
 
       <div className="border border-darkmode-100 rounded p-[18px] mt-8">
         <p className="text-sm text-white font-semibold">Choose a Quantity</p>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-col lg:flex-row items-center gap-2">
           <RadioCard<number>
-            className="grid grid-cols-4 gap-3 mt-4 w-1/2"
+            className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4 w-full lg:w-2/3 xl:w-1/2"
             selected={selectedQty}
             onChange={setSelectedQty}
             options={qtyOptions}
             padding="py-[9px]"
           />
 
-          <div className="bg-darkmode-100 w-px h-20"></div>
+          <div className="bg-darkmode-100 w-px h-20 hidden lg:block"></div>
+          <div className="bg-darkmode-100 h-px w-full block lg:hidden my-4"></div>
 
           <InputText
-            className="w-1/2"
+            className="w-full lg:w-1/3 xl:w-1/2"
             startAdornment={<Image src={QuantityIcon} alt="" />}
             value={quantity}
             onChange={(e) => setQuantity(Number(e.target.value))}

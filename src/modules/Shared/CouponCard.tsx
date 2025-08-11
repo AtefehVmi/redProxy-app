@@ -52,7 +52,7 @@ const CouponCard = ({ coupon, setCoupon, amount }: Props) => {
           key={"coupon"}
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          className="mt-6 w-full"
+          className="w-full"
           label="Coupon Code *"
           placeholder="Enter Coupon code"
           startAdornment={<Image src={CouponIcon} alt="" />}

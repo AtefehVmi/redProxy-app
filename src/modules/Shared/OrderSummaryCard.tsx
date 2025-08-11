@@ -86,7 +86,7 @@ const OrderSummaryCard: React.FC<Props> = ({
         className
       )}
     >
-      <p className="text-white font-bold text-xl">Order Summary</p>
+      <p className="text-white font-bold text-lg md:text-xl">Order Summary</p>
 
       {residentialPlan && (
         <div className="mt-8 bg-darkmode-300 rounded-lg p-[18px]">
