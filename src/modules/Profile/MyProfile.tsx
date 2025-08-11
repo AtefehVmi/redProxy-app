@@ -9,14 +9,12 @@ import { useState } from "react";
 import UserIcon from "@public/icons/sidebar-user.svg";
 import EmailIcon from "@public/icons/email.svg";
 import LockIcon from "@public/icons/lock.svg";
-import PhoneIcon from "@public/icons/phone.svg";
 import PasswordInput from "@/components/PasswordInput/PasswordInput";
 
 type ProfileData = {
   firstName: string;
   lastName: string;
   email: string;
-  phone: string;
   currentPassword: string;
   newPassword: string;
   confirmNewPassword: string;
@@ -27,7 +25,6 @@ const MyProfile = () => {
     firstName: "",
     lastName: "",
     email: "",
-    phone: "",
     currentPassword: "",
     newPassword: "",
     confirmNewPassword: "",
@@ -89,13 +86,6 @@ const MyProfile = () => {
               onChange={(e) => handleChange("email", e.target.value)}
               placeholder="Enter email"
               label="Email *"
-            />
-            <InputText
-              startAdornment={<Image src={PhoneIcon} alt="" />}
-              value={profileData.phone}
-              onChange={(e) => handleChange("phone", e.target.value)}
-              placeholder="Enter phone number"
-              label="Phone number *"
             />
           </div>
           <div className="grid grid-cols-3 gap-5 mt-7">

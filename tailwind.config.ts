@@ -109,6 +109,7 @@ const config: Config = {
       gridTemplateColumns: { 18: "repeat(18, minmax(0, 1fr))" },
       gridColumn: {
         "span-13": "span 13 / span 13",
+        "span-15": "span 15 / span 15",
       },
     },
   },

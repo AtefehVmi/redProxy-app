@@ -33,10 +33,10 @@ const ProfilePanel = ({ className }: { className?: string }) => {
       className={cn(
         "bg-darkmode-200/60 border-[1.75px] border-darkmode-100 p-8 rounded mb-8",
         className,
-        "flex items-start gap-8"
+        "grid grid-cols-18 gap-8"
       )}
     >
-      <div className="max-w-[177px] w-full grow">
+      <div className="col-span-3 grow">
         <div className="flex flex-col gap-4">
           {profileItems.map((item, index) => (
             <button
@@ -60,7 +60,7 @@ const ProfilePanel = ({ className }: { className?: string }) => {
         </div>
       </div>
 
-      <div className="flex-grow w-full border-l border-darkmode-100 pl-8">
+      <div className="col-span-15 flex-grow w-full border-l border-darkmode-100 pl-8">
         {activeContent ?? (
           <div className="text-white text-lg">
             No content available for this tab.
