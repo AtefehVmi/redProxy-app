@@ -29,8 +29,9 @@ const IspControl = ({ className }: { className?: string }) => {
         <CouponCard coupon={coupon} setCoupon={setCoupon} />
 
         <OrderSummaryCard
+          className="mt-4"
+          location={location}
           price={2}
-          pricePerGb={2}
           quantity={quantity}
           coupon={coupon}
           plan={plan}
