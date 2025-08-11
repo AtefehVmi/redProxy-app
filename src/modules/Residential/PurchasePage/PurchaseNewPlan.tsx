@@ -3,13 +3,14 @@
 import cn from "@/utils/cn";
 import ResidentialPlan from "./ResidentialPlan";
 import { useState } from "react";
-import CustomPlanCard from "./CustomPlanCard";
 import CustomAmountCard from "./CustomAmountCard";
-import CouponCard from "./CouponCard";
+import CouponCard from "../../Shared/CouponCard";
 import OrderSummaryCard from "../../Shared/OrderSummaryCard";
+import CustomPlanCard from "./CustomPlanCard";
 
 const PurchaseNewPlan = ({ className }: { className?: string }) => {
   const [selectedPlanId, setSelectedPlanId] = useState<number | null>(null);
+  const [coupon, setCoupon] = useState("");
 
   const handleSelectPlan = (id: number) => {
     setSelectedPlanId(id);
@@ -77,7 +78,7 @@ const PurchaseNewPlan = ({ className }: { className?: string }) => {
         <CustomAmountCard className="mt-8" />
       </div>
       <div className="xl:col-span-3">
-        <CouponCard />
+        <CouponCard coupon={coupon} setCoupon={setCoupon} />
 
         <OrderSummaryCard price={4.0} residentialPlan={1} className="mt-4" />
       </div>

@@ -1,10 +1,10 @@
 "use client";
 
 import cn from "@/utils/cn";
-import CouponCard from "../Shared/CouponCard";
 import OrderSummaryCard from "../Shared/OrderSummaryCard";
 import { useState } from "react";
 import CustomPlan from "./CustomPlan";
+import CouponCard from "../Shared/CouponCard";
 
 const IspControl = ({ className }: { className?: string }) => {
   const [coupon, setCoupon] = useState("");
@@ -23,10 +23,11 @@ const IspControl = ({ className }: { className?: string }) => {
           location={location}
           setLocation={setLocation}
         />
-        <CouponCard coupon={coupon} setCoupon={setCoupon} className="mt-4" />
       </div>
 
       <div className="xl:col-span-3">
+        <CouponCard coupon={coupon} setCoupon={setCoupon} />
+
         <OrderSummaryCard
           price={2}
           pricePerGb={2}
