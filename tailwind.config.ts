@@ -106,6 +106,10 @@ const config: Config = {
         "custom-link": "0px 2px 0px 0px #C6C2BC1A",
       },
       screens: { 1420: "1420px" },
+      gridTemplateColumns: { 18: "repeat(18, minmax(0, 1fr))" },
+      gridColumn: {
+        "span-13": "span 13 / span 13",
+      },
     },
   },
   plugins: [],

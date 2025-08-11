@@ -29,7 +29,7 @@ const FirstViewPage = () => {
         </Link>
       </div>
 
-      <div className="grid grid-cols-9 gap-4 my-8">
+      <div className="grid grid-cols-18 gap-4 my-8">
         <FirstView
           numberColor="bg-indigo-100"
           color="bg-indigo-100/15"
@@ -37,7 +37,7 @@ const FirstViewPage = () => {
           text2="Use Cases of Static Residential Proxies"
           desc="A Static Residential Proxy is an IP address provided by an Internet Service Provider (ISP) that remains the same (static) over  time, unlike rotating proxies that change periodically. These proxies  route your internet traffic through a real residential device (such as a home computer or router), making your requests appear as if they come  from a legitimate residential user rather than a data center or VPN."
           title="Static Residential Proxies"
-          className="col-span-7"
+          className="col-span-13"
           keyFeatures={[
             {
               feature: "Fixed IP Address",
@@ -70,7 +70,14 @@ const FirstViewPage = () => {
           checkIcon={CheckIcon}
         />
 
-        <FirstViewOrder ellipseColor="bg-[#735CFF5C]" className="col-span-2" />
+        <FirstViewOrder
+          bestPlanColor="bg-indigo-100"
+          planName="30 Days"
+          discount={20}
+          totalPrice={12}
+          ellipseColor="bg-indigo-100/35"
+          className="col-span-5"
+        />
       </div>
     </div>
   );
