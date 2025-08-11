@@ -99,15 +99,14 @@ const FirstViewOrder = ({
             >
               <Image src={TagIcon} alt="" />
               <p className="text-orange-200 text-[10px]">
-                Best Plan - <span className="font-medium">{discount}%</span>
+                Best Seller - <span className="font-medium">{discount}%</span>
               </p>
             </div>
           </div>
 
           <div className="mt-6 flex items-center gap-1">
-            <p className="text-grey-500 text-base leading-4">$</p>
-            <p className="text-grey-400 text-xs">Total - </p>
             <p className="text-sm font-semibold text-grey-50">${totalPrice}</p>
+            <p className="text-grey-500 text-base leading-4">/ Per IP</p>
           </div>
 
           <div
@@ -116,7 +115,7 @@ const FirstViewOrder = ({
               "flex items-center justify-between"
             )}
           >
-            <p className="text-xs text-white">Famous Countries</p>
+            <p className="text-xs text-white">Popular Countries</p>
             <div className="flex items-center gap-1">
               <Image src={CountriesImage} alt="" />
               <Image src={ArrowDownIcon} alt="" />
