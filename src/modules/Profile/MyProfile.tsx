@@ -37,11 +37,11 @@ const MyProfile = () => {
   return (
     <div className="flex flex-col gap-6 w-full">
       <div className="bg-darkmode-200 border border-darkmode-100 rounded-xl py-8 pl-8">
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col md:flex-row md:items-center gap-4">
           <Image src={ProfileImage} alt="" />
 
           <div>
-            <p className="text-white text-lg font-semibold">
+            <p className="text-white text-base md:text-lg font-semibold">
               Fatemeh.mozaffari.77@gmail.com
             </p>
 
@@ -55,7 +55,7 @@ const MyProfile = () => {
         </div>
       </div>
 
-      <div className="bg-darkmode-200 border border-darkmode-100 rounded-xl p-8">
+      <div className="bg-darkmode-200 border border-darkmode-100 rounded-xl p-6 lg:p-8">
         <div className="flex items-center justify-between">
           <p className="text-white text-lg font-semibold">
             Personal Information
@@ -65,7 +65,7 @@ const MyProfile = () => {
         </div>
 
         <form className="mt-8">
-          <div className="grid grid-cols-2 gap-x-5 gap-y-7">
+          <div className="grid md:grid-cols-2 gap-x-5 gap-y-7">
             <InputText
               startAdornment={<Image src={UserIcon} alt="" />}
               value={profileData.firstName}
@@ -88,7 +88,7 @@ const MyProfile = () => {
               label="Email *"
             />
           </div>
-          <div className="grid grid-cols-3 gap-5 mt-7">
+          <div className="grid lg:grid-cols-3 gap-5 mt-7">
             <PasswordInput
               startAdornment={<Image src={LockIcon} alt="" />}
               value={profileData.currentPassword}
