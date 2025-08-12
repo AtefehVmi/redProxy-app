@@ -287,7 +287,7 @@ const CreateResidentialConfig = ({ className }: { className?: string }) => {
           <p className="col-span-2 text-white text-base font-semibold">
             Proxy settings
           </p>
-          <div className="col-span-1 grid grid-cols-2 gap-x-5 gap-y-4 mt-8">
+          <div className="col-span-1 grid grid-cols-1 lg:grid-cols-2 gap-x-5 gap-y-4 mt-8">
             <Input
               key={"name"}
               type={"text"}
@@ -339,7 +339,7 @@ const CreateResidentialConfig = ({ className }: { className?: string }) => {
               onChange={(e) => setQuantity(Number(e.target.value))}
             />
           </div>
-          <div className="flex items-center justify-end col-span-2">
+          <div className="flex items-center lg:justify-end col-span-2">
             <Button onClick={handleSubmit} className="mt-8 text-base px-8">
               Generate Proxy
             </Button>
