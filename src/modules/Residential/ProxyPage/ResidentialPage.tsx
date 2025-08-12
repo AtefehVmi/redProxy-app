@@ -106,9 +106,7 @@ const ResidentialPage = () => {
             }
           />
 
-          {activeTab === "plans" && (
-            <StatusFilterButton field="status" value="active" />
-          )}
+          {activeTab === "plans" && <StatusFilterButton />}
         </div>
       </div>
 
