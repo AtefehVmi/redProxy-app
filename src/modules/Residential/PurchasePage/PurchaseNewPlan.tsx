@@ -49,10 +49,40 @@ const PurchaseNewPlan = ({ className }: { className?: string }) => {
       <div className={cn("grid xl:grid-cols-9 gap-4", className)}>
         <div className="xl:col-span-6">
           <div>
-            <div className="grid md:grid-cols-2 gap-4">
+            <div className="grid md:grid-cols-3 gap-4">
               <ResidentialPlan
                 id={1}
+                isSelected={selectedPlanId === 3}
+                onSelect={handleSelectPlan}
                 gb={1}
+                perPrice={2}
+                total={12}
+                discount={5}
+              />
+              <ResidentialPlan
+                id={2}
+                isSelected={selectedPlanId === 4}
+                onSelect={handleSelectPlan}
+                gb={2}
+                perPrice={2}
+                total={12}
+                discount={5}
+              />
+              <ResidentialPlan
+                id={3}
+                isSelected={selectedPlanId === 5}
+                onSelect={handleSelectPlan}
+                gb={3}
+                perPrice={2}
+                total={12}
+                discount={5}
+              />
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-4 mt-6">
+              <ResidentialPlan
+                id={4}
+                gb={5}
                 recommend={true}
                 perPrice={2}
                 total={12}
@@ -61,8 +91,8 @@ const PurchaseNewPlan = ({ className }: { className?: string }) => {
                 onSelect={handleSelectPlan}
               />
               <ResidentialPlan
-                id={2}
-                gb={5}
+                id={5}
+                gb={10}
                 recommend={true}
                 perPrice={2}
                 total={12}
@@ -74,17 +104,8 @@ const PurchaseNewPlan = ({ className }: { className?: string }) => {
 
             <div className="grid md:grid-cols-3 mt-6 gap-4">
               <ResidentialPlan
-                id={3}
+                id={6}
                 isSelected={selectedPlanId === 3}
-                onSelect={handleSelectPlan}
-                gb={10}
-                perPrice={2}
-                total={12}
-                discount={5}
-              />
-              <ResidentialPlan
-                id={4}
-                isSelected={selectedPlanId === 4}
                 onSelect={handleSelectPlan}
                 gb={20}
                 perPrice={2}
@@ -92,10 +113,19 @@ const PurchaseNewPlan = ({ className }: { className?: string }) => {
                 discount={5}
               />
               <ResidentialPlan
-                id={5}
-                isSelected={selectedPlanId === 5}
+                id={7}
+                isSelected={selectedPlanId === 4}
                 onSelect={handleSelectPlan}
                 gb={50}
+                perPrice={2}
+                total={12}
+                discount={5}
+              />
+              <ResidentialPlan
+                id={8}
+                isSelected={selectedPlanId === 5}
+                onSelect={handleSelectPlan}
+                gb={100}
                 perPrice={2}
                 total={12}
                 discount={5}
@@ -103,12 +133,11 @@ const PurchaseNewPlan = ({ className }: { className?: string }) => {
             </div>
           </div>
 
-          <CustomPlanCard className="mt-8" />
           <CustomAmountCard className="mt-8" />
         </div>
         <div className="xl:col-span-3">
           <CouponCard coupon={coupon} setCoupon={setCoupon} />
-
+          <CustomPlanCard className="mt-4" />
           <OrderSummaryCard price={4.0} residentialPlan={1} className="mt-4" />
         </div>
       </div>
