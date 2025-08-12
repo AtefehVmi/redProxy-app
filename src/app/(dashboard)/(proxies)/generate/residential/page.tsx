@@ -18,7 +18,7 @@ const Page = () => {
           </p>
         </div>
         <CustomLink href={"/proxy/residential"} className="py-2 px-4">
-          <p>Cancel configuration</p>
+          <p>Go Back</p>
         </CustomLink>
       </div>
       <div className="grid grid-cols-9 mt-[30px] gap-4">

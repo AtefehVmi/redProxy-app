@@ -12,6 +12,7 @@ const Sidebar = ({ className }: { className?: string }) => {
     [APP_ROUTES.residentialProxy]: [
       "/plan/residential",
       "/purchase/residential",
+      "/generate/residential",
     ],
     [APP_ROUTES.datacenterProxy]: [
       "/viewConfig/datacenter",

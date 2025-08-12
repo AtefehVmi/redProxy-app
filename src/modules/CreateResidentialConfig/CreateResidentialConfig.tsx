@@ -2,20 +2,14 @@
 
 import React, { useState } from "react";
 import Input from "@/components/Input/Input";
-import TextArea from "@/components/TextArea/TextArea";
 import Image from "next/image";
 import cn from "@/utils/cn";
 import Button from "@/components/Button/Button";
 
-import copyIcon from "@public/icons/copy-all.svg";
-import DownloadIcon from "@public/icons/download-icon.svg";
-import CheckIcon from "@public/icons/check.svg";
 import ConfigIcon from "@public/icons/config-name.svg";
 import RotationIcon from "@public/icons/rotation.svg";
 import PortIcon from "@public/icons/port.svg";
 import QuantityIcon from "@public/icons/quantity.svg";
-import ProxyIcon from "@public/icons/model-cube.svg";
-import CodeIcon from "@public/icons/display-code.svg";
 
 import Autocomplete from "@/components/AutoComplete/Autocomplete";
 import {
@@ -27,13 +21,7 @@ import {
 import { usePathname } from "next/navigation";
 import useFetch from "@/hooks/UseFetch";
 import { City, Country, State } from "@/service/models";
-
-const DUMMY_TEXT_AREA_VALUE =
-  "saaf.eth---gmail.com:null:proxy.wtfproxy.com:3030\n" +
-  "saaf.eth---gmail.com:null:proxy.wtfproxy.com:3030\n" +
-  "saaf.eth---gmail.com:null:proxy.wtfproxy.com:3030\n" +
-  "saaf.eth---gmail.com:null:proxy.wtfproxy.com:3030\n" +
-  "saaf.eth---gmail.com:null:proxy.wtfproxy.com:3030\n";
+import ResidentialGenerateTab from "./ResidentialGenerateTab";
 
 const portOptions = [
   {
@@ -82,18 +70,7 @@ const poolToName = {
   premium_residential: "Premium Residential",
 };
 
-const tabs = [
-  { title: "Proxy", icon: ProxyIcon, content: <></> },
-  { title: "Code", icon: CodeIcon, content: <></> },
-];
-
 const CreateResidentialConfig = ({ className }: { className?: string }) => {
-  const [formatedList, setFormatedList] = React.useState<string>(
-    DUMMY_TEXT_AREA_VALUE
-  );
-  const [downloaded, setDownloaded] = React.useState(false);
-  const [copied, setCopied] = React.useState(false);
-
   const [port, setPort] = useState(portOptions[0].value);
   const [rotation, setRotation] = useState(rotationOptions[0].value);
   const [format, setFormat] = useState(formatOptions[0].value);
@@ -136,30 +113,6 @@ const CreateResidentialConfig = ({ className }: { className?: string }) => {
     false,
     { toastOnError: true }
   );
-
-  const selectLabelStyle = "text-sm mb-2.5";
-
-  function copyToClipboard(text: string) {
-    navigator.clipboard.writeText(text);
-  }
-
-  function onCopyClick() {
-    copyToClipboard(formatedList);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 5000);
-  }
-
-  function onDownloadClick() {
-    const blob = new Blob([formatedList], { type: "text/plain" });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = "proxy-config.txt";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    setDownloaded(true);
-    setTimeout(() => setDownloaded(false), 5000);
-  }
 
   //country, state, city logics
 
@@ -393,47 +346,7 @@ const CreateResidentialConfig = ({ className }: { className?: string }) => {
           </div>
         </div>
 
-        <TextArea
-          className="mt-12"
-          buttons={
-            <div className="flex items-center gap-3">
-              <Button
-                onClick={onDownloadClick}
-                icon={
-                  <Image
-                    width={18}
-                    height={18}
-                    src={downloaded ? CheckIcon : DownloadIcon}
-                    alt={downloaded ? "Copied" : "Copy"}
-                  />
-                }
-              >
-                Download
-              </Button>
-              <Button
-                icon={
-                  <Image
-                    width={18}
-                    height={18}
-                    src={copied ? CheckIcon : copyIcon}
-                    alt={copied ? "Copied" : "Copy"}
-                  />
-                }
-                onClick={onCopyClick}
-              >
-                Copy All Line
-              </Button>
-            </div>
-          }
-          label={"FORMATTED LIST"}
-          readonly={true}
-          value={formatedList}
-          containerClassName={"col-span-1"}
-          labelClassName={selectLabelStyle}
-          textAreaClassName={
-            "h-full h-[153px] px-[19px] py-4 text-xs font-medium"
-          }
-        ></TextArea>
+        <ResidentialGenerateTab />
       </div>
     </div>
   );

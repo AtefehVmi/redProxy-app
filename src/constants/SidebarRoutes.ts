@@ -51,7 +51,11 @@ export const APP_NAVIGATION = [
         iconSrc: "/icons/resi-small-icon.svg",
         navbarIconSrc: "/icons/resi-icon.svg",
         href: APP_ROUTES.residentialProxy,
-        aliases: ["/plan/residential", "/purchase/residential"],
+        aliases: [
+          "/plan/residential",
+          "/purchase/residential",
+          "/generate/residential",
+        ],
       },
       {
         title: "ISP Proxies",
