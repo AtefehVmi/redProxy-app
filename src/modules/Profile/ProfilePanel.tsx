@@ -33,11 +33,11 @@ const ProfilePanel = ({ className }: { className?: string }) => {
       className={cn(
         "bg-darkmode-200/60 border-[1.75px] border-darkmode-100 p-8 rounded mb-8",
         className,
-        "flex items-start gap-8"
+        "grid grid-cols-1 xl:grid-cols-18 gap-8"
       )}
     >
-      <div className="max-w-[177px] w-full grow">
-        <div className="flex flex-col gap-4">
+      <div className="col-span-1 xl:col-span-3 xl:grow w-full">
+        <div className="flex flex-row flex-wrap xl:flex-col gap-4">
           {profileItems.map((item, index) => (
             <button
               onClick={() => {
@@ -46,11 +46,11 @@ const ProfilePanel = ({ className }: { className?: string }) => {
               }}
               type="button"
               className={cn(
-                "rounded-full py-2.5 px-4 text-base text-white text-left",
+                "rounded-full py-2.5 px-4 text-base text-white text-left whitespace-nowrap",
                 activeTab === item.key
                   ? "bg-orange-100 cursor-not-allowed"
                   : "bg-darkmode-200 hover:text-grey-400",
-                index === profileItems.length - 1 && "mt-12"
+                index === profileItems.length - 1 && "xl:mt-12"
               )}
               key={item.key}
             >
@@ -60,7 +60,7 @@ const ProfilePanel = ({ className }: { className?: string }) => {
         </div>
       </div>
 
-      <div className="flex-grow w-full border-l border-darkmode-100 pl-8">
+      <div className="col-span-1 xl:col-span-15 xl:flex-grow w-full xl:border-l border-darkmode-100 xl:pl-8">
         {activeContent ?? (
           <div className="text-white text-lg">
             No content available for this tab.

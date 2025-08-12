@@ -1,4 +1,4 @@
-import ResidentialPage from "@/modules/Residential/ResidentialPage";
+import ResidentialPage from "@/modules/Residential/ProxyPage/ResidentialPage";
 
 const Page = () => {
   return (

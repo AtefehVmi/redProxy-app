@@ -22,7 +22,7 @@ type Props = {
   resiCards?: React.ReactNode;
 };
 
-const ResidentialFirstView: React.FC<Props> = ({
+const FirstView: React.FC<Props> = ({
   className,
   image,
   title,
@@ -83,8 +83,8 @@ const ResidentialFirstView: React.FC<Props> = ({
                 </p>
               </div>
 
-              <div className="flex flex-col md:flex-row md:items-center gap-1">
-                <p className="text-sm md:text-base font-semibold text-white">
+              <div className="flex flex-col md:flex-row gap-1">
+                <p className="text-sm md:text-base font-semibold text-white whitespace-nowrap">
                   {keyFeature.feature}
                 </p>
                 <p className="text-sm md:text-base text-grey-300">
@@ -118,4 +118,4 @@ const ResidentialFirstView: React.FC<Props> = ({
     </div>
   );
 };
-export default ResidentialFirstView;
+export default FirstView;

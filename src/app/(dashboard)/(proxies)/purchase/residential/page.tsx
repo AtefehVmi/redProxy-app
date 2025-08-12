@@ -1,4 +1,4 @@
-import PurchaseNewPlan from "@/modules/Residential/PurchaseNewPlan";
+import PurchaseNewPlan from "@/modules/Residential/PurchasePage/PurchaseNewPlan";
 
 const NewPurchasePage = () => {
   return (

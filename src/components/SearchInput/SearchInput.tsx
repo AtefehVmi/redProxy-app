@@ -11,6 +11,7 @@ type SearchInputProps = {
   startAdornment?: ReactNode;
   endAdornment?: ReactNode;
   label?: string;
+  paddingY?: string;
   description?: string | React.ReactNode;
   allocateSpaceForDescription?: boolean;
 } & Omit<
@@ -34,6 +35,7 @@ const SearchInput = ({
   description,
   startAdornment,
   endAdornment,
+  paddingY,
   allocateSpaceForDescription = false,
   onFocus,
   onBlur,
@@ -64,11 +66,12 @@ const SearchInput = ({
       fullWidth && "w-full"
     ),
     input: cn(
-      "w-full bg-darkmode-100 rounded-lg px-3 py-3.5 text-sm text-primary-200",
+      "w-full bg-darkmode-100 rounded-lg px-3 text-sm text-primary-200",
       error && "text-error-main",
       disabled && "bg-gray-50 text-gray-400 cursor-not-allowed",
       startAdornment && "pl-10",
-      endAdornment && "pr-10"
+      endAdornment && "pr-10",
+      paddingY ? paddingY : "py-3.5"
     ),
     startAdornment:
       "absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none flex items-center justify-center",

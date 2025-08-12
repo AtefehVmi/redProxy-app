@@ -1,8 +1,11 @@
 import { useSearchParams } from "next/navigation";
-import ResidentialPlanCard from "./ResidentialPlanCard";
 import Pagination from "@/components/Pagination/Pagination";
 import Image from "next/image";
 import NoDataImage from "@public/image/plans.png";
+import ResidentialPlanCard from "../ResidentialPlanCard";
+import Button from "@/components/Button/Button";
+import Link from "next/link";
+import ShoppingCartIcon from "@public/icons/shopping-cart.svg";
 
 const data = [
   {
@@ -87,6 +90,17 @@ const ResidentialPlansTab = () => {
             <p className="mt-6 text-base font-semibold text-white">
               There are no Plans.
             </p>
+            <Link
+              className="mt-6 flex items-center justify-center"
+              href={"/plan/residential"}
+            >
+              <Button
+                className="px-4 py-3 text-base"
+                icon={<Image src={ShoppingCartIcon} alt="" />}
+              >
+                Order Now
+              </Button>
+            </Link>
           </div>
         </div>
       ) : (

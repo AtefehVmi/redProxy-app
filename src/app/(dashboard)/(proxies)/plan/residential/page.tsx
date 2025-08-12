@@ -1,8 +1,4 @@
-import ResidentialCards from "@/modules/Residential/ResidentialCards";
-import ResidentialFirstView from "@/modules/Residential/ResidentialFirstView";
-import ResidentialImage from "@public/icons/residential.svg";
-import CheckIcon from "@public/icons/blue-check.svg";
-import PreviousPlansCard from "@/modules/Residential/PreviousPlansCard";
+import ResidentialPlanPage from "@/modules/Residential/PlanPage/ResidentialPlanPage";
 
 const PlanPage = () => {
   return (
@@ -14,18 +10,7 @@ const PlanPage = () => {
         </p>
       </div>
 
-      <ResidentialFirstView
-        numberColor="bg-blue-100"
-        color="bg-blue-100/15"
-        desc="Create a fresh new plan, or top up your previous plans from below (without extending their expiry dates)."
-        title="Residential Proxy"
-        className="my-8"
-        image={ResidentialImage}
-        checkIcon={CheckIcon}
-        resiCards={<ResidentialCards />}
-      />
-
-      <PreviousPlansCard />
+      <ResidentialPlanPage />
     </div>
   );
 };

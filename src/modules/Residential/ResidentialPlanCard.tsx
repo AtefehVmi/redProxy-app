@@ -7,7 +7,7 @@ import cn from "@/utils/cn";
 import EditIcon from "@public/icons/edit.svg";
 import PlanIcon from "@public/icons/plans.svg";
 import CalendarIcon from "@public/icons/calendar.svg";
-import GlobeIcon from "@public/icons/globe.svg";
+import GlobeIcon from "@public/icons/globe-big.svg";
 import EyeIcon from "@public/icons/eye.svg";
 import PurchaseIcon from "@public/icons/shopping-cart.svg";
 import Button from "@/components/Button/Button";

@@ -21,7 +21,7 @@ const Button = ({
   ...props
 }: ButtonProps & Omit<React.ComponentProps<"button">, keyof ButtonProps>) => {
   const baseStyle = cn(
-    "rounded-md px-[9.5px] py-2 text-xs font-semibold relative overflow-hidden group",
+    "rounded-md px-[9.5px] py-2 text-base md:text-xs font-semibold relative overflow-hidden group whitespace-nowrap",
     icon && "flex items-center justify-center gap-1",
     rightIcon && "flex items-center justify-center gap-1"
   );

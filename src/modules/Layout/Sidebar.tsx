@@ -10,9 +10,9 @@ import cn from "@/utils/cn";
 const Sidebar = ({ className }: { className?: string }) => {
   const matchPathMap: Record<string, string[]> = {
     [APP_ROUTES.residentialProxy]: [
-      "/viewConfig/residential",
       "/plan/residential",
-      "/firstView/residential",
+      "/purchase/residential",
+      "/generate/residential",
     ],
     [APP_ROUTES.datacenterProxy]: [
       "/viewConfig/datacenter",

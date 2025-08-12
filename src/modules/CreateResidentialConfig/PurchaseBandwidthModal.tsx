@@ -7,6 +7,7 @@ import Image from "next/image";
 import XIcon from "@public/icons/cross.svg";
 import CryptoIcon from "@public/icons/crypto.svg";
 import CreditCardIcon from "@public/icons/credit-card.svg";
+import CheckIcon from "@public/icons/check-circle.svg";
 import cn from "@/utils/cn";
 
 const paymentMethods = [
@@ -14,13 +15,11 @@ const paymentMethods = [
     label: "Balance",
     value: "balance",
     icon: CreditCardIcon,
-    types: "Visa, MasterCard, ...",
   },
   {
     label: "Crypto Coins",
     value: "crypto",
     icon: CryptoIcon,
-    types: "Bitcoin, ETH, ...",
   },
 ];
 
@@ -91,18 +90,22 @@ const PurchaseBandwidthModal = ({
                         </div>
                         <div>
                           <div className="flex items-center gap-2">
-                            <div className="rounded bg-darkmode-200">
+                            <div className="rounded bg-darkmode-200 relative">
                               <Image
                                 src={method.icon}
                                 alt=""
                                 className="m-1.5"
                               />
+                              {checked && (
+                                <Image
+                                  src={CheckIcon}
+                                  alt=""
+                                  className="absolute -top-1 -right-1"
+                                />
+                              )}
                             </div>
                             <p className="text-white text-sm">{method.label}</p>
                           </div>
-                          <p className="mt-2 text-xs text-grey-300">
-                            {method.types}
-                          </p>
                         </div>
                       </div>
                     )}

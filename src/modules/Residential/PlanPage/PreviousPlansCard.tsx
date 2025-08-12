@@ -6,12 +6,12 @@ import GamingIcon from "@public/icons/gamepad.svg";
 import GenericIcon from "@public/icons/plans.svg";
 import Image from "next/image";
 import cn from "@/utils/cn";
-import ResidentialPlanCard from "./ResidentialPlanCard";
 import Pagination from "@/components/Pagination/Pagination";
 import { useSearchParams } from "next/navigation";
 import NoDataImage from "@public/image/plans.png";
 import { useState } from "react";
-import StatusFilterButton from "./StatusFilterButton";
+import StatusFilterButton from "../StatusFilterButton";
+import ResidentialPlanCard from "../ResidentialPlanCard";
 
 const filterOptions = [
   { label: "All" },
@@ -104,6 +104,8 @@ const PreviousPlansCard = () => {
           <p className="text-white font-bold text-xl">Previous Plans</p>
         </div>
 
+        <StatusFilterButton className="lg:hidden" />
+
         <div className={cn("hidden lg:flex items-center gap-2.5")}>
           {filterOptions.map((item) => (
             <button
@@ -123,8 +125,6 @@ const PreviousPlansCard = () => {
             </button>
           ))}
         </div>
-
-        <StatusFilterButton className="lg:hidden" value="" field="" />
       </div>
 
       <div className="mt-6">
@@ -138,7 +138,7 @@ const PreviousPlansCard = () => {
             </div>
           </div>
         ) : (
-          <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-y-5 gap-x-4 px-6">
+          <div className="grid md:grid-cols-2 2xl:grid-cols-4 gap-y-5 gap-x-4 px-6">
             {paginatedData?.map((item) => (
               <ResidentialPlanCard
                 key={item.id}

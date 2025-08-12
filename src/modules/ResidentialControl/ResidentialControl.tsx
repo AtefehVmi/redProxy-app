@@ -27,12 +27,7 @@ const ResidentialControl = ({ className }: { className?: string }) => {
           bandwidth={bandwidth}
           setBandwidth={(val) => setBandwidth(Math.max(1, val))}
         />
-        <CouponCard
-          amount={bandwidth}
-          coupon={coupon}
-          setCoupon={setCoupon}
-          className="mt-4"
-        />
+        <CouponCard amount={bandwidth} coupon={coupon} setCoupon={setCoupon} />
       </div>
     </div>
   );

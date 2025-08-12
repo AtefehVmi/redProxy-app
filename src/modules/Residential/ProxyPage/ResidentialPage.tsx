@@ -9,13 +9,12 @@ import MagicWandIcon from "@public/icons/magic-wand.svg";
 import Image from "next/image";
 import SearchInput from "@/components/SearchInput/SearchInput";
 import SearchIcon from "@public/icons/search.svg";
-import ResidentialConfigTab from "./ResidentialConfigTab";
-import ResidentialPlansTab from "./ResidentialPlansTab";
 import ConfigIcon from "@public/icons/globe.svg";
 import PlansIcon from "@public/icons/plans.svg";
-import SettingsIcon from "@public/icons/settings-sliders.svg";
-import StatusFilterButton from "./StatusFilterButton";
+import StatusFilterButton from "../StatusFilterButton";
 import Link from "next/link";
+import ResidentialConfigTab from "./ResidentialConfigTab";
+import ResidentialPlansTab from "./ResidentialPlansTab";
 
 const tabs = [
   {
@@ -46,6 +45,7 @@ const ResidentialPage = () => {
   const router = useRouter();
 
   const activeTab = params.get("tab") || tabs[0].key;
+
   const handleTabClick = (tabKey: string) => {
     const newParams = new URLSearchParams(params.toString());
     newParams.set("tab", tabKey);
@@ -71,9 +71,11 @@ const ResidentialPage = () => {
               Purchase Plan
             </Button>
           </Link>
-          <Button icon={<Image src={MagicWandIcon} alt="" />}>
-            Generate New
-          </Button>
+          <Link href={"/generate/residential"}>
+            <Button icon={<Image src={MagicWandIcon} alt="" />}>
+              Generate New
+            </Button>
+          </Link>
         </div>
       </div>
 
@@ -106,13 +108,11 @@ const ResidentialPage = () => {
             }
           />
 
-          {activeTab === "plans" && (
-            <StatusFilterButton field="status" value="active" />
-          )}
+          {activeTab === "plans" && <StatusFilterButton />}
         </div>
       </div>
 
-      <div className="mt-5">
+      <div className="mt-8">
         {tabs.find((t) => t.key === activeTab)?.content}
       </div>
     </div>

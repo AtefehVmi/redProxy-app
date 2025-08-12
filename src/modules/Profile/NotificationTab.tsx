@@ -33,7 +33,7 @@ const NotificationTab = () => {
   const [activeTab, setActiveTab] = useState<"all" | "read" | "unread">("all");
 
   return (
-    <div className="bg-darkmode-200 border border-darkmode-100 px-8 pt-8 rounded-xl">
+    <div className="bg-darkmode-200 border border-darkmode-100 px-6 pt-6 lg:px-8 lg:pt-8 rounded-xl">
       <p className="text-white text-lg font-semibold">Notification</p>
 
       <div className="mt-8">

@@ -2,9 +2,10 @@ import Button from "@/components/Button/Button";
 import Link from "next/link";
 import ArrowRightIcon from "@public/icons/arrow-small-right.svg";
 import Image from "next/image";
-import ResidentialFirstView from "@/modules/Residential/ResidentialFirstView";
 import IspImage from "@public/icons/isp.svg";
 import CheckIcon from "@public/icons/purple-check.svg";
+import FirstView from "@/modules/Residential/PlanPage/FirstView";
+import FirstViewOrder from "@/modules/Shared/FirstViewOrder";
 
 const FirstViewPage = () => {
   return (
@@ -28,44 +29,56 @@ const FirstViewPage = () => {
         </Link>
       </div>
 
-      <ResidentialFirstView
-        numberColor="bg-indigo-100"
-        color="bg-indigo-100/15"
-        text1="Key Features of Static Residential Proxies"
-        text2="Use Cases of Static Residential Proxies"
-        desc="A Static Residential Proxy is an IP address provided by an Internet Service Provider (ISP) that remains the same (static) over  time, unlike rotating proxies that change periodically. These proxies  route your internet traffic through a real residential device (such as a home computer or router), making your requests appear as if they come  from a legitimate residential user rather than a data center or VPN."
-        title="Static Residential Proxies"
-        className="my-8"
-        keyFeatures={[
-          {
-            feature: "Fixed IP Address",
-            featureDesc: "– The IP does not change unless manually reassigned.",
-          },
-          {
-            feature: "Residential Origin",
-            featureDesc:
-              "– The IP belongs to an ISP (e.g., Comcast, Verizon), making it appear more legitimate.",
-          },
-          {
-            feature: "High Anonymity",
-            featureDesc:
-              "– Harder to detect and block compared to datacenter proxies.",
-          },
-          {
-            feature: "Reliable for Long-term Tasks",
-            featureDesc:
-              "– Ideal for activities requiring consistent IPs (e.g., managing social media accounts, e-commerce).",
-          },
-        ]}
-        usecases={[
-          "Web Scraping",
-          "Social Media Automation",
-          "Ad Verification",
-          "Sneaker & Limited Drops",
-        ]}
-        image={IspImage}
-        checkIcon={CheckIcon}
-      />
+      <div className="grid xl:grid-cols-18 gap-4 my-8">
+        <FirstView
+          numberColor="bg-indigo-100"
+          color="bg-indigo-100/15"
+          text1="Key Features of Static Residential Proxies"
+          text2="Use Cases of Static Residential Proxies"
+          desc="A Static Residential Proxy is an IP address provided by an Internet Service Provider (ISP) that remains the same (static) over  time, unlike rotating proxies that change periodically. These proxies  route your internet traffic through a real residential device (such as a home computer or router), making your requests appear as if they come  from a legitimate residential user rather than a data center or VPN."
+          title="Static Residential Proxies"
+          className="xl:col-span-13"
+          keyFeatures={[
+            {
+              feature: "Fixed IP Address",
+              featureDesc:
+                "– The IP does not change unless manually reassigned.",
+            },
+            {
+              feature: "Residential Origin",
+              featureDesc:
+                "– The IP belongs to an ISP (e.g., Comcast, Verizon), making it appear more legitimate.",
+            },
+            {
+              feature: "High Anonymity",
+              featureDesc:
+                "– Harder to detect and block compared to datacenter proxies.",
+            },
+            {
+              feature: "Reliable for Long-term Tasks",
+              featureDesc:
+                "– Ideal for activities requiring consistent IPs (e.g., managing social media accounts, e-commerce).",
+            },
+          ]}
+          usecases={[
+            "Web Scraping",
+            "Social Media Automation",
+            "Ad Verification",
+            "Sneaker & Limited Drops",
+          ]}
+          image={IspImage}
+          checkIcon={CheckIcon}
+        />
+
+        <FirstViewOrder
+          bestPlanColor="bg-indigo-100"
+          planName="30 Days"
+          discount={20}
+          totalPrice={12}
+          ellipseColor="bg-indigo-100/35"
+          className="xl:col-span-5"
+        />
+      </div>
     </div>
   );
 };
