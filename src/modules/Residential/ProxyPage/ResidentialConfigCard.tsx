@@ -58,7 +58,8 @@ PASSWORD: ${props.password}`;
   };
 
   const containerStyle = "w-auto h-auto flex flex-col items-start gap-[7px]";
-  const headingStyle = "text-xs font-medium text-config-card-heading-text";
+  const headingStyle =
+    "text-xs font-medium text-config-card-heading-text whitespace-nowrap";
   const valueStyle = "text-sm font-semibold text-white";
 
   const renderCopyIcon = (field: string) => (
@@ -103,45 +104,45 @@ PASSWORD: ${props.password}`;
       <div className="block xl:hidden w-full bg-darkmode-100 h-px my-4"></div>
 
       {/*col 2*/}
-      <div className="xl:col-span-4 grid md:grid-cols-2 xl:grid-cols-4 grid-rows-2 gap-2 items-center">
-        <div className={containerStyle}>
+      <div className="xl:col-span-5 1940:col-span-4 grid md:grid-cols-2 xl:grid-cols-10 grid-rows-2 gap-2 items-center">
+        <div className={cn(containerStyle, "xl:col-span-1")}>
           <p className={headingStyle}>PORT TYPE</p>
           <p className={valueStyle}>{props.portType}</p>
         </div>
-        <div className={containerStyle}>
+        <div className={cn(containerStyle, "xl:col-span-2")}>
           <p className={headingStyle}>GEO LOCATION</p>
           <p className={valueStyle}>{props.geoLocation}</p>
         </div>
-        <div className={containerStyle}>
+        <div className={cn(containerStyle, "xl:col-span-4")}>
           <p className={headingStyle}>FORMAT</p>
           <div className="flex items-center gap-[3px]">
             <p className={valueStyle}>{props.format}</p>
             {renderCopyIcon("FORMAT")}
           </div>
         </div>
-        <div className={containerStyle}>
+        <div className={cn(containerStyle, "xl:col-span-3")}>
           <p className={headingStyle}>USERNAME</p>
           <div className="flex items-center gap-[3px]">
             <p className={valueStyle}>{props.username}</p>
             {renderCopyIcon("USERNAME")}
           </div>
         </div>
-        <div className={containerStyle}>
+        <div className={cn(containerStyle, "xl:col-span-1")}>
           <p className={headingStyle}>ROTATION</p>
           <p className={valueStyle}>{props.rotation}</p>
         </div>
-        <div className={containerStyle}>
+        <div className={cn(containerStyle, "xl:col-span-2")}>
           <p className={headingStyle}>QUANTITY GENERATED</p>
           <p className={valueStyle}>{props.quantityGenerated}</p>
         </div>
-        <div className={containerStyle}>
+        <div className={cn(containerStyle, "xl:col-span-4")}>
           <p className={headingStyle}>PORT</p>
           <div className="flex items-center gap-[3px]">
             <p className={valueStyle}>{props.port}</p>
             {renderCopyIcon("PORT")}
           </div>
         </div>
-        <div className={containerStyle}>
+        <div className={cn(containerStyle, "xl:col-span-3")}>
           <p className={headingStyle}>PASSWORD</p>
           <div className="flex items-center gap-[3px]">
             <p className={valueStyle}>{props.password}</p>
@@ -153,10 +154,10 @@ PASSWORD: ${props.password}`;
       <div className="block xl:hidden w-full bg-darkmode-100 h-px my-4"></div>
 
       {/*col 3*/}
-      <div className="xl:col-span-1 flex flex-col justify-center items-end gap-2.5">
-        <div className="flex items-center gap-1 w-full">
+      <div className="xl:col-span-7 1940:col-span-1 flex flex-row 1940:flex-col 1940:justify-center items-end gap-2.5 w-full mt-3 pt-3 border-t 1940:border-t-0 border-darkmode-100">
+        <div className="flex items-center gap-1 1940:w-full">
           <Button
-            className="w-1/2"
+            className="1940:w-1/2"
             variant="secondary"
             icon={
               <Image
@@ -174,7 +175,7 @@ PASSWORD: ${props.password}`;
           </Button>
 
           <Button
-            className="w-1/2"
+            className="1940:w-1/2"
             onClick={(e) => {
               e.stopPropagation();
             }}
@@ -184,12 +185,13 @@ PASSWORD: ${props.password}`;
             <p className="text-xs font-medium text-white">Delete</p>
           </Button>
         </div>
-        <Link className="w-full" href={"/viewConfig/residential"}>
+
+        <Link className="1940:w-full" href={"/viewConfig/residential"}>
           <Button
             rightIcon={
               <Image src={rawArrowRightIcon} alt={""} className="w-4 h-4" />
             }
-            className="w-full"
+            className="1940:w-full"
           >
             Proxy List
           </Button>
