@@ -22,8 +22,12 @@ const AddBandwidthModal = () => {
 
   return (
     <>
-      <Button onClick={() => setIsFirstModalOpen(true)} className="p-2.5">
-        <Image src={PlusIcon} alt="Add" />
+      <Button
+        icon={<Image src={PlusIcon} alt="Add" />}
+        onClick={() => setIsFirstModalOpen(true)}
+        className="p-2.5"
+      >
+        Add Bandwidth
       </Button>
 
       <Dialog

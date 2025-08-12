@@ -17,27 +17,14 @@ const AddBandwidthCard = () => {
 
           <div>
             <p className="text-white font-bold text-sm">Bandwidth</p>
-            <div className="flex items-center gap-2">
-              <p className="text-white text-xs">10 Plans</p>
-              <div className="flex items-center gap-0.5">
-                <Image src={TrendupIcon} alt="" />
-                <p className="text-white/50 text-xs font-bold">40%</p>
-              </div>
-            </div>
           </div>
         </div>
-
-        <AddBandwidthModal />
       </div>
 
       <div className="mt-10">
         <div className="flex items-center justify-between">
           <p className="text-white font-extrabold text-xl">45 GB</p>
-          <p className="text-white/45 text-xs">90%</p>
-        </div>
-
-        <div className="mt-2">
-          <ProgressBar progress={90} />
+          <AddBandwidthModal />
         </div>
       </div>
     </div>

@@ -16,7 +16,7 @@ const DatacenterControl = ({ className }: { className?: string }) => {
     <div className={cn("grid grid-cols-1 xl:grid-cols-11 gap-4", className)}>
       <div className="xl:col-span-8">
         <CustomPlan plan={plan} setPlan={setPlan} />
-        <CouponCard coupon={coupon} setCoupon={setCoupon} className="mt-4" />
+        <CouponCard coupon={coupon} setCoupon={setCoupon} />
       </div>
 
       <div className="xl:col-span-3">

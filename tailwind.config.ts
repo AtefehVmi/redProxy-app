@@ -57,7 +57,7 @@ const config: Config = {
         "nav-link-active-bg": "#F8F8F81A",
         "custom-card-bg": "#14181A",
         "profile-card-text": "#B0B0B0",
-        "proxy-color": "#2ECB6D",
+        succes: "#2ECB6D",
         error: "#ea2a4e",
         "custom-link-bg": "#FBFAF91A",
         "custom-link-border": "#F1EEE90D",
@@ -91,6 +91,7 @@ const config: Config = {
         "yellow-100": "#FFF85C",
         "orange-300": "#FF5C5C",
         "error-main": "#FD3D39",
+        danger: "#FF395D",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

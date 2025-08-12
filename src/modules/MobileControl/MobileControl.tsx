@@ -27,7 +27,7 @@ const MobileControl = ({ className }: { className?: string }) => {
           port={port}
           setPort={setPort}
         />
-        <CouponCard coupon={coupon} setCoupon={setCoupon} className="mt-4" />
+        <CouponCard coupon={coupon} setCoupon={setCoupon} />
       </div>
 
       <div className="xl:col-span-3">

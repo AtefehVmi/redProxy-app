@@ -92,7 +92,7 @@ const ResidentialPlansTab = () => {
             </p>
             <Link
               className="mt-6 flex items-center justify-center"
-              href={"/purchase/residential"}
+              href={"/plan/residential"}
             >
               <Button
                 className="px-4 py-3 text-base"

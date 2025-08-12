@@ -83,7 +83,10 @@ const ResidentialConfigTab = () => {
             <p className="mt-6 text-base font-semibold text-white">
               There are no Configurations.
             </p>
-            <Link className="mt-6 flex items-center justify-center" href={"/"}>
+            <Link
+              className="mt-6 flex items-center justify-center"
+              href={"/generate/residential"}
+            >
               <Button
                 className="px-4 py-3 text-base"
                 icon={<Image src={ShoppingCartIcon} alt="" />}

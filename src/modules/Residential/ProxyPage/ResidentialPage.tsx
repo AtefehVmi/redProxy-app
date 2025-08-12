@@ -71,9 +71,11 @@ const ResidentialPage = () => {
               Purchase Plan
             </Button>
           </Link>
-          <Button icon={<Image src={MagicWandIcon} alt="" />}>
-            Generate New
-          </Button>
+          <Link href={"/generate/residential"}>
+            <Button icon={<Image src={MagicWandIcon} alt="" />}>
+              Generate New
+            </Button>
+          </Link>
         </div>
       </div>
 

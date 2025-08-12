@@ -104,6 +104,8 @@ const PreviousPlansCard = () => {
           <p className="text-white font-bold text-xl">Previous Plans</p>
         </div>
 
+        <StatusFilterButton className="lg:hidden" />
+
         <div className={cn("hidden lg:flex items-center gap-2.5")}>
           {filterOptions.map((item) => (
             <button
@@ -123,8 +125,6 @@ const PreviousPlansCard = () => {
             </button>
           ))}
         </div>
-
-        <StatusFilterButton className="lg:hidden" value="" field="" />
       </div>
 
       <div className="mt-6">

@@ -3,6 +3,7 @@ import CustomLink from "@/components/CustomLink/customLink";
 import CreateResidentialConfig from "@/modules/CreateResidentialConfig/CreateResidentialConfig";
 import AddBandwidthCard from "@/modules/CreateResidentialConfig/AddBandwidthCard";
 import ResiDetailCard from "@/modules/CreateResidentialConfig/ResiDetailCard";
+import PurchaseHistory from "@/modules/CreateResidentialConfig/PurchaseHistory";
 
 const Page = () => {
   return (
@@ -10,10 +11,10 @@ const Page = () => {
       <div className="w-full flex justify-between items-center">
         <div className="flex flex-col items-start gap-1.5">
           <p className="text-xl font-semibold text-white">
-            New Residential Configuration
+            Your Configurations
           </p>
           <p className="text-sm font-medium text-nav-sub-menu-heading-text">
-            Configure your new proxy settings
+            You have 4 active configurations
           </p>
         </div>
         <CustomLink href={"/proxy/residential"} className="py-2 px-4">
@@ -26,6 +27,7 @@ const Page = () => {
         <div className="col-span-3">
           <AddBandwidthCard />
           <ResiDetailCard />
+          <PurchaseHistory className="mt-4" />
         </div>
       </div>
     </div>

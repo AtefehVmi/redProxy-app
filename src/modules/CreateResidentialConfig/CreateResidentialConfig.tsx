@@ -6,6 +6,7 @@ import TextArea from "@/components/TextArea/TextArea";
 import Image from "next/image";
 import cn from "@/utils/cn";
 import Button from "@/components/Button/Button";
+
 import copyIcon from "@public/icons/copy-all.svg";
 import DownloadIcon from "@public/icons/download-icon.svg";
 import CheckIcon from "@public/icons/check.svg";
@@ -13,16 +14,17 @@ import ConfigIcon from "@public/icons/config-name.svg";
 import RotationIcon from "@public/icons/rotation.svg";
 import PortIcon from "@public/icons/port.svg";
 import QuantityIcon from "@public/icons/quantity.svg";
+import ProxyIcon from "@public/icons/model-cube.svg";
+import CodeIcon from "@public/icons/display-code.svg";
+
 import Autocomplete from "@/components/AutoComplete/Autocomplete";
-import { useQuery } from "@tanstack/react-query";
-import { QUERY_KEYS } from "@/constants/querykeys";
 import {
   generateProxy,
   getResiCities,
   getResiCountries,
   getResiStates,
 } from "@/service/api";
-import { useParams, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import useFetch from "@/hooks/UseFetch";
 import { City, Country, State } from "@/service/models";
 
@@ -79,6 +81,11 @@ const poolToName = {
   residential: "Residential",
   premium_residential: "Premium Residential",
 };
+
+const tabs = [
+  { title: "Proxy", icon: ProxyIcon, content: <></> },
+  { title: "Code", icon: CodeIcon, content: <></> },
+];
 
 const CreateResidentialConfig = ({ className }: { className?: string }) => {
   const [formatedList, setFormatedList] = React.useState<string>(
@@ -357,7 +364,7 @@ const CreateResidentialConfig = ({ className }: { className?: string }) => {
               options={countryOptions}
               onChange={() => {}}
               onFocus={handleCountriesFetch}
-              label={"Geo Location *"}
+              label={"Location *"}
               startAdornment={<Image src={QuantityIcon} alt="" />}
             />
 
@@ -380,11 +387,12 @@ const CreateResidentialConfig = ({ className }: { className?: string }) => {
             />
           </div>
           <div className="flex items-center justify-end col-span-2">
-            <Button onClick={handleSubmit} className="mt-8 text-base">
+            <Button onClick={handleSubmit} className="mt-8 text-base px-8">
               Generate Proxy
             </Button>
           </div>
         </div>
+
         <TextArea
           className="mt-12"
           buttons={

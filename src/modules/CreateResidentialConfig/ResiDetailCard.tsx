@@ -1,5 +1,5 @@
-import DatabaseIcon from "@public/icons/database.svg";
 import TimeIcon from "@public/icons/time-past.svg";
+import CalendarIcon from "@public/icons/calendar.svg";
 import Image from "next/image";
 
 const ResiDetailCard = () => {
@@ -8,12 +8,12 @@ const ResiDetailCard = () => {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="bg-darkmode-300 rounded">
-            <Image src={DatabaseIcon} alt="" className="m-2.5" />
+            <Image src={TimeIcon} alt="" className="m-2.5" />
           </div>
 
-          <p className="text-xs text-gray-600">Total Purchase</p>
+          <p className="text-xs text-gray-600">Order Date</p>
         </div>
-        <p className="text-base text-white font-semibold">20GB</p>
+        <p className="text-base text-white font-semibold">12 April 2026</p>
       </div>
 
       <div className="my-6 h-px w-full bg-darkmode-100"></div>
@@ -21,7 +21,7 @@ const ResiDetailCard = () => {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="bg-darkmode-300 rounded">
-            <Image src={TimeIcon} alt="" className="m-2.5" />
+            <Image src={CalendarIcon} alt="" className="m-2.5 w-6 h-6" />
           </div>
 
           <p className="text-xs text-gray-600">Expiration Date</p>
