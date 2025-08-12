@@ -3,16 +3,12 @@
 import React from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import cn from "@/utils/cn";
-import TextArea from "@/components/TextArea/TextArea";
-import Button from "@/components/Button/Button";
 
-import copyIcon from "@public/icons/copy-all.svg";
-import DownloadIcon from "@public/icons/download-icon.svg";
-import CheckIcon from "@public/icons/check.svg";
 import ProxyIcon from "@public/icons/model-cube.svg";
 import CodeIcon from "@public/icons/display-code.svg";
 import Image from "next/image";
 import CodePicker from "./CodePicker";
+import GeneratedProxyTab from "./GeneratedProxyTab";
 
 const DUMMY_TEXT_AREA_VALUE =
   "saaf.eth---gmail.com:null:proxy.wtfproxy.com:3030\n" +
@@ -36,7 +32,19 @@ const ResidentialGenerateTab = () => {
   const selectLabelStyle = "text-sm mb-2.5";
 
   const tabs = [
-    { title: "Proxy", icon: ProxyIcon, key: "proxy", content: <></> },
+    {
+      title: "Proxy",
+      icon: ProxyIcon,
+      key: "proxy",
+      content: (
+        <GeneratedProxyTab
+          downloaded={downloaded}
+          copied={copied}
+          onCopyClick={onCopyClick}
+          onDownloadClick={onDownloadClick}
+        />
+      ),
+    },
     {
       title: "Code",
       icon: CodeIcon,
@@ -85,13 +93,13 @@ const ResidentialGenerateTab = () => {
   return (
     <div className="w-full">
       <div className="flex flex-col md:flex-row md:items-center justify-between border-t border-darkmode-100 mt-6 py-5">
-        <div className="bg-darkmode-200 rounded p-2 w-full md:w-fit grid grid-cols-2 gap-2.5 border border-darkmode-100">
+        <div className="bg-darkmode-200 p-2 rounded flex items-center w-fit gap-2.5 border border-darkmode-100">
           {tabs.map((item) => (
             <button
               key={item.key}
               onClick={() => handleTabClick(item.key)}
               className={cn(
-                "rounded border px-3 py-1.5 text-white text-sm flex items-center gap-1",
+                "rounded border px-12 py-[9px] text-white text-sm flex items-center gap-1",
                 activeTab === item.key
                   ? "bg-darkmode-100 border-darkmode-100 cursor-not-allowed"
                   : "bg-darkmode-300 border-darkmode-300 cursor-pointer"
