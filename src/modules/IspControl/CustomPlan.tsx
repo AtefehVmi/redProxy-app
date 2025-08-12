@@ -163,7 +163,7 @@ const CustomPlan: React.FC<Props> = ({
             }
           />
         </div>
-        <div className="flex flex-col md:flex-row md:items-center gap-3">
+        <div className="flex flex-col md:flex-row md:items-center justify-center gap-3">
           <RadioCard<string>
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mt-4 w-full"
             selected={selectedlocation}
@@ -172,9 +172,9 @@ const CustomPlan: React.FC<Props> = ({
             padding="py-[9px]"
           />
 
-          <button className="flex items-center gap-1 group w-fit">
+          <button className="flex items-center gap-1 group w-fit mt-4">
             <p className="text-white text-xs whitespace-nowrap">
-              +30 more Country
+              Expand All countries
             </p>
             <Image
               src={ChevronIcon}
