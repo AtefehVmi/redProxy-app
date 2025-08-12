@@ -55,7 +55,7 @@ export const APP_NAVIGATION = [
           "/plan/residential",
           "/purchase/new",
           "/generate/residential",
-          "/purchase/previous",
+          "/purchase/",
         ],
       },
       {
@@ -63,7 +63,7 @@ export const APP_NAVIGATION = [
         iconSrc: "/icons/isp-small-icon.svg",
         navbarIconSrc: "/icons/isp-icon.svg",
         href: APP_ROUTES.ispProxy,
-        aliases: ["/plan/isp", "/firstView/isp", "/viewConfig/isp"],
+        aliases: ["/plan/isp", "/firstView/isp", "/generate/isp"],
       },
       {
         title: "Datacenter Proxies",
@@ -73,7 +73,7 @@ export const APP_NAVIGATION = [
         aliases: [
           "/plan/datacenter",
           "/firstView/datacenter",
-          "/viewConfig/datacenter",
+          "/generate/datacenter",
         ],
       },
       {
@@ -81,7 +81,7 @@ export const APP_NAVIGATION = [
         iconSrc: "/icons/mobile-small-icon.svg",
         navbarIconSrc: "/icons/mobile-icon.svg",
         href: APP_ROUTES.mobileProxy,
-        aliases: ["/plan/mobile", "/firstView/mobile"],
+        aliases: ["/plan/mobile", "/firstView/mobile", "/generate/mobile"],
       },
     ],
   },

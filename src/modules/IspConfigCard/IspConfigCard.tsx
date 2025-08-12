@@ -134,7 +134,7 @@ Date: ${props.date}`;
               handleCopyAll();
             }}
           >
-            <p className="text-xs font-medium text-white">
+            <p className="text-white">
               {copiedField === "ALL" ? "Copied" : "Copy"}
             </p>
           </Button>
@@ -147,7 +147,7 @@ Date: ${props.date}`;
             variant="secondary"
             icon={<Image src={trashIcon} alt={""} className="w-4 h-4" />}
           >
-            <p className="text-xs font-medium text-white">Delete</p>
+            <p className="text-white">Delete</p>
           </Button>
         </div>
         {["Mobile Proxies"].includes(props.proxyname) ? (
@@ -156,14 +156,14 @@ Date: ${props.date}`;
             rightIcon={
               <Image src={rawArrowRightIcon} alt={""} className="w-4 h-4" />
             }
-            className="col-span-2 px-9"
+            className="col-span-2 px-10"
           >
             Proxy List
           </Button>
         ) : props.href ? (
           <Link className="md:col-span-2" href={props.href}>
             <Button
-              className="px-9 w-full md:w-fit"
+              className="px-10 w-full md:w-fit"
               rightIcon={
                 <Image src={rawArrowRightIcon} alt={""} className="w-4 h-4" />
               }

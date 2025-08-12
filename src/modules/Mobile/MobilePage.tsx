@@ -166,6 +166,7 @@ const MobilePage = () => {
         <div className="flex flex-col gap-6">
           {paginatedData.map((config, index) => (
             <IspConfigCard
+              href="/generate/mobile"
               dataUsage={config.dataUsage}
               chartColor="#FFF85C"
               proxyname="Mobile Proxies"
