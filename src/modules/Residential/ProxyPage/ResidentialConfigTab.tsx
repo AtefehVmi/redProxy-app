@@ -3,6 +3,9 @@ import Pagination from "@/components/Pagination/Pagination";
 import NoDataImage from "@public/image/config.png";
 import Image from "next/image";
 import ResidentialConfigCard from "./ResidentialConfigCard";
+import ShoppingCartIcon from "@public/icons/shopping-cart.svg";
+import Button from "@/components/Button/Button";
+import Link from "next/link";
 
 const CHART_DATA = [
   {
@@ -80,6 +83,14 @@ const ResidentialConfigTab = () => {
             <p className="mt-6 text-base font-semibold text-white">
               There are no Configurations.
             </p>
+            <Link className="mt-6 flex items-center justify-center" href={"/"}>
+              <Button
+                className="px-4 py-3 text-base"
+                icon={<Image src={ShoppingCartIcon} alt="" />}
+              >
+                Order Now
+              </Button>
+            </Link>
           </div>
         </div>
       ) : (
