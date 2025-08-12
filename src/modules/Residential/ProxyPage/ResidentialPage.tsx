@@ -111,6 +111,10 @@ const ResidentialPage = () => {
           )}
         </div>
       </div>
+
+      <div className="mt-8">
+        {tabs.find((t) => t.key === activeTab)?.content}
+      </div>
     </div>
   );
 };
