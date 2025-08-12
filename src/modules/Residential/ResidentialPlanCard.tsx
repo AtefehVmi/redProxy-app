@@ -22,7 +22,7 @@ type Props = {
 };
 
 const ResidentialPlanCard: React.FC<Props> = ({
-  name,
+  name: initialName,
   desc,
   purchaseDate,
   expireDate,
@@ -30,6 +30,15 @@ const ResidentialPlanCard: React.FC<Props> = ({
   planId,
 }) => {
   const [showGb, setShowGb] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [name, setName] = useState(initialName);
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
+  };
+  const handleNameSubmit = () => {
+    setIsEditing(false);
+  };
 
   return (
     <div className="border border-darkmode-100 bg-darkmode-300 rounded-lg p-4">
@@ -37,8 +46,28 @@ const ResidentialPlanCard: React.FC<Props> = ({
         <div className="flex items-center justify-between">
           <div>
             <div className="flex items-center gap-1">
-              <p className="text-white font-semibold text-base">{name}</p>
-              <Image src={EditIcon} alt="" />
+              {isEditing ? (
+                <input
+                  type="text"
+                  value={name}
+                  onChange={handleNameChange}
+                  onBlur={handleNameSubmit}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") handleNameSubmit();
+                  }}
+                  className="bg-transparent border-b border-grey-400 text-white font-semibold text-base focus:outline-none w-[150px]"
+                  autoFocus
+                />
+              ) : (
+                <p className="text-white font-semibold text-base">{name}</p>
+              )}
+
+              <button
+                onClick={() => setIsEditing(true)}
+                className="hover:opacity-80"
+              >
+                <Image src={EditIcon} alt="" />
+              </button>
             </div>
             <p className="text-grey-400 text-xs">{desc}</p>
           </div>
