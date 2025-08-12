@@ -154,6 +154,7 @@ const PreviousPlansCard = () => {
         )}
 
         <Pagination
+          color="bg-blue-100 border-blue-100 hover:bg-blue-400"
           className="mb-0"
           totalCount={data.length}
           limit={limit}

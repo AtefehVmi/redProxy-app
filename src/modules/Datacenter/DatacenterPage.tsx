@@ -185,6 +185,7 @@ const DatacenterPage = () => {
         </div>
 
         <Pagination
+          color="bg-orange-300 border-orange-300 hover:bg-orange-400"
           totalCount={data.length}
           limit={limit}
           offset={offset}

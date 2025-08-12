@@ -186,7 +186,7 @@ PASSWORD: ${props.password}`;
           </Button>
         </div>
 
-        <Link className="1940:w-full" href={"/viewConfig/residential"}>
+        <Link className="1940:w-full" href={"/generate/residential"}>
           <Button
             rightIcon={
               <Image src={rawArrowRightIcon} alt={""} className="w-4 h-4" />

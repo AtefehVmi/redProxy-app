@@ -185,6 +185,7 @@ const IspPage = () => {
         </div>
 
         <Pagination
+          color="bg-indigo-100 border-indigo-100 hover:bg-indigo-400"
           totalCount={data.length}
           limit={limit}
           offset={offset}

@@ -18,6 +18,7 @@ interface PaginationProps {
   isDataAvailable: boolean;
   noMargin?: boolean;
   className?: string;
+  color?: string;
 }
 
 const Pagination: React.FC<PaginationProps> = ({
@@ -27,6 +28,7 @@ const Pagination: React.FC<PaginationProps> = ({
   isDataAvailable,
   className,
   noMargin = false,
+  color,
 }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -78,6 +80,7 @@ const Pagination: React.FC<PaginationProps> = ({
     if (totalPages <= 5) {
       return Array.from({ length: totalPages }, (_, i) => (
         <PaginationButton
+          color={color}
           key={i + 1}
           pageNumber={i + 1}
           currentPage={currentPage}
@@ -89,6 +92,7 @@ const Pagination: React.FC<PaginationProps> = ({
       if (currentPage > 2) {
         pages.push(
           <PaginationButtton
+            color={color}
             key={1}
             pageNumber={1}
             currentPage={currentPage}
@@ -107,6 +111,7 @@ const Pagination: React.FC<PaginationProps> = ({
       if (currentPage > 1) {
         pages.push(
           <PaginationButton
+            color={color}
             key={currentPage - 1}
             pageNumber={currentPage - 1}
             currentPage={currentPage}
@@ -116,6 +121,7 @@ const Pagination: React.FC<PaginationProps> = ({
       }
       pages.push(
         <PaginationButton
+          color={color}
           key={currentPage}
           pageNumber={currentPage}
           currentPage={currentPage}
@@ -125,6 +131,7 @@ const Pagination: React.FC<PaginationProps> = ({
       if (currentPage < totalPages) {
         pages.push(
           <PaginationButton
+            color={color}
             key={currentPage + 1}
             pageNumber={currentPage + 1}
             currentPage={currentPage}

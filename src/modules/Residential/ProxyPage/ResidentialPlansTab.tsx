@@ -120,6 +120,7 @@ const ResidentialPlansTab = () => {
       )}
 
       <Pagination
+        color="bg-blue-100 border-blue-100 hover:bg-blue-400"
         totalCount={data.length}
         limit={limit}
         offset={offset}
