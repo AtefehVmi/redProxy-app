@@ -46,7 +46,7 @@ const ResidentialCard: React.FC<Props> = ({
             </p>
           </div>
 
-          <Link className="w-2/5" href={"/purchase/residential"}>
+          <Link className="w-2/5" href={"/purchase/new"}>
             <Button
               className="px-3 py-2.5 text-base"
               rightIcon={<Image src={ArrowIcon} alt="" />}

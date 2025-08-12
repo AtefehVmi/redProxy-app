@@ -11,6 +11,7 @@ import GlobeIcon from "@public/icons/globe-big.svg";
 import EyeIcon from "@public/icons/eye.svg";
 import PurchaseIcon from "@public/icons/shopping-cart.svg";
 import Button from "@/components/Button/Button";
+import Link from "next/link";
 
 type Props = {
   name: string;
@@ -120,9 +121,11 @@ const ResidentialPlanCard: React.FC<Props> = ({
       </div>
 
       <div className="mt-4 w-full">
-        <Button className="w-full" icon={<Image src={PurchaseIcon} alt="" />}>
-          Add Bandwidth
-        </Button>
+        <Link href={`/purchase/${planId}`}>
+          <Button className="w-full" icon={<Image src={PurchaseIcon} alt="" />}>
+            Add Bandwidth
+          </Button>
+        </Link>
       </div>
     </div>
   );

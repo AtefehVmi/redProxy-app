@@ -171,7 +171,7 @@ PASSWORD: ${props.password}`;
               handleCopyAll();
             }}
           >
-            <p className="text-xs font-medium text-white">Copy</p>
+            <p className="text-white">Copy</p>
           </Button>
 
           <Button
@@ -182,7 +182,7 @@ PASSWORD: ${props.password}`;
             variant="secondary"
             icon={<Image src={trashIcon} alt={""} className="w-4 h-4" />}
           >
-            <p className="text-xs font-medium text-white">Delete</p>
+            <p className="text-white">Delete</p>
           </Button>
         </div>
 

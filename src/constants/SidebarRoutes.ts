@@ -53,8 +53,9 @@ export const APP_NAVIGATION = [
         href: APP_ROUTES.residentialProxy,
         aliases: [
           "/plan/residential",
-          "/purchase/residential",
+          "/purchase/new",
           "/generate/residential",
+          "/purchase/previous",
         ],
       },
       {

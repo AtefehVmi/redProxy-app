@@ -10,11 +10,14 @@ import OrderSummaryCard from "@/modules/Shared/OrderSummaryCard";
 import HotSaleImage from "@public/icons/hot-sale.svg";
 import CrossIcon from "@public/icons/cross.svg";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
+import PreviousPlanCard from "./PreviousPlanCard";
 
 const PurchaseNewPlan = ({ className }: { className?: string }) => {
   const [selectedPlanId, setSelectedPlanId] = useState<number | null>(null);
   const [coupon, setCoupon] = useState("");
   const [bannerVisibility, setBannerVisibility] = useState(true);
+  const pathname = usePathname();
 
   const handleSelectPlan = (id: number) => {
     setSelectedPlanId(id);
@@ -48,92 +51,98 @@ const PurchaseNewPlan = ({ className }: { className?: string }) => {
 
       <div className={cn("grid xl:grid-cols-9 gap-4", className)}>
         <div className="xl:col-span-6">
-          <div>
-            <div className="grid md:grid-cols-3 gap-4">
-              <ResidentialPlan
-                id={1}
-                isSelected={selectedPlanId === 3}
-                onSelect={handleSelectPlan}
-                gb={1}
-                perPrice={2}
-                total={12}
-                discount={5}
-              />
-              <ResidentialPlan
-                id={2}
-                isSelected={selectedPlanId === 4}
-                onSelect={handleSelectPlan}
-                gb={2}
-                perPrice={2}
-                total={12}
-                discount={5}
-              />
-              <ResidentialPlan
-                id={3}
-                isSelected={selectedPlanId === 5}
-                onSelect={handleSelectPlan}
-                gb={3}
-                perPrice={2}
-                total={12}
-                discount={5}
-              />
-            </div>
+          {pathname === "/purchase/new" ? (
+            <>
+              <div>
+                <div className="grid md:grid-cols-3 gap-4">
+                  <ResidentialPlan
+                    id={1}
+                    isSelected={selectedPlanId === 3}
+                    onSelect={handleSelectPlan}
+                    gb={1}
+                    perPrice={2}
+                    total={12}
+                    discount={5}
+                  />
+                  <ResidentialPlan
+                    id={2}
+                    isSelected={selectedPlanId === 4}
+                    onSelect={handleSelectPlan}
+                    gb={2}
+                    perPrice={2}
+                    total={12}
+                    discount={5}
+                  />
+                  <ResidentialPlan
+                    id={3}
+                    isSelected={selectedPlanId === 5}
+                    onSelect={handleSelectPlan}
+                    gb={3}
+                    perPrice={2}
+                    total={12}
+                    discount={5}
+                  />
+                </div>
 
-            <div className="grid md:grid-cols-2 gap-4 mt-6">
-              <ResidentialPlan
-                id={4}
-                gb={5}
-                recommend={true}
-                perPrice={2}
-                total={12}
-                discount={20}
-                isSelected={selectedPlanId === 1}
-                onSelect={handleSelectPlan}
-              />
-              <ResidentialPlan
-                id={5}
-                gb={10}
-                recommend={true}
-                perPrice={2}
-                total={12}
-                discount={20}
-                isSelected={selectedPlanId === 2}
-                onSelect={handleSelectPlan}
-              />
-            </div>
+                <div className="grid md:grid-cols-2 gap-4 mt-6">
+                  <ResidentialPlan
+                    id={4}
+                    gb={5}
+                    recommend={true}
+                    perPrice={2}
+                    total={12}
+                    discount={20}
+                    isSelected={selectedPlanId === 1}
+                    onSelect={handleSelectPlan}
+                  />
+                  <ResidentialPlan
+                    id={5}
+                    gb={10}
+                    recommend={true}
+                    perPrice={2}
+                    total={12}
+                    discount={20}
+                    isSelected={selectedPlanId === 2}
+                    onSelect={handleSelectPlan}
+                  />
+                </div>
 
-            <div className="grid md:grid-cols-3 mt-6 gap-4">
-              <ResidentialPlan
-                id={6}
-                isSelected={selectedPlanId === 3}
-                onSelect={handleSelectPlan}
-                gb={20}
-                perPrice={2}
-                total={12}
-                discount={5}
-              />
-              <ResidentialPlan
-                id={7}
-                isSelected={selectedPlanId === 4}
-                onSelect={handleSelectPlan}
-                gb={50}
-                perPrice={2}
-                total={12}
-                discount={5}
-              />
-              <ResidentialPlan
-                id={8}
-                isSelected={selectedPlanId === 5}
-                onSelect={handleSelectPlan}
-                gb={100}
-                perPrice={2}
-                total={12}
-                discount={5}
-              />
-            </div>
-          </div>
+                <div className="grid md:grid-cols-3 mt-6 gap-4">
+                  <ResidentialPlan
+                    id={6}
+                    isSelected={selectedPlanId === 3}
+                    onSelect={handleSelectPlan}
+                    gb={20}
+                    perPrice={2}
+                    total={12}
+                    discount={5}
+                  />
+                  <ResidentialPlan
+                    id={7}
+                    isSelected={selectedPlanId === 4}
+                    onSelect={handleSelectPlan}
+                    gb={50}
+                    perPrice={2}
+                    total={12}
+                    discount={5}
+                  />
+                  <ResidentialPlan
+                    id={8}
+                    isSelected={selectedPlanId === 5}
+                    onSelect={handleSelectPlan}
+                    gb={100}
+                    perPrice={2}
+                    total={12}
+                    discount={5}
+                  />
+                </div>
+              </div>
 
-          <CustomAmountCard className="mt-8" />
+              <CustomAmountCard className="mt-8" />
+            </>
+          ) : (
+            <PreviousPlanCard />
+          )}
         </div>
         <div className="xl:col-span-3">
           <CouponCard coupon={coupon} setCoupon={setCoupon} />
