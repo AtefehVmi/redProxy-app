@@ -82,16 +82,16 @@ const ProxyUsageCard = (props: ProxyUsageCardProps) => {
   let proxyColor = "";
   switch (props.proxyType) {
     case "RESIDENTIAL":
-      proxyColor = "bg-proxy-color";
+      proxyColor = "bg-succes";
       break;
     case "MOBILE":
-      proxyColor = "bg-proxy-color/50";
+      proxyColor = "bg-succes/50";
       break;
     case "DATACENTER":
-      proxyColor = "bg-proxy-color/20";
+      proxyColor = "bg-succes/20";
       break;
     default:
-      proxyColor = "bg-proxy-color";
+      proxyColor = "bg-succes";
       break;
   }
 
