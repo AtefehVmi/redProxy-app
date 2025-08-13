@@ -81,6 +81,7 @@ const MyProfile = () => {
               label="Last name *"
             />
             <InputText
+              className="md:col-span-2"
               startAdornment={<Image src={EmailIcon} alt="" />}
               value={profileData.email}
               onChange={(e) => handleChange("email", e.target.value)}
