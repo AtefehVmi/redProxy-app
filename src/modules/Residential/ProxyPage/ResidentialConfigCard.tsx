@@ -12,6 +12,7 @@ import AreaLineChart from "@/components/Charts/AreaLineChart";
 import cn from "@/utils/cn";
 import Button from "@/components/Button/Button";
 import Link from "next/link";
+import DeleteModal from "@/components/Modal/DeleteModal";
 
 interface ResidentialConfigCardProps {
   configName: string;
@@ -29,6 +30,7 @@ interface ResidentialConfigCardProps {
 
 const ResidentialConfigCard = (props: ResidentialConfigCardProps) => {
   const [copiedField, setCopiedField] = useState<string | null>(null);
+  const [open, setOpen] = useState(false);
 
   const handleCopy = (field: string, value: string | number) => {
     navigator.clipboard.writeText(String(value));
@@ -178,12 +180,14 @@ PASSWORD: ${props.password}`;
             className="1940:w-1/2"
             onClick={(e) => {
               e.stopPropagation();
+              setOpen(true);
             }}
             variant="secondary"
             icon={<Image src={trashIcon} alt={""} className="w-4 h-4" />}
           >
             <p className="text-white">Delete</p>
           </Button>
+          {open && <DeleteModal open={open} onClose={() => setOpen(false)} />}
         </div>
 
         <Link className="1940:w-full" href={"/generate/residential"}>
