@@ -14,6 +14,8 @@ import { toast } from "react-toastify";
 
 import CryptoIcon from "@public/icons/crypto.svg";
 import CartIcon from "@public/icons/cart.svg";
+import NotEnoughBalanceModal from "@/components/Modal/NotEnoughBalanceModal";
+import TopUpBalanceModal from "@/components/Modal/TopUpBalanceModal";
 
 type Props = {
   coupon?: string;
@@ -43,6 +45,10 @@ const OrderSummaryCard: React.FC<Props> = ({
   location,
 }) => {
   const [selectedPayment, setSelectedPayment] = useState(0);
+  const [openFirst, setOpenFirst] = useState(false);
+  const [openSecond, setOpenSecond] = useState(false);
+
+  const balance = 0;
 
   const { fetch: purchaseRotatingFetch, loading: rotatingFetch } = useFetch(
     purchaseRotatingProxy,
@@ -54,29 +60,37 @@ const OrderSummaryCard: React.FC<Props> = ({
   const queryClient = useQueryClient();
 
   const handlePurchaseBandwidth = () => {
-    purchaseRotatingFetch(
-      "residential",
-      residentialPlan,
-      selectedPayment,
-      coupon,
-      "Bandwidth"
-    ).then((resp) => {
-      if (selectedPayment === PAYMENT_METHODS.CRYPTO) {
-        toast.success("You'll be redirected soon...");
-        return router.push(resp.url);
-      }
-      toast.success("Purchased Successfully!");
-      // queryClient.invalidateQueries({
-      //   queryKey: QUERY_KEYS.trafficDetails(pool),
-      // });
-      queryClient.invalidateQueries({
-        queryKey: ["refreshable"],
+    if (balance <= 0) {
+      setOpenFirst(true);
+    } else
+      purchaseRotatingFetch(
+        "residential",
+        residentialPlan,
+        selectedPayment,
+        coupon,
+        "Bandwidth"
+      ).then((resp) => {
+        if (selectedPayment === PAYMENT_METHODS.CRYPTO) {
+          toast.success("You'll be redirected soon...");
+          return router.push(resp.url);
+        }
+        toast.success("Purchased Successfully!");
+        // queryClient.invalidateQueries({
+        //   queryKey: QUERY_KEYS.trafficDetails(pool),
+        // });
+        queryClient.invalidateQueries({
+          queryKey: ["refreshable"],
+        });
+        queryClient.invalidateQueries({
+          queryKey: QUERY_KEYS.PROFILE,
+        });
+        router.refresh();
       });
-      queryClient.invalidateQueries({
-        queryKey: QUERY_KEYS.PROFILE,
-      });
-      router.refresh();
-    });
+  };
+
+  const handleTopUpClick = () => {
+    setOpenFirst(false);
+    setOpenSecond(true);
   };
 
   return (
@@ -179,6 +193,19 @@ const OrderSummaryCard: React.FC<Props> = ({
       >
         {rotatingFetch ? "Purchasing..." : "Purchase"}
       </Button>
+      {openFirst && (
+        <NotEnoughBalanceModal
+          open={openFirst}
+          onClose={() => setOpenFirst(false)}
+          onTopUp={handleTopUpClick}
+        />
+      )}
+      {openSecond && (
+        <TopUpBalanceModal
+          open={openSecond}
+          onClose={() => setOpenSecond(false)}
+        />
+      )}
     </div>
   );
 };
