@@ -30,13 +30,13 @@ const EmailModal: React.FC<Props> = ({ className, open, onClose }) => {
       <DialogPanel
         as="form"
         className={cn(
-          "w-80 md:w-[474px] p-8",
+          "w-80 md:w-[474px] p-5 md:p-8",
           "bg-darkmode-200 rounded-xl",
           className
         )}
       >
         <div className="flex items-center justify-between">
-          <p className="text-white font-semibold text-lg">
+          <p className="text-white font-semibold md:text-lg">
             Enter your Email Address
           </p>
           <div onClick={onClose} className="rounded-full cursor-pointer">

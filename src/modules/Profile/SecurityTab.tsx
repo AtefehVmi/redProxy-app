@@ -21,7 +21,7 @@ const SecurityTab = () => {
   const closeModal = () => setOpenModal(null);
 
   return (
-    <div className="border border-darkmode-100 bg-darkmode-200 p-8 rounded-xl">
+    <div className="border border-darkmode-100 bg-darkmode-200 p-4 md:p-8 rounded-xl">
       <p className="text-white font-semibold text-base">
         Two-Factor Authentication (2FA)
       </p>
@@ -29,7 +29,7 @@ const SecurityTab = () => {
         Add a layer of protection to your account
       </p>
 
-      <div className="grid grid-cols-2 gap-6 mt-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
         <FactorAuthCard
           Icon={AuthAppIcon}
           name="Authenticator App"
@@ -53,7 +53,7 @@ const SecurityTab = () => {
         />
       </div>
 
-      <div className="mt-8 flex items-center justify-end">
+      <div className="mt-8 flex items-center lg:justify-end">
         <Button className="!text-xs px-4 py-[11px]">
           Enable Two Factor Authentication
         </Button>

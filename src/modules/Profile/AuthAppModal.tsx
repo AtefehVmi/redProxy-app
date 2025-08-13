@@ -36,13 +36,13 @@ const AuthAppModal: React.FC<Props> = ({
       <DialogPanel
         as="form"
         className={cn(
-          "w-80 md:w-[474px] p-8",
+          "w-80 md:w-[474px] p-5 md:p-8",
           "bg-darkmode-200 rounded-xl",
           className
         )}
       >
         <div className="flex items-center justify-between">
-          <p className="text-white font-semibold text-lg">
+          <p className="text-white font-semibold md:text-lg">
             Setup app based Authentication
           </p>
           <div
@@ -58,7 +58,7 @@ const AuthAppModal: React.FC<Props> = ({
         </div>
 
         <div>
-          <p className="mt-7 text-grey-300 text-center">
+          <p className="mt-7 text-grey-300 md:text-center text-sm md:text-base">
             Scan this QR with your selected app, then enter the code you got
             below
           </p>
