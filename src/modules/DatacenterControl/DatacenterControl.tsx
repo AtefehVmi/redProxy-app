@@ -1,10 +1,10 @@
 "use client";
 
 import cn from "@/utils/cn";
-import CouponCard from "../Shared/CouponCard";
 import OrderSummaryCard from "../Shared/OrderSummaryCard";
 import { useState } from "react";
-import CustomPlan from "./CustomPlan";
+import CustomPlan from "../IspControl/CustomPlan";
+import CouponCard from "../Shared/CouponCard";
 
 const DatacenterControl = ({ className }: { className?: string }) => {
   const [coupon, setCoupon] = useState("");
@@ -15,17 +15,26 @@ const DatacenterControl = ({ className }: { className?: string }) => {
   return (
     <div className={cn("grid grid-cols-1 xl:grid-cols-11 gap-4", className)}>
       <div className="xl:col-span-8">
-        <CustomPlan plan={plan} setPlan={setPlan} />
-        <CouponCard coupon={coupon} setCoupon={setCoupon} />
+        <CustomPlan
+          plan={plan}
+          setPlan={setPlan}
+          quantity={quantity}
+          setQuantity={setQuantity}
+          location={location}
+          setLocation={setLocation}
+        />
       </div>
 
       <div className="xl:col-span-3">
+        <CouponCard coupon={coupon} setCoupon={setCoupon} />
+
         <OrderSummaryCard
+          className="mt-4"
           price={2}
-          pricePerGb={2}
           quantity={quantity}
           coupon={coupon}
           plan={plan}
+          location={location}
         />
       </div>
     </div>
