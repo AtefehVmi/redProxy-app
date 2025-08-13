@@ -81,6 +81,7 @@ const config: Config = {
         "grey-500": "#6D7280",
         "grey-300": "#D2D5DA",
         "grey-100": "#FAFAFA",
+        "grey-600": "#4B5563",
         "darkmode-100": "#26292B",
         "darkmode-200": "#15191B",
         "darkmode-300": "#0E1214",
@@ -106,7 +107,7 @@ const config: Config = {
           "0px 37.33px 28px -18.67px rgba(0, 0, 0, 0.24), 0px 0px 9.33px 0px rgba(248, 248, 248, 0.15) inset",
         "custom-link": "0px 2px 0px 0px #C6C2BC1A",
       },
-      screens: { 1420: "1420px", 1940: "1940px" },
+      screens: { 1420: "1420px", 1940: "1940px", 1665: "1665px" },
       gridTemplateColumns: { 18: "repeat(18, minmax(0, 1fr))" },
       gridColumn: {
         "span-13": "span 13 / span 13",
