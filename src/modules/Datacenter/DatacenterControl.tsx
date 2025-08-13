@@ -3,14 +3,14 @@
 import cn from "@/utils/cn";
 import OrderSummaryCard from "../Shared/OrderSummaryCard";
 import { useState } from "react";
-import CustomPlan from "./CustomPlan";
 import CouponCard from "../Shared/CouponCard";
+import CustomPlan from "../Shared/CustomPlan";
 
-const IspControl = ({ className }: { className?: string }) => {
+const DatacenterControl = ({ className }: { className?: string }) => {
   const [coupon, setCoupon] = useState("");
   const [plan, setPlan] = useState("1 Day");
   const [quantity, setQuantity] = useState(1);
-  const [location, setLocation] = useState("Germany");
+  const [location, setLocation] = useState("");
 
   return (
     <div className={cn("grid grid-cols-1 xl:grid-cols-11 gap-4", className)}>
@@ -30,14 +30,14 @@ const IspControl = ({ className }: { className?: string }) => {
 
         <OrderSummaryCard
           className="mt-4"
-          location={location}
           price={2}
           quantity={quantity}
           coupon={coupon}
           plan={plan}
+          location={location}
         />
       </div>
     </div>
   );
 };
-export default IspControl;
+export default DatacenterControl;

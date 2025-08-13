@@ -4,7 +4,7 @@ import cn from "@/utils/cn";
 import CouponCard from "../Shared/CouponCard";
 import OrderSummaryCard from "../Shared/OrderSummaryCard";
 import { useState } from "react";
-import CustomPlan from "../IspControl/CustomPlan";
+import CustomPlan from "../Shared/CustomPlan";
 
 const MobileControl = ({ className }: { className?: string }) => {
   const [coupon, setCoupon] = useState("");

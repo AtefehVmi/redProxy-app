@@ -1,4 +1,4 @@
-import IspControl from "@/modules/IspControl/IspControl";
+import IspControl from "@/modules/IspConfigCard/IspControl";
 
 const PlanPage = () => {
   return (

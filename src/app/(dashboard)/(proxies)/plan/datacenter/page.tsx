@@ -1,4 +1,4 @@
-import DatacenterControl from "@/modules/DatacenterControl/DatacenterControl";
+import DatacenterControl from "@/modules/Datacenter/DatacenterControl";
 
 const PlanPage = () => {
   return (
