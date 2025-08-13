@@ -8,10 +8,10 @@ import PortIcon from "@public/icons/port.svg";
 import Autocomplete from "@/components/AutoComplete/Autocomplete";
 import ToggleBox from "@/components/ToggleBox/ToggleBox";
 import ResidentialGenerateTab from "../CreateResidentialConfig/ResidentialGenerateTab";
-import ActivePlanCard from "../Shared/ActivePlanCard";
-import InvoiceDetailsCard from "../Shared/InvoiceDetailsCard";
+import ActivePlanCard from "./ActivePlanCard";
+import InvoiceDetailsCard from "./InvoiceDetailsCard";
 
-const CreateDatacenterConfig = () => {
+const CreateConfig = () => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-9 gap-4">
       <div
@@ -77,4 +77,4 @@ const CreateDatacenterConfig = () => {
   );
 };
 
-export default CreateDatacenterConfig;
+export default CreateConfig;

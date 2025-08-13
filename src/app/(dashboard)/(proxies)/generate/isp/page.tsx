@@ -1,9 +1,9 @@
 import React from "react";
-import CreateDatacenterConfig from "@/modules/CreateDatacenterConfig/CreateDatacenterConfig";
 import Link from "next/link";
 import Button from "@/components/Button/Button";
 import ArrowIcon from "@public/icons/arrow-left.svg";
 import Image from "next/image";
+import CreateConfig from "@/modules/Shared/CreateConfig";
 
 const Page = () => {
   return (
@@ -22,7 +22,7 @@ const Page = () => {
         </Link>
       </div>
       <div className="w-full mt-[30px]">
-        <CreateDatacenterConfig />
+        <CreateConfig />
       </div>
     </div>
   );

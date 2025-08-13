@@ -1,6 +1,6 @@
 import React from "react";
 import CustomLink from "@/components/CustomLink/customLink";
-import CreateDatacenterConfig from "@/modules/CreateDatacenterConfig/CreateDatacenterConfig";
+import CreateConfig from "@/modules/Shared/CreateConfig";
 
 const Page = () => {
   return (
@@ -19,7 +19,7 @@ const Page = () => {
         </CustomLink>
       </div>
       <div className="w-full mt-[30px]">
-        <CreateDatacenterConfig />
+        <CreateConfig />
       </div>
     </div>
   );
