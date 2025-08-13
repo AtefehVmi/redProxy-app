@@ -160,6 +160,7 @@ const UserInvoices = ({ height }: { height?: string }) => {
       </div>
 
       <Pagination
+        color="bg-orange-200 border-orange-200 hover:bg-orange-400"
         noMargin={true}
         totalCount={INVOICE_DATA.length}
         limit={limit}

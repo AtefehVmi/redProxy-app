@@ -149,6 +149,7 @@ const UserInvoices = () => {
         <Table columns={InvoiceColumns} data={orders ?? INVOICE_DATA} />
       </div>
       <Pagination
+        color="bg-orange-200 border-orange-200 hover:bg-orange-400"
         noMargin={true}
         totalCount={INVOICE_DATA.length}
         limit={limit}
