@@ -26,7 +26,7 @@ interface IspConfigCardProps {
   plan: string;
   dataUsage: { month: string; usage: number }[];
   chartColor: string;
-  href?: string;
+  href: string;
 }
 
 const IspConfigCard = (props: IspConfigCardProps) => {
@@ -150,28 +150,16 @@ Date: ${props.date}`;
             <p className="text-white">Delete</p>
           </Button>
         </div>
-        {["Mobile Proxies"].includes(props.proxyname) ? (
+        <Link className="md:col-span-2" href={props.href}>
           <Button
-            onClick={handleCardClick}
+            className="px-10 w-full md:w-fit"
             rightIcon={
               <Image src={rawArrowRightIcon} alt={""} className="w-4 h-4" />
             }
-            className="col-span-2 px-10"
           >
             Proxy List
           </Button>
-        ) : props.href ? (
-          <Link className="md:col-span-2" href={props.href}>
-            <Button
-              className="px-10 w-full md:w-fit"
-              rightIcon={
-                <Image src={rawArrowRightIcon} alt={""} className="w-4 h-4" />
-              }
-            >
-              Proxy List
-            </Button>
-          </Link>
-        ) : null}
+        </Link>
       </div>
 
       <ProxiesModal

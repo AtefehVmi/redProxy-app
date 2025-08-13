@@ -4,39 +4,37 @@ import cn from "@/utils/cn";
 import CouponCard from "../Shared/CouponCard";
 import OrderSummaryCard from "../Shared/OrderSummaryCard";
 import { useState } from "react";
-import CustomPlan from "./CustomPlan";
+import CustomPlan from "../IspControl/CustomPlan";
 
 const MobileControl = ({ className }: { className?: string }) => {
   const [coupon, setCoupon] = useState("");
-  const [country, setCountry] = useState("UK");
-  const [city, setCity] = useState("London");
+  const [plan, setPlan] = useState("1 Day");
   const [quantity, setQuantity] = useState(1);
-  const [port, setPort] = useState("");
-  const [lte, setLte] = useState("1 Day");
+  const [location, setLocation] = useState("");
 
   return (
     <div className={cn("grid grid-cols-1 xl:grid-cols-11 gap-4", className)}>
       <div className="xl:col-span-8">
         <CustomPlan
-          lte={lte}
-          setLte={setLte}
-          country={country}
-          setCountry={setCountry}
-          city={city}
-          setCity={setCity}
-          port={port}
-          setPort={setPort}
+          plan={plan}
+          setPlan={setPlan}
+          quantity={quantity}
+          setQuantity={setQuantity}
+          location={location}
+          setLocation={setLocation}
         />
-        <CouponCard coupon={coupon} setCoupon={setCoupon} />
       </div>
 
       <div className="xl:col-span-3">
+        <CouponCard coupon={coupon} setCoupon={setCoupon} />
+
         <OrderSummaryCard
+          className="mt-4"
           price={2}
-          pricePerGb={2}
           quantity={quantity}
           coupon={coupon}
-          plan={lte}
+          plan={plan}
+          location={location}
         />
       </div>
     </div>
