@@ -7,10 +7,12 @@ import XIcon from "@public/icons/cross.svg";
 import InputText from "../Input/Input";
 import Autocomplete from "../AutoComplete/Autocomplete";
 import { useState } from "react";
+import CreditCartIcon from "@public/icons/cart.svg";
+import CryptoIcon from "@public/icons/crypto.svg";
 
 const paymentOptions = [
-  { label: "Credit card", value: 1 },
-  { label: "Crypto currency", value: 2 },
+  { label: "Credit card", value: 1, icon: CreditCartIcon },
+  { label: "Crypto currency", value: 2, icon: CryptoIcon },
 ];
 
 const TopUpBalanceModal = ({

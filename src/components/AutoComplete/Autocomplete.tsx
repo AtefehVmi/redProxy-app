@@ -101,8 +101,9 @@ const Autocomplete = <A extends string | number | null, B extends any>(
     (option) => option.value === value
   );
 
-  const startAdornment = startAdornmentProp || selectedOption?.icon;
-
+  const startAdornment =
+    startAdornmentProp ??
+    (selectedOption?.icon ? <Image src={selectedOption.icon} alt="" /> : null);
   return (
     <Field className={classes.root}>
       {label && <Label className={classes.label}>{label}</Label>}
@@ -165,8 +166,7 @@ const Autocomplete = <A extends string | number | null, B extends any>(
           anchor="bottom"
           transition
           className={cn(
-            "dark:text-dark-800",
-            "border border-solid border-darkmode-100 bg-green-500 dark:bg-dark-300",
+            "border border-solid border-darkmode-100 bg-darkmode-200 text-white",
             "z-40 w-[var(--input-width)] rounded-b-[4px] text-sm font-normal [--anchor-gap:0.1rem] empty:invisible",
             "origin-top transition duration-200 ease-out empty:invisible data-[closed]:scale-95 data-[closed]:opacity-0"
           )}
@@ -174,9 +174,9 @@ const Autocomplete = <A extends string | number | null, B extends any>(
           {({ option }) => (
             <ComboboxOption
               value={option}
-              className="flex gap-2 justify-start items-center px-2 py-4 w-full cursor-pointer border-b border-darkmode-100 hover:bg-green-600"
+              className="flex gap-2 justify-start items-center p-3 w-full cursor-pointer hover:bg-darkmode-100"
             >
-              {option.icon && option.icon}
+              {option.icon && <Image src={option.icon} alt="" />}
               {option.label}
             </ComboboxOption>
           )}
