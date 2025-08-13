@@ -9,6 +9,7 @@ import USFlag from "@public/icons/us.svg";
 import ChevronIcon from "@public/icons/angle-small-down.svg";
 import SearchInput from "@/components/SearchInput/SearchInput";
 import SearchIcon from "@public/icons/search.svg";
+import cn from "@/utils/cn";
 
 type Props = {
   plan: string;
@@ -113,6 +114,24 @@ const locationOptions = [
       </div>
     ),
   },
+  {
+    value: "sr",
+    content: (
+      <div className="flex items-center gap-1">
+        <Image src={USFlag} alt="" />
+        <p className="text-grey-400 text-sm">United States</p>
+      </div>
+    ),
+  },
+  {
+    value: "gr",
+    content: (
+      <div className="flex items-center gap-1">
+        <Image src={USFlag} alt="" />
+        <p className="text-grey-400 text-sm">United States</p>
+      </div>
+    ),
+  },
 ];
 
 const qtyOptions = [
@@ -133,6 +152,11 @@ const CustomPlan: React.FC<Props> = ({
   const [selectedPlan, setSelectedPlan] = useState(0);
   const [selectedlocation, setSelectedLocation] = useState("us");
   const [selectedQty, setSelectedQty] = useState(1);
+
+  const [isExpanded, setIsExpanded] = useState(false);
+  const visibleLocations = isExpanded
+    ? locationOptions
+    : locationOptions.slice(0, 4);
 
   return (
     <div className="rounded bg-darkmode-200 border border-darkmode-100 p-6 md:p-8">
@@ -163,18 +187,29 @@ const CustomPlan: React.FC<Props> = ({
             }
           />
         </div>
-        <div className="flex flex-col md:flex-row md:items-center justify-center gap-3">
+        <div
+          className={cn(
+            "flex flex-col justify-center gap-3",
+            isExpanded ? "md:flex-col" : "md:flex-row md:items-center"
+          )}
+        >
           <RadioCard<string>
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mt-4 w-full"
+            className={cn(
+              "grid grid-cols-1 md:grid-cols-2 gap-3 mt-4 w-full",
+              isExpanded ? "lg:grid-cols-5" : "lg:grid-cols-4"
+            )}
             selected={selectedlocation}
             onChange={setSelectedLocation}
-            options={locationOptions}
+            options={visibleLocations}
             padding="py-[9px]"
           />
 
-          <button className="flex items-center gap-1 group w-fit mt-4">
+          <button
+            onClick={() => setIsExpanded((prev) => !prev)}
+            className="flex items-center gap-1 group w-fit mt-4"
+          >
             <p className="text-white text-xs whitespace-nowrap">
-              Expand All countries
+              {isExpanded ? "Show Less" : " Expand All countries"}
             </p>
             <Image
               src={ChevronIcon}
