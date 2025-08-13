@@ -10,10 +10,13 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import cn from "@/utils/cn";
 
 import PlanImage from "@public/icons/plans.svg";
+import ArrowIcon from "@public/icons/arrow-small-left.svg";
 import Image from "next/image";
+import AnimatedTab from "@/components/AnimatedTab/AnimatedTab";
 
 const tabs = [
   {
+    icon: PlanImage,
     title: "New Purchase",
     key: "new",
     content: (
@@ -30,6 +33,7 @@ const tabs = [
     ),
   },
   {
+    icon: ArrowIcon,
     title: "Previous Plan",
     key: "previous",
     content: <PreviousPlansCard />,
@@ -53,20 +57,15 @@ const ResidentialPlanPage = () => {
     <div className="mt-6">
       <div className="bg-darkmode-200 rounded p-2 w-full md:w-fit grid grid-cols-2 gap-2.5">
         {tabs.map((item) => (
-          <button
+          <AnimatedTab
+            className="flex items-center gap-1"
             key={item.key}
+            isActive={activeTab === item.key}
             onClick={() => handleTabClick(item.key)}
-            className={cn(
-              "rounded border px-3 py-1.5 text-white text-sm",
-              "flex items-center gap-1",
-              activeTab === item.key
-                ? "bg-darkmode-100 border-darkmode-100 cursor-not-allowed"
-                : "bg-darkmode-300 border-darkmode-300 cursor-pointer"
-            )}
           >
-            <Image src={PlanImage} alt="" />
+            <Image src={item.icon} alt="" />
             {item.title}
-          </button>
+          </AnimatedTab>
         ))}
       </div>
 

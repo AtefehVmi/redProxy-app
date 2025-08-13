@@ -15,6 +15,8 @@ import StatusFilterButton from "../StatusFilterButton";
 import Link from "next/link";
 import ResidentialConfigTab from "./ResidentialConfigTab";
 import ResidentialPlansTab from "./ResidentialPlansTab";
+import { motion } from "framer-motion";
+import AnimatedTab from "@/components/AnimatedTab/AnimatedTab";
 
 const tabs = [
   {
@@ -82,18 +84,13 @@ const ResidentialPage = () => {
       <div className="flex flex-col md:flex-row md:items-center justify-between">
         <div className="bg-darkmode-200 rounded p-2 w-full md:w-fit grid grid-cols-2 gap-2.5">
           {tabs.map((item) => (
-            <button
+            <AnimatedTab
               key={item.key}
+              isActive={activeTab === item.key}
               onClick={() => handleTabClick(item.key)}
-              className={cn(
-                "rounded border px-3 py-1.5 text-white text-sm",
-                activeTab === item.key
-                  ? "bg-darkmode-100 border-darkmode-100 cursor-not-allowed"
-                  : "bg-darkmode-300 border-darkmode-300 cursor-pointer"
-              )}
             >
               {item.title}
-            </button>
+            </AnimatedTab>
           ))}
         </div>
 

@@ -9,6 +9,7 @@ import CodeIcon from "@public/icons/display-code.svg";
 import Image from "next/image";
 import CodePicker from "./CodePicker";
 import GeneratedProxyTab from "./GeneratedProxyTab";
+import AnimatedTab from "@/components/AnimatedTab/AnimatedTab";
 
 const DUMMY_TEXT_AREA_VALUE =
   "saaf.eth---gmail.com:null:proxy.wtfproxy.com:3030\n" +
@@ -65,7 +66,7 @@ const ResidentialGenerateTab = () => {
   const handleTabClick = (tabKey: string) => {
     const newParams = new URLSearchParams(params.toString());
     newParams.set("tab", tabKey);
-    router.push(`${pathname}?${newParams.toString()}`);
+    router.push(`${pathname}?${newParams.toString()}`, { scroll: false });
   };
 
   function copyToClipboard(text: string) {
@@ -95,19 +96,15 @@ const ResidentialGenerateTab = () => {
       <div className="flex flex-col md:flex-row md:items-center justify-between border-t border-darkmode-100 mt-6 py-5">
         <div className="bg-darkmode-200 p-2 rounded flex items-center w-fit gap-2.5 border border-darkmode-100">
           {tabs.map((item) => (
-            <button
+            <AnimatedTab
+              className="flex items-center gap-1 px-11"
               key={item.key}
+              isActive={activeTab === item.key}
               onClick={() => handleTabClick(item.key)}
-              className={cn(
-                "rounded border px-12 py-[9px] text-white text-sm flex items-center gap-1",
-                activeTab === item.key
-                  ? "bg-darkmode-100 border-darkmode-100 cursor-not-allowed"
-                  : "bg-darkmode-300 border-darkmode-300 cursor-pointer"
-              )}
             >
               <Image src={item.icon} alt="" />
               {item.title}
-            </button>
+            </AnimatedTab>
           ))}
         </div>
       </div>
