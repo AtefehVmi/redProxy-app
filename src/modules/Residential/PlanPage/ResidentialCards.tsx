@@ -25,7 +25,7 @@ const ResidentialCards = () => {
       {data?.map((pool: any) => (
         <ResidentialCard
           key={pool.name}
-          start_price={12}
+          start_price={pool.price ?? 0}
           icon={ICON_MAP[pool.name] || GenericIcon}
           name={pool.name}
           features={[

@@ -18,8 +18,8 @@ type Props = {
   desc: string;
   purchaseDate: string;
   expireDate: string;
-  remainingGb: number;
-  planId: number;
+  remainingGb?: number;
+  planId: string;
 };
 
 const ResidentialPlanCard: React.FC<Props> = ({
@@ -27,7 +27,7 @@ const ResidentialPlanCard: React.FC<Props> = ({
   desc,
   purchaseDate,
   expireDate,
-  remainingGb,
+  remainingGb = 12,
   planId,
 }) => {
   const [showGb, setShowGb] = useState(false);

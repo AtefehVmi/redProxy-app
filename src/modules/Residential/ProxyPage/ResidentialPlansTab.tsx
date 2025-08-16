@@ -6,84 +6,32 @@ import ResidentialPlanCard from "../ResidentialPlanCard";
 import Button from "@/components/Button/Button";
 import Link from "next/link";
 import ShoppingCartIcon from "@public/icons/shopping-cart.svg";
+import { useQuery } from "@tanstack/react-query";
+import { QUERY_KEYS } from "@/constants/querykeys";
+import { getUserPlans } from "@/service/api";
 
-const data = [
-  {
-    name: "Universal Scraper API",
-    desc: "Scraping Pool",
-    purchase_date: "01 April 2026",
-    expire_date: "12 April 2026",
-    remainingGb: 12,
-    id: 1,
-  },
-  {
-    name: "Universal Scraper API",
-    desc: "Scraping Pool",
-    purchase_date: "01 April 2026",
-    expire_date: "12 April 2026",
-    remainingGb: 12,
-    id: 1,
-  },
-  {
-    name: "Universal Scraper API",
-    desc: "Scraping Pool",
-    purchase_date: "01 April 2026",
-    expire_date: "12 April 2026",
-    remainingGb: 12,
-    id: 1,
-  },
-  {
-    name: "Universal Scraper API",
-    desc: "Scraping Pool",
-    purchase_date: "01 April 2026",
-    expire_date: "12 April 2026",
-    remainingGb: 12,
-    id: 1,
-  },
-  {
-    name: "Universal Scraper API",
-    desc: "Scraping Pool",
-    purchase_date: "01 April 2026",
-    expire_date: "12 April 2026",
-    remainingGb: 12,
-    id: 1,
-  },
-  {
-    name: "Universal Scraper API",
-    desc: "Scraping Pool",
-    purchase_date: "01 April 2026",
-    expire_date: "12 April 2026",
-    remainingGb: 12,
-    id: 1,
-  },
-  {
-    name: "Universal Scraper API",
-    desc: "Scraping Pool",
-    purchase_date: "01 April 2026",
-    expire_date: "12 April 2026",
-    remainingGb: 12,
-    id: 1,
-  },
-  {
-    name: "Universal Scraper API",
-    desc: "Scraping Pool",
-    purchase_date: "01 April 2026",
-    expire_date: "12 April 2026",
-    remainingGb: 12,
-    id: 1,
-  },
-];
+interface Props {
+  filterValue?: string;
+}
 
-const ResidentialPlansTab = () => {
+const ResidentialPlansTab = ({ filterValue }: Props) => {
   const params = useSearchParams();
   const limit = params.get("limit") ? parseInt(params.get("limit")!) : 8;
   const offset = params.get("offset") ? parseInt(params.get("offset")!) : 0;
 
-  const paginatedData = data.slice(offset, offset + limit);
+  const { data } = useQuery({
+    queryKey: [...QUERY_KEYS.PLANS, filterValue],
+    queryFn: () =>
+      getUserPlans(filterValue !== "All" ? filterValue : undefined, true),
+  });
+
+  const totalCount = data?.length ?? 0;
+  const paginatedData = data?.slice(offset, offset + limit) ?? [];
+  const isDataAvailable = offset + limit < totalCount;
 
   return (
     <div>
-      {paginatedData.length === 0 ? (
+      {paginatedData?.length === 0 ? (
         <div className="flex items-center justify-center h-[560px]">
           <div>
             <Image quality={100} priority src={NoDataImage} alt="" />
@@ -107,13 +55,13 @@ const ResidentialPlansTab = () => {
         <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-y-5 gap-x-4">
           {paginatedData?.map((item) => (
             <ResidentialPlanCard
-              key={item.id}
-              name={item.name}
-              desc={item.desc}
-              purchaseDate={item.purchase_date}
-              expireDate={item.expire_date}
-              remainingGb={item.remainingGb}
-              planId={item.id}
+              key={item.uuid}
+              name={item.pool_type.name}
+              desc={item.pool_type.description}
+              purchaseDate={item.created}
+              expireDate={item.expiration}
+              // remainingGb={item.remainingGb}
+              planId={item.uuid}
             />
           ))}
         </div>
@@ -121,10 +69,10 @@ const ResidentialPlansTab = () => {
 
       <Pagination
         color="bg-blue-100 border-blue-100 hover:bg-blue-400"
-        totalCount={data.length}
+        totalCount={totalCount}
         limit={limit}
         offset={offset}
-        isDataAvailable={data?.length >= limit}
+        isDataAvailable={isDataAvailable}
       />
     </div>
   );

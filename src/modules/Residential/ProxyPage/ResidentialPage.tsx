@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import cn from "@/utils/cn";
 import Button from "@/components/Button/Button";
@@ -17,6 +17,13 @@ import ResidentialConfigTab from "./ResidentialConfigTab";
 import ResidentialPlansTab from "./ResidentialPlansTab";
 import { motion } from "framer-motion";
 import AnimatedTab from "@/components/AnimatedTab/AnimatedTab";
+import PlusIcon from "@public/icons/plus.svg";
+import GamingIcon from "@public/icons/gamepad.svg";
+import GenericIcon from "@public/icons/plans.svg";
+import GlobeIcon from "@public/icons/globe.svg";
+import { useQuery } from "@tanstack/react-query";
+import { QUERY_KEYS } from "@/constants/querykeys";
+import { getPoolTypes } from "@/service/api";
 
 const tabs = [
   {
@@ -48,6 +55,25 @@ const ResidentialPage = () => {
 
   const activeTab = params.get("tab") || tabs[0].key;
   const [searchValue, setSearchValue] = React.useState("");
+  const [filterValue, setFilterValue] = useState("");
+
+  const { data: poolTypesData } = useQuery({
+    queryKey: QUERY_KEYS.POOL_TYPES,
+    queryFn: () => getPoolTypes(),
+  });
+
+  const filterOptions = [
+    { filterName: "All", icon: PlusIcon },
+    ...(poolTypesData ?? []).map((type) => ({
+      filterName: type.name,
+      icon:
+        type.name === "Gaming"
+          ? GamingIcon
+          : type.name === "Generic"
+          ? GenericIcon
+          : GlobeIcon,
+    })),
+  ];
 
   const handleTabClick = (tabKey: string) => {
     const newParams = new URLSearchParams(params.toString());
@@ -108,7 +134,13 @@ const ResidentialPage = () => {
             }
           />
 
-          {activeTab === "plans" && <StatusFilterButton />}
+          {activeTab === "plans" && (
+            <StatusFilterButton
+              filterOptions={filterOptions}
+              value={filterValue}
+              onChange={(selected) => setFilterValue(selected)}
+            />
+          )}
         </div>
       </div>
 

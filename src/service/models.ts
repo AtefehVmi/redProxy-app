@@ -11,6 +11,7 @@ export type Profile = {
 };
 
 export type PoolTypes = {
+  price: number | null;
   name: string;
   description: string;
   is_active: boolean;
@@ -108,4 +109,18 @@ export type Transaction = {
   updated: string;
   created: string;
   expire_at: string;
+};
+
+export type ResidentialPlan = {
+  uuid: string;
+  pool_type: PoolTypes;
+  type: string;
+  reference_id: string;
+  subuser_id: string;
+  username: string;
+  password: string;
+  expiration: string;
+  created: string;
+  total_gb: number;
+  total_cost: number;
 };

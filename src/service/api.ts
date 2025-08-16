@@ -9,6 +9,7 @@ import Order, {
   Plans,
   PoolTypes,
   Profile,
+  ResidentialPlan,
   Transaction,
 } from "./models";
 
@@ -188,9 +189,11 @@ export async function getProductPlans(name: string): Promise<Plans> {
   return data;
 }
 
-export async function getUserPlans(name: string = "enterprise"): Promise<any> {
-  const { data } = await instance.get(`/residential/${name}/plans/`);
-  return data;
+export async function getUserPlans(
+  pool_type?: string,
+  active_only?: boolean
+): Promise<ResidentialPlan[]> {
+  return await instance.get(`/plans/`, { params: { pool_type, active_only } });
 }
 
 export async function getProxyUsageDetails(

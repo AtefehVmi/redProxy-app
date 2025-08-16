@@ -41,35 +41,6 @@ const CHART_DATA = [
   },
 ];
 
-const data = [
-  {
-    configName: "Residential for reddit",
-    location: "China",
-    portType: "Socks5",
-    rotation: "Sticky",
-    quantity: 720,
-    format: "hostname:port:username:password",
-    port: 6608,
-    username: "mopoproxy@gmail.com",
-    password: "prrrrrjhhkjdsfiued",
-    dataUsage: CHART_DATA,
-    dataUsed: 4.92,
-  },
-  {
-    configName: "Residential for reddit",
-    location: "China",
-    portType: "Socks5",
-    rotation: "Sticky",
-    quantity: 720,
-    format: "hostname:port:username:password",
-    port: 6608,
-    username: "mopoproxy@gmail.com",
-    password: "prrrrrjhhkjdsfiued",
-    dataUsage: CHART_DATA,
-    dataUsed: 4.92,
-  },
-];
-
 const ResidentialConfigTab = ({ planUuid }: { planUuid?: string }) => {
   const params = useSearchParams();
   const limit = params.get("limit") ? parseInt(params.get("limit")!) : 4;
@@ -81,7 +52,11 @@ const ResidentialConfigTab = ({ planUuid }: { planUuid?: string }) => {
       getUserConfigs(planUuid ? { plan_uuid: planUuid } : undefined),
   });
 
-  const paginatedData = configs?.slice(offset, offset + limit);
+  const totalCount = configs?.length ?? 0;
+
+  const paginatedData = configs?.slice(offset, offset + limit) ?? [];
+
+  const isDataAvailable = offset + limit < totalCount;
 
   return (
     <div>
@@ -128,10 +103,10 @@ const ResidentialConfigTab = ({ planUuid }: { planUuid?: string }) => {
 
       <Pagination
         color="bg-blue-100 border-blue-100 hover:bg-blue-400"
-        totalCount={data.length}
+        totalCount={totalCount}
         limit={limit}
         offset={offset}
-        isDataAvailable={data?.length >= limit}
+        isDataAvailable={isDataAvailable}
       />
     </div>
   );

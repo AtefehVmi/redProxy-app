@@ -8,4 +8,5 @@ export const QUERY_KEYS = {
   POOL_TYPES: ["pool_types"],
   USER_CONFIGS: ["user_configs"],
   TRANSACTIONS: ["transactions"],
+  PLANS: ["plans"],
 };
