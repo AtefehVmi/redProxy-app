@@ -143,35 +143,13 @@ export async function getPlanDetails(plan_id?: string): Promise<any> {
 }
 
 export async function getResiCountries(name: string): Promise<any> {
-  return await instance.get(`/residential/${name}/countries/`);
-}
-
-export async function getResiStates(
-  name: string,
-  country: string
-): Promise<any> {
-  return await instance.get(`/residential/${name}/states/?country=${country}`);
-}
-
-export async function getResiCities(
-  name: string,
-  country: string,
-  state?: string
-): Promise<any> {
-  return await instance.get(
-    `/residential/${name}/cities/?country=${country}&state=${state}`
-  );
+  return await instance.get(`/plans/pool-types/${name}/countries`);
 }
 
 export async function generateProxy(
-  name: string,
   payload: GenerateResidentialProxy
 ): Promise<any> {
-  const { data } = await instance.post(
-    `/residential/${name}/generate/`,
-    payload
-  );
-  return data;
+  return await instance.post(`/plans/configurations/`, payload);
 }
 
 export async function getPricings() {

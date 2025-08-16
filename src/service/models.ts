@@ -43,27 +43,27 @@ export type City = {
 
 export type State = {
   name: string;
-  code: string;
   cities: City[];
 };
 
 export type Country = {
   code: string;
   name: string;
-  iso_code: string;
   states: State[];
 };
 
 export interface GenerateResidentialProxy {
+  name: string;
+  plan_uuid: string;
+  protocol: string;
+  port: number;
   format: string;
-  port: string;
+  rotation: string;
+  sticky_lifetime: number;
   country: string;
   state: string;
   city: string;
-  rotation: string;
   quantity: number;
-  lifetime: number;
-  plan: string;
 }
 
 export default interface Order {

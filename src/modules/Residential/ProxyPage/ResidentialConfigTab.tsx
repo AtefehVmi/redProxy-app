@@ -53,7 +53,7 @@ const ResidentialConfigTab = ({ planUuid }: { planUuid?: string }) => {
                   className="px-4 py-3 text-base"
                   icon={<Image src={ShoppingCartIcon} alt="" />}
                 >
-                  Order Now
+                  Create Now
                 </Button>
               </Link>
             </div>

@@ -7,7 +7,7 @@ import CustomPlan from "./CustomPlan";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/querykeys";
-import { getPlanDetails, getProductPlans, getUserPlans } from "@/service/api";
+import { getPlanDetails, getProductPlans } from "@/service/api";
 
 const ResidentialControl = ({ className }: { className?: string }) => {
   const [coupon, setCoupon] = useState("");
