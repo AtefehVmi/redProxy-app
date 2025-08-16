@@ -3,7 +3,13 @@ import { createAppErrorMessage } from "@/utils/createAppErrorMessage";
 import { isServer } from "@/utils/isServer";
 import axios from "axios";
 import { toast } from "react-toastify";
-import Order, { GenerateResidentialProxy, Plans, Profile } from "./models";
+import Order, {
+  Config,
+  GenerateResidentialProxy,
+  Plans,
+  PoolTypes,
+  Profile,
+} from "./models";
 
 export const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASEURL,
@@ -78,6 +84,8 @@ instance.interceptors.response.use(
   }
 );
 
+//auth
+
 export async function regisetrUser(payload: any): Promise<any> {
   const { data } = await axios.post(
     `${process.env.NEXT_PUBLIC_API_BASEURL}/users/register/`,
@@ -111,6 +119,20 @@ export async function loginUser(payload: any): Promise<any> {
 export async function getUserProfile(): Promise<Profile> {
   const { data } = await instance.get("/users/profile/");
   return data;
+}
+
+//user configs
+export async function getUserConfigs(params?: {
+  plan_uuid?: string;
+  active_only?: boolean;
+}): Promise<Config[]> {
+  return await instance.get("/plans/configurations/", { params });
+}
+
+//residential
+
+export async function getPoolTypes(): Promise<PoolTypes> {
+  return await instance.get("/plans/pool-types/");
 }
 
 export async function getPlanDetails(plan_id?: string): Promise<any> {

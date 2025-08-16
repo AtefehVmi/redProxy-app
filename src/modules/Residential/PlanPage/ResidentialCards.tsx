@@ -1,9 +1,19 @@
+"use client";
+
 import ScrapingIcon from "@public/icons/globe.svg";
 import GamingIcon from "@public/icons/gamepad.svg";
 import GenericIcon from "@public/icons/plans.svg";
 import ResidentialCard from "./ResidentialCard";
+import { useQuery } from "@tanstack/react-query";
+import { QUERY_KEYS } from "@/constants/querykeys";
+import { getPoolTypes } from "@/service/api";
 
 const ResidentialCards = () => {
+  const { data } = useQuery({
+    queryKey: QUERY_KEYS.POOL_TYPES,
+    queryFn: () => getPoolTypes(),
+  });
+
   return (
     <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
       <ResidentialCard

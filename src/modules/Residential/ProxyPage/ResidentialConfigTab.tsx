@@ -6,6 +6,9 @@ import ResidentialConfigCard from "./ResidentialConfigCard";
 import ShoppingCartIcon from "@public/icons/shopping-cart.svg";
 import Button from "@/components/Button/Button";
 import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
+import { QUERY_KEYS } from "@/constants/querykeys";
+import { getUserConfigs } from "@/service/api";
 
 const CHART_DATA = [
   {
@@ -67,10 +70,16 @@ const data = [
   },
 ];
 
-const ResidentialConfigTab = () => {
+const ResidentialConfigTab = ({ planUuid }: { planUuid?: string }) => {
   const params = useSearchParams();
   const limit = params.get("limit") ? parseInt(params.get("limit")!) : 4;
   const offset = params.get("offset") ? parseInt(params.get("offset")!) : 0;
+
+  const { data: configs } = useQuery({
+    queryKey: [...QUERY_KEYS.USER_CONFIGS, planUuid],
+    queryFn: () =>
+      getUserConfigs(planUuid ? { plan_uuid: planUuid } : undefined),
+  });
 
   const paginatedData = data.slice(offset, offset + limit);
 

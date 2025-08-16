@@ -10,6 +10,31 @@ export type Profile = {
   total_spent: null | string | number;
 };
 
+export type PoolTypes = {
+  name: string;
+  description: string;
+  is_active: boolean;
+};
+
+export type Config = {
+  plan_name: string;
+  plan_uuid: string;
+  pool_type_name: string;
+  uuid: string;
+  name: string;
+  protocol: string;
+  format: string;
+  rotation: string;
+  sticky_lifetime: number;
+  country: string;
+  state: string;
+  city: string;
+  quantity: number;
+  is_active: boolean;
+  created: string;
+  updated: string;
+};
+
 export type City = {
   name: string;
   code: string;

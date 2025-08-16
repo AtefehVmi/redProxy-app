@@ -47,6 +47,7 @@ const ResidentialPage = () => {
   const router = useRouter();
 
   const activeTab = params.get("tab") || tabs[0].key;
+  const [searchValue, setSearchValue] = React.useState("");
 
   const handleTabClick = (tabKey: string) => {
     const newParams = new URLSearchParams(params.toString());
@@ -96,6 +97,8 @@ const ResidentialPage = () => {
 
         <div className="flex items-center gap-2 mt-6 md:mt-0">
           <SearchInput
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
             className="w-full"
             placeholder="Search"
             endAdornment={
@@ -110,7 +113,11 @@ const ResidentialPage = () => {
       </div>
 
       <div className="mt-8">
-        {tabs.find((t) => t.key === activeTab)?.content}
+        {activeTab === "configs" ? (
+          <ResidentialConfigTab planUuid={searchValue} />
+        ) : (
+          <ResidentialPlansTab />
+        )}
       </div>
     </div>
   );
