@@ -18,7 +18,7 @@ import {
   getResiCountries,
   getResiStates,
 } from "@/service/api";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import useFetch from "@/hooks/UseFetch";
 import { City, Country, State } from "@/service/models";
 import ResidentialGenerateTab from "./ResidentialGenerateTab";
@@ -64,22 +64,17 @@ const formatOptions = [
   },
 ];
 
-const poolToName = {
-  enterprise_residential: "Enterprise Residential",
-  residential: "Residential",
-  premium_residential: "Premium Residential",
-};
-
 const CreateResidentialConfig = ({ className }: { className?: string }) => {
   const [port, setPort] = useState(portOptions[0].value);
   const [rotation, setRotation] = useState(rotationOptions[0].value);
   const [format, setFormat] = useState(formatOptions[0].value);
   const [quantity, setQuantity] = useState(0);
+  const [lifetime, setLifetime] = useState(0);
 
-  const path = usePathname();
-  const pool = path.split("/")[2];
-  console.log("pool param value:", pool);
+  const searchParams = useSearchParams();
+  const pool = searchParams.get("pool");
 
+  // country, state, city
   const [country, setCountry] = useState<string | null>(null);
   const [countryOptions, setCountryOptions] = useState<
     Option<string, Country>[]
@@ -113,8 +108,6 @@ const CreateResidentialConfig = ({ className }: { className?: string }) => {
     false,
     { toastOnError: true }
   );
-
-  //country, state, city logics
 
   const handleCountriesFetch = () => {
     if (countryOptions.length === 0) {
@@ -269,6 +262,7 @@ const CreateResidentialConfig = ({ className }: { className?: string }) => {
       city,
       rotation,
       quantity,
+      lifetime,
     });
 
     console.log(res);
@@ -317,7 +311,25 @@ const CreateResidentialConfig = ({ className }: { className?: string }) => {
               options={countryOptions}
               onChange={() => {}}
               onFocus={handleCountriesFetch}
-              label={"Location *"}
+              label={"Country *"}
+              startAdornment={<Image src={QuantityIcon} alt="" />}
+            />
+
+            <Autocomplete
+              value={"germany"}
+              options={countryOptions}
+              onChange={() => {}}
+              // onFocus={handleCountriesFetch}
+              label={"State *"}
+              startAdornment={<Image src={QuantityIcon} alt="" />}
+            />
+
+            <Autocomplete
+              value={"germany"}
+              options={countryOptions}
+              onChange={() => {}}
+              // onFocus={handleCountriesFetch}
+              label={"City *"}
               startAdornment={<Image src={QuantityIcon} alt="" />}
             />
 
@@ -337,6 +349,17 @@ const CreateResidentialConfig = ({ className }: { className?: string }) => {
               placeholder={"Enter Quantity"}
               value={quantity}
               onChange={(e) => setQuantity(Number(e.target.value))}
+            />
+
+            <Input
+              startAdornment={<Image src={QuantityIcon} alt="" />}
+              key={"lifetime"}
+              type={"number"}
+              label={"Lifetime *"}
+              placeholder={"Enter lifetime"}
+              value={lifetime}
+              onChange={(e) => setLifetime(Number(e.target.value))}
+              className="col-span-2"
             />
           </div>
           <div className="flex items-center lg:justify-end col-span-2">

@@ -143,29 +143,24 @@ export async function getPlanDetails(plan_id?: string): Promise<any> {
 }
 
 export async function getResiCountries(name: string): Promise<any> {
-  const { data } = await instance.get(`/residential/${name}/countries/`);
-  return data;
+  return await instance.get(`/residential/${name}/countries/`);
 }
 
 export async function getResiStates(
   name: string,
   country: string
 ): Promise<any> {
-  const { data } = await instance.get(
-    `/residential/${name}/states/?country=${country}`
-  );
-  return data;
+  return await instance.get(`/residential/${name}/states/?country=${country}`);
 }
 
 export async function getResiCities(
   name: string,
   country: string,
-  state: string
+  state?: string
 ): Promise<any> {
-  const { data } = await instance.get(
+  return await instance.get(
     `/residential/${name}/cities/?country=${country}&state=${state}`
   );
-  return data;
 }
 
 export async function generateProxy(

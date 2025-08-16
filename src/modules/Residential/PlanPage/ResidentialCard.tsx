@@ -46,7 +46,13 @@ const ResidentialCard: React.FC<Props> = ({
             </p>
           </div>
 
-          <Link className="w-2/5" href={"/purchase/new"}>
+          <Link
+            className="w-2/5"
+            href={{
+              pathname: "/purchase/new",
+              query: { pool: name },
+            }}
+          >
             <Button
               className="px-3 py-2.5 text-base"
               rightIcon={<Image src={ArrowIcon} alt="" />}
