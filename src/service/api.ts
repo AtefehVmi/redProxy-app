@@ -130,7 +130,7 @@ export async function getUserConfigs(params?: {
 }
 
 //residential
-export async function getPoolTypes(): Promise<PoolTypes> {
+export async function getPoolTypes(): Promise<PoolTypes[]> {
   return await instance.get("/plans/pool-types/");
 }
 
@@ -210,6 +210,7 @@ export async function getPlan(plan_id?: string): Promise<any> {
   return data;
 }
 
+//payments
 export async function depositBalance(
   amount: number,
   method: number
