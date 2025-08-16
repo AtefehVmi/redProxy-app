@@ -7,4 +7,5 @@ export const QUERY_KEYS = {
   ORDERS: ["orders"],
   POOL_TYPES: ["pool_types"],
   USER_CONFIGS: ["user_configs"],
+  TRANSACTIONS: ["transactions"],
 };

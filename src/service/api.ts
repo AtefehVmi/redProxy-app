@@ -9,6 +9,7 @@ import Order, {
   Plans,
   PoolTypes,
   Profile,
+  Transaction,
 } from "./models";
 
 export const instance = axios.create({
@@ -66,7 +67,7 @@ instance.interceptors.response.use(
     if (response.status === 500) {
       toast.error("Something unexpected happened");
     }
-    return response;
+    return response.data;
   },
   async function (error) {
     error.appError = createAppErrorMessage(error);
@@ -117,8 +118,7 @@ export async function loginUser(payload: any): Promise<any> {
 }
 
 export async function getUserProfile(): Promise<Profile> {
-  const { data } = await instance.get("/users/profile/");
-  return data;
+  return await instance.get("/users/profile/");
 }
 
 //user configs
@@ -130,7 +130,6 @@ export async function getUserConfigs(params?: {
 }
 
 //residential
-
 export async function getPoolTypes(): Promise<PoolTypes> {
   return await instance.get("/plans/pool-types/");
 }
@@ -243,9 +242,8 @@ export async function getOrders({
   return data;
 }
 
-export async function getTransactions(): Promise<any> {
-  const { data } = await instance.get("/payment/orders/transactions/");
-  return data;
+export async function getTransactions(): Promise<Transaction[]> {
+  return await instance.get("/payment/orders/transactions/");
 }
 
 export async function getProxiesByName(name: string): Promise<any> {

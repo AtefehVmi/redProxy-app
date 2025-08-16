@@ -17,7 +17,7 @@ import DeleteModal from "@/components/Modal/DeleteModal";
 interface ResidentialConfigCardProps {
   configName: string;
   dataUsed: number;
-  dataUsage: { month: string; usage: number }[];
+  dataUsage?: { month: string; usage: number }[];
   portType: string;
   rotation: string;
   geoLocation: string;
@@ -98,9 +98,11 @@ PASSWORD: ${props.password}`;
             {formatBytes(props.dataUsed)}
           </p>
         </div>
-        <div className="col-span-2 row-span-2">
-          <AreaLineChart color="#5CA7FF" data={props.dataUsage} />
-        </div>
+        {props.dataUsage && (
+          <div className="col-span-2 row-span-2">
+            <AreaLineChart color="#5CA7FF" data={props.dataUsage} />
+          </div>
+        )}
       </div>
 
       <div className="block xl:hidden w-full bg-darkmode-100 h-px my-4"></div>

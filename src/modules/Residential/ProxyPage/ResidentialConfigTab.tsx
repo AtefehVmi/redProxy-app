@@ -81,11 +81,11 @@ const ResidentialConfigTab = ({ planUuid }: { planUuid?: string }) => {
       getUserConfigs(planUuid ? { plan_uuid: planUuid } : undefined),
   });
 
-  const paginatedData = data.slice(offset, offset + limit);
+  const paginatedData = configs?.slice(offset, offset + limit);
 
   return (
     <div>
-      {paginatedData.length === 0 ? (
+      {paginatedData?.length === 0 ? (
         <div className="flex items-center justify-center h-[560px]">
           <div>
             <Image quality={100} priority src={NoDataImage} alt="" />
@@ -107,20 +107,20 @@ const ResidentialConfigTab = ({ planUuid }: { planUuid?: string }) => {
         </div>
       ) : (
         <div className="flex flex-col gap-6">
-          {paginatedData.map((config, index) => (
+          {paginatedData?.map((config, index) => (
             <ResidentialConfigCard
               key={index}
-              configName={config.configName}
-              dataUsage={config.dataUsage}
-              portType={config.portType}
-              geoLocation={config.location}
+              configName={config.name}
+              // dataUsage={config.dataUsage}
+              portType={config.protocol}
+              geoLocation={config.country}
               rotation={config.rotation}
               quantityGenerated={config.quantity}
               format={config.format}
-              port={config.port}
-              username={config.username}
-              password={config.password}
-              dataUsed={config.dataUsed}
+              port={config.quantity}
+              username={config.city}
+              password={config.city}
+              dataUsed={config.quantity}
             />
           ))}
         </div>

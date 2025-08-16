@@ -91,3 +91,21 @@ export type Plans = {
   active: boolean;
   plans: Plan[];
 };
+
+export type Transaction = {
+  name: string;
+  status: string;
+  duration: string;
+  provider: string;
+  id: number;
+  product: number;
+  plan: number;
+  user_plan: number;
+  quantity: number;
+  order_data: {};
+  total_amount: number;
+  coupon: number;
+  updated: string;
+  created: string;
+  expire_at: string;
+};
