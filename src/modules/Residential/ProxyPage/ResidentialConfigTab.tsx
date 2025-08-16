@@ -9,37 +9,7 @@ import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/querykeys";
 import { getUserConfigs } from "@/service/api";
-
-const CHART_DATA = [
-  {
-    month: "Page A",
-    usage: 2400,
-  },
-  {
-    month: "Page B",
-    usage: 1398,
-  },
-  {
-    month: "Page C",
-    usage: 3800,
-  },
-  {
-    month: "Page D",
-    usage: 3908,
-  },
-  {
-    month: "Page E",
-    usage: 4800,
-  },
-  {
-    month: "Page F",
-    usage: 3800,
-  },
-  {
-    month: "Page G",
-    usage: 4300,
-  },
-];
+import NoSearchResultImage from "@public/image/search.png";
 
 const ResidentialConfigTab = ({ planUuid }: { planUuid?: string }) => {
   const params = useSearchParams();
@@ -62,23 +32,32 @@ const ResidentialConfigTab = ({ planUuid }: { planUuid?: string }) => {
     <div>
       {paginatedData?.length === 0 ? (
         <div className="flex items-center justify-center h-[560px]">
-          <div>
-            <Image quality={100} priority src={NoDataImage} alt="" />
-            <p className="mt-6 text-base font-semibold text-white">
-              There are no Configurations.
-            </p>
-            <Link
-              className="mt-6 flex items-center justify-center"
-              href={"/generate/residential"}
-            >
-              <Button
-                className="px-4 py-3 text-base"
-                icon={<Image src={ShoppingCartIcon} alt="" />}
+          {planUuid ? (
+            <div>
+              <Image quality={100} priority src={NoSearchResultImage} alt="" />
+              <p className="mt-6 text-base font-semibold text-white">
+                Search Not Found.
+              </p>
+            </div>
+          ) : (
+            <div>
+              <Image quality={100} priority src={NoDataImage} alt="" />
+              <p className="mt-6 text-base font-semibold text-white">
+                There are no Configurations.
+              </p>
+              <Link
+                className="mt-6 flex items-center justify-center"
+                href={"/generate/residential"}
               >
-                Order Now
-              </Button>
-            </Link>
-          </div>
+                <Button
+                  className="px-4 py-3 text-base"
+                  icon={<Image src={ShoppingCartIcon} alt="" />}
+                >
+                  Order Now
+                </Button>
+              </Link>
+            </div>
+          )}
         </div>
       ) : (
         <div className="flex flex-col gap-6">

@@ -148,7 +148,7 @@ const ResidentialPage = () => {
         {activeTab === "configs" ? (
           <ResidentialConfigTab planUuid={searchValue} />
         ) : (
-          <ResidentialPlansTab />
+          <ResidentialPlansTab searchValue={searchValue} />
         )}
       </div>
     </div>

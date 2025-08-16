@@ -185,10 +185,13 @@ export async function getProductPlans(name: string): Promise<Plans> {
 }
 
 export async function getUserPlans(
-  pool_type?: string,
-  active_only?: boolean
+  pool_type?: string | null,
+  active_only?: boolean | null,
+  search?: string | null
 ): Promise<ResidentialPlan[]> {
-  return await instance.get(`/plans/`, { params: { pool_type, active_only } });
+  return await instance.get(`/plans/`, {
+    params: { pool_type, active_only, search },
+  });
 }
 
 export async function getProxyUsageDetails(
