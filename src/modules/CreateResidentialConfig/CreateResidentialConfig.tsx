@@ -21,7 +21,7 @@ import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/querykeys";
 import { toast } from "react-toastify";
 
-const portOptions = [
+const protocolOptions = [
   {
     label: "HTTPS",
     value: "http|https",
@@ -63,16 +63,14 @@ const formatOptions = [
 ];
 
 const CreateResidentialConfig = ({ className }: { className?: string }) => {
-  const [port, setPort] = useState(portOptions[0].value);
+  const [protocol, setProtocol] = useState(protocolOptions[0].value);
   const [rotation, setRotation] = useState(rotationOptions[0].value);
   const [format, setFormat] = useState(formatOptions[0].value);
   const [quantity, setQuantity] = useState(0);
   const [lifetime, setLifetime] = useState(0);
+
   // get plans
   const [plan, setPlan] = useState<string | null>(null);
-
-  const searchParams = useSearchParams();
-  const pool = searchParams.get("pool");
 
   const { data: plans, isLoading: plansLoading } = useQuery({
     queryKey: QUERY_KEYS.PLANS,
@@ -110,7 +108,7 @@ const CreateResidentialConfig = ({ className }: { className?: string }) => {
       const selected = plans?.find((p) => p.uuid === plan);
       if (!selected) return;
 
-      const fetchedCountries = await CountriesFetch("das");
+      const fetchedCountries = await CountriesFetch(selected.pool_type.name);
 
       setCountries(fetchedCountries);
       setCountryOptions(
@@ -150,7 +148,6 @@ const CreateResidentialConfig = ({ className }: { className?: string }) => {
       : [];
 
   //generate residential
-
   const { fetch: generateProxyFetch, loading: generateProxyLoading } = useFetch(
     generateProxy,
     false,
@@ -158,15 +155,22 @@ const CreateResidentialConfig = ({ className }: { className?: string }) => {
   );
 
   const handleSubmit = () => {
-    const res = generateProxyFetch(pool, {
+    if (!plan) return;
+
+    const selectedPlan = plans?.find((p) => p.uuid === plan);
+    if (!selectedPlan) return;
+
+    const res = generateProxyFetch({
+      plan_uuid: selectedPlan.uuid,
+      name: selectedPlan.pool_type.name,
       format,
-      port,
+      protocol,
       country,
       state,
       city,
       rotation,
       quantity,
-      lifetime,
+      sticky_lifetime: lifetime,
     });
 
     console.log(res);
@@ -205,10 +209,10 @@ const CreateResidentialConfig = ({ className }: { className?: string }) => {
             />
 
             <Autocomplete
-              value={port}
-              options={portOptions}
-              onChange={({ value }) => setPort(value)}
-              label={"Port Type *"}
+              value={protocol}
+              options={protocolOptions}
+              onChange={({ value }) => setProtocol(value)}
+              label={"Protocol Type *"}
               startAdornment={<Image src={PortIcon} alt="" />}
             />
 

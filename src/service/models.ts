@@ -21,6 +21,8 @@ export type Config = {
   plan_name: string;
   plan_uuid: string;
   pool_type_name: string;
+  username: string;
+  password: string;
   uuid: string;
   name: string;
   protocol: string;
@@ -113,6 +115,7 @@ export type Transaction = {
 
 export type ResidentialPlan = {
   uuid: string;
+  name: string;
   pool_type: PoolTypes;
   type: string;
   reference_id: string;
