@@ -9,7 +9,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       <div className="grow flex flex-col overflow-auto">
         <Navbar className="z-50" />
         <Suspense>
-          <main className="p-8">{children}</main>
+          <main className="p-5 md:p-8">{children}</main>
         </Suspense>
       </div>
     </div>

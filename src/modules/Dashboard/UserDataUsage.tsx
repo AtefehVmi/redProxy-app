@@ -82,15 +82,17 @@ const UserDataUsage = ({ className }: { className?: string }) => {
         </div>
       </div>
 
-      <div className="w-full h-[187px] mt-[35px]">
-        <StackedBarChart
-          data={CHART_DATA}
-          colors={colorMapping}
-          XKey={"month"}
-          barKeys={barKeys}
-          horizontalCartesian={true}
-          barSize={40}
-        />
+      <div className="w-full h-[187px] mt-[35px] overflow-x-auto">
+        <div className="min-w-[800px] h-full">
+          <StackedBarChart
+            data={CHART_DATA}
+            colors={colorMapping}
+            XKey={"month"}
+            barKeys={barKeys}
+            horizontalCartesian={true}
+            barSize={40}
+          />
+        </div>
       </div>
     </div>
   );
