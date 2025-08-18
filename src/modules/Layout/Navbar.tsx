@@ -5,12 +5,14 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 import dashboardIcon from "@public/icons/dashboard.svg";
+import BurgerMenuIcon from "@public/icons/menu-burger.svg";
 
 import { APP_NAVIGATION, NavModel } from "@/constants/SidebarRoutes";
 import NotifDropdown from "../Dropdown/NotifDropdown";
 import cn from "@/utils/cn";
 import ProfileDropdown from "../Dropdown/ProfileDropdown";
 import MobileSidebar from "./MobileSidebar";
+import Button from "@/components/Button/Button";
 
 const Navbar = ({ className }: { className?: string }) => {
   const pathName = usePathname();
@@ -86,16 +88,26 @@ const Navbar = ({ className }: { className?: string }) => {
           unoptimized
         />
 
-        <button onClick={() => setOpenMenu(true)} className="block lg:hidden">
-          <Image
-            src={iconToUse}
-            alt={activePageName}
-            width={24}
-            height={24}
-            unoptimized
-            className="min-w-6 min-h-6"
-          />
-        </button>
+        <Image
+          src={iconToUse}
+          alt={activePageName}
+          width={24}
+          height={24}
+          unoptimized
+          className="min-w-6 min-h-6"
+        />
+
+        <p className="text-left text-white text-lg md:text-2xl font-bold">
+          {activePageName}
+        </p>
+      </div>
+      <div className="flex items-center gap-3 relative">
+        <NotifDropdown />
+        <ProfileDropdown />
+
+        <Button onClick={() => setOpenMenu(true)} className="block lg:hidden">
+          <Image src={BurgerMenuIcon} alt="" />
+        </Button>
 
         {openMenu && (
           <MobileSidebar
@@ -104,13 +116,6 @@ const Navbar = ({ className }: { className?: string }) => {
             onClose={() => setOpenMenu(false)}
           />
         )}
-        <p className="text-left text-white text-lg md:text-2xl font-bold">
-          {activePageName}
-        </p>
-      </div>
-      <div className="flex items-center gap-3 relative">
-        <NotifDropdown />
-        <ProfileDropdown />
       </div>
     </div>
   );
