@@ -19,7 +19,7 @@ const ResidentialCard: React.FC<Props> = ({
   start_price,
 }) => {
   return (
-    <div className="bg-darkmode-300 rounded-xl p-6 z-10 h-full flex flex-col">
+    <div className="bg-darkmode-300 rounded-xl p-4 lg:p-6 z-10 h-full flex flex-col">
       <div className="grow">
         <div className="flex items-center gap-2">
           <div className="bg-blue-100 rounded-lg">
@@ -39,7 +39,7 @@ const ResidentialCard: React.FC<Props> = ({
 
       <div className="mt-6">
         <div className="flex items-center gap-2 w-full">
-          <div className="border border-darkmode-100 rounded-lg px-3 py-3 flex items-center justify-between w-3/5">
+          <div className="border border-darkmode-100 rounded-lg px-3 py-3 flex items-center justify-between grow">
             <p className="text-grey-400 text-xs">Start From</p>
             <p className="text-orange-200 font-semibold text-sm">
               {start_price}
@@ -47,7 +47,6 @@ const ResidentialCard: React.FC<Props> = ({
           </div>
 
           <Link
-            className="w-2/5"
             href={{
               pathname: "/purchase/new",
               query: { pool: name },

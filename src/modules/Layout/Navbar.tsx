@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 
 import dashboardIcon from "@public/icons/dashboard.svg";
 import BurgerMenuIcon from "@public/icons/menu-burger.svg";
+import bellIcon from "@public/icons/cowbell.svg";
 
 import { APP_NAVIGATION, NavModel } from "@/constants/SidebarRoutes";
 import NotifDropdown from "../Dropdown/NotifDropdown";
@@ -13,6 +14,7 @@ import cn from "@/utils/cn";
 import ProfileDropdown from "../Dropdown/ProfileDropdown";
 import MobileSidebar from "./MobileSidebar";
 import Button from "@/components/Button/Button";
+import Link from "next/link";
 
 const Navbar = ({ className }: { className?: string }) => {
   const pathName = usePathname();
@@ -102,7 +104,14 @@ const Navbar = ({ className }: { className?: string }) => {
         </p>
       </div>
       <div className="flex items-center gap-3 relative">
-        <NotifDropdown />
+        <NotifDropdown className="hidden md:block" />
+
+        <Link className="block md:hidden" href={"/profile?tab=notification"}>
+          <Button variant="ghost" className="p-2">
+            <Image src={bellIcon} alt={""} className="h-4 w-4 cursor-pointer" />
+          </Button>
+        </Link>
+
         <ProfileDropdown />
 
         <Button onClick={() => setOpenMenu(true)} className="block lg:hidden">
