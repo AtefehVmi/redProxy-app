@@ -8,7 +8,8 @@ import useFetch from "@/hooks/UseFetch";
 import {
   estimatePrice,
   estimateResi,
-  purchaseRotatingProxy,
+  purchaseProxy,
+  purchaseResi,
 } from "@/service/api";
 import cn from "@/utils/cn";
 import { useQueryClient } from "@tanstack/react-query";
@@ -34,7 +35,7 @@ type Props = {
   quantity?: number;
   price: number;
   pricePerGb?: number;
-  plan?: string;
+  plan?: { price: number; name: string };
   selectedPlan?: any;
   className?: string;
   location?: string;
@@ -67,19 +68,29 @@ const OrderSummaryCard: React.FC<Props> = ({
 
   const balance = 0;
 
-  const { fetch: purchaseRotatingFetch, loading: rotatingFetch } = useFetch(
-    purchaseRotatingProxy,
+  const { fetch: purchaseResiFetch, loading: resiLoading } = useFetch(
+    purchaseResi,
     false,
     { toastOnError: true }
   );
 
-  const handlePurchaseBandwidth = () => {
-    if (balance <= 0) {
+  const { fetch: purchaseProxyFetch, loading: proxyLoading } = useFetch(
+    purchaseProxy,
+    false,
+    { toastOnError: true }
+  );
+
+  const handlePurchase = () => {
+    if (balance >= 1) {
       setOpenFirst(true);
-    } else
-      purchaseRotatingFetch(
-        "residential",
-        residentialPlan,
+      return;
+    }
+
+    if (residentialPlan) {
+      // Residential plan purchase
+      purchaseResiFetch(
+        pool,
+        quantity,
         selectedPayment,
         coupon,
         "Bandwidth"
@@ -89,17 +100,32 @@ const OrderSummaryCard: React.FC<Props> = ({
           return router.push(resp.url);
         }
         toast.success("Purchased Successfully!");
-        // queryClient.invalidateQueries({
-        //   queryKey: QUERY_KEYS.trafficDetails(pool),
-        // });
-        queryClient.invalidateQueries({
-          queryKey: ["refreshable"],
-        });
-        queryClient.invalidateQueries({
-          queryKey: QUERY_KEYS.PROFILE,
-        });
+        queryClient.invalidateQueries({ queryKey: ["refreshable"] });
+        queryClient.invalidateQueries({ queryKey: QUERY_KEYS.PROFILE });
         router.refresh();
       });
+    } else {
+      // other proxies purchase
+      purchaseProxyFetch(
+        plan, // name
+        selectedPayment, // method
+        quantity, // quantity
+        location ?? "", // location
+        location ?? "", // location_name
+        selectedPlan?.port, // port
+        coupon, // coupon (optional)
+        selectedPlan?.planId // plan (optional)
+      ).then((resp) => {
+        if (selectedPayment === PAYMENT_METHODS.CRYPTO) {
+          toast.success("You'll be redirected soon...");
+          return router.push(resp.url);
+        }
+        toast.success("Purchased Successfully!");
+        queryClient.invalidateQueries({ queryKey: ["refreshable"] });
+        queryClient.invalidateQueries({ queryKey: QUERY_KEYS.PROFILE });
+        router.refresh();
+      });
+    }
   };
 
   const handleTopUpClick = () => {
@@ -170,13 +196,13 @@ const OrderSummaryCard: React.FC<Props> = ({
           <div className="flex items-center justify-between">
             <p className="text-sm text-grey-500">Price</p>
             <p className="text-base text-white font-semibold">
-              ${price.toFixed(2)}
+              ${plan?.price.toFixed(2)}
             </p>
           </div>
 
           <div className="flex items-center justify-between mt-2.5">
             <p className="text-sm text-grey-500">Plan</p>
-            <p className="text-base text-white font-semibold">{plan}</p>
+            <p className="text-base text-white font-semibold">{plan?.name}</p>
           </div>
 
           <div className="flex items-center justify-between mt-2.5">
@@ -192,13 +218,17 @@ const OrderSummaryCard: React.FC<Props> = ({
           {coupon && (
             <div className="flex items-center justify-between mt-2.5">
               <p className="text-sm text-grey-500">Sale</p>
-              <p className="text-base text-orange-200 font-semibold">20%</p>
+              <p className="text-base text-orange-200 font-semibold">
+                {coupon}%
+              </p>
             </div>
           )}
 
           <div className="flex items-center justify-between mt-5 pt-5 border-t border-dashed border-darkmode-100">
             <p className="text-sm text-grey-500">Total</p>
-            <p className="text-base text-white font-semibold">$4.00</p>
+            <p className="text-base text-white font-semibold">
+              ${price.toFixed(2)}
+            </p>
           </div>
         </div>
       )}
@@ -210,11 +240,11 @@ const OrderSummaryCard: React.FC<Props> = ({
       />
 
       <Button
-        disabled={rotatingFetch}
-        onClick={handlePurchaseBandwidth}
+        disabled={resiLoading}
+        onClick={handlePurchase}
         className="mt-6 text-base font-semibold w-full"
       >
-        {rotatingFetch ? "Purchasing..." : "Purchase"}
+        {resiLoading ? "Purchasing..." : "Purchase"}
       </Button>
       {openFirst && (
         <NotEnoughBalanceModal

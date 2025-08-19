@@ -12,71 +12,21 @@ import SearchIcon from "@public/icons/search.svg";
 import cn from "@/utils/cn";
 import { usePathname } from "next/navigation";
 
+type PlanOption = {
+  value: number;
+  content: React.ReactNode;
+};
+
 type Props = {
-  plan: string;
-  setPlan: (plan: string) => void;
+  plans?: { value: number; name: string; price: number }[];
+  plan?: { value: number; name: string; price: number };
+  setPlan?: (plan: { value: number; name: string; price: number }) => void;
   quantity: number;
   setQuantity: (quantity: number) => void;
   location: string;
   setLocation: (location: string) => void;
+  planOptions: PlanOption[];
 };
-
-const planOptions = [
-  {
-    value: 0,
-    content: (
-      <div>
-        <p className="text-sm text-white">10 Days</p>
-        <p className="text-grey-400 text-sm">$12</p>
-      </div>
-    ),
-  },
-  {
-    value: 1,
-    content: (
-      <div>
-        <p className="text-sm text-white">30 Days</p>
-        <p className="text-grey-400 text-sm">$12</p>
-      </div>
-    ),
-  },
-  {
-    value: 2,
-    content: (
-      <div>
-        <p className="text-sm text-white">60 Days</p>
-        <p className="text-grey-400 text-sm">$12</p>
-      </div>
-    ),
-  },
-  {
-    value: 3,
-    content: (
-      <div>
-        <p className="text-sm text-white">120 Days</p>
-        <p className="text-grey-400 text-sm">$12</p>
-      </div>
-    ),
-  },
-  {
-    value: 4,
-    content: (
-      <div>
-        <p className="text-sm text-white">160 Days</p>
-        <p className="text-grey-400 text-sm">$12</p>
-      </div>
-    ),
-  },
-  {
-    value: 5,
-    content: (
-      <div>
-        <p className="text-sm text-white">180 Days</p>
-        <p className="text-grey-400 text-sm">$12</p>
-      </div>
-    ),
-  },
-];
 
 const locationOptions = [
   {
@@ -149,11 +99,11 @@ const CustomPlan: React.FC<Props> = ({
   setQuantity,
   location,
   setLocation,
+  planOptions,
+  plans,
 }) => {
   const pathname = usePathname();
-  const [selectedPlan, setSelectedPlan] = useState(0);
   const [selectedlocation, setSelectedLocation] = useState("us");
-  const [selectedQty, setSelectedQty] = useState(1);
 
   const [isExpanded, setIsExpanded] = useState({
     city: false,
@@ -177,9 +127,13 @@ const CustomPlan: React.FC<Props> = ({
         <div className="border border-darkmode-100 rounded p-[18px] mt-8">
           <p className="text-sm text-white font-semibold">Choose Plan</p>
           <RadioCard<number>
-            className="grid grid-cols-2 lg:grid-cols-6 gap-3 mt-4"
-            selected={selectedPlan}
-            onChange={setSelectedPlan}
+            className="grid grid-cols-2 lg:grid-cols-4 gap-3 mt-4"
+            selected={plan?.value ?? -1}
+            onChange={(val) => {
+              if (!plans || !setPlan) return;
+              const newPlan = plans.find((p) => p.value === val);
+              if (newPlan) setPlan(newPlan);
+            }}
             options={planOptions}
             padding="py-[9px]"
           />
@@ -305,8 +259,8 @@ const CustomPlan: React.FC<Props> = ({
         <div className="flex flex-col lg:flex-row items-center gap-2">
           <RadioCard<number>
             className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4 w-full lg:w-2/3 xl:w-1/2"
-            selected={selectedQty}
-            onChange={setSelectedQty}
+            selected={quantity}
+            onChange={setQuantity}
             options={qtyOptions}
             padding="py-[9px]"
           />
@@ -315,6 +269,7 @@ const CustomPlan: React.FC<Props> = ({
           <div className="bg-darkmode-100 h-px w-full block lg:hidden my-4"></div>
 
           <InputText
+            type="number"
             className="w-full lg:w-1/3 xl:w-1/2"
             startAdornment={<Image src={QuantityIcon} alt="" />}
             value={quantity}
