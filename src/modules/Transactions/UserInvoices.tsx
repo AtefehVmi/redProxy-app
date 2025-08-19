@@ -5,123 +5,14 @@ import SelectWithCustomCard from "@/components/CustomSelect/SelectWithCustomCard
 import Table from "@/components/Table/Table";
 import { InvoiceColumns } from "@/constants/TableColumns";
 import cn from "@/utils/cn";
-import { getOrders } from "@/service/api";
+import { getOrders, getTransactions } from "@/service/api";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/querykeys";
-import Order from "@/service/models";
+import Order, { Transaction } from "@/service/models";
 import Pagination from "@/components/Pagination/Pagination";
 import { useSearchParams } from "next/navigation";
-
-const INVOICE_DATA: Array<any> = [
-  {
-    date: "08/05/2024",
-    invoice: "#982ZK-001",
-    order: "100 GB Residential",
-    amount: "$ 300.00",
-    paymentMethod: "Mastercard",
-    status: "PAID",
-    download: "https://www.google.com",
-  },
-  {
-    date: "09/05/2024",
-    invoice: "#982ZK-002",
-    order: "10 GB Residential",
-    amount: "$ 300.00",
-    paymentMethod: "Mastercard",
-    status: "PAID",
-    download: "https://www.google.com",
-  },
-  {
-    date: "10/05/2024",
-    invoice: "#982ZK-003",
-    order: "50 GB Residential",
-    amount: "$ 300.00",
-    paymentMethod: "Mastercard",
-    status: "PAID",
-    download: "https://www.google.com",
-  },
-  {
-    date: "11/05/2024",
-    invoice: "#982ZK-004",
-    order: "20 GB Residential",
-    amount: "$ 300.00",
-    paymentMethod: "Mastercard",
-    status: "FAILED",
-    download: "https://www.google.com",
-  },
-  {
-    date: "10/05/2024",
-    invoice: "#982ZK-003",
-    order: "50 GB Residential",
-    amount: "$ 300.00",
-    paymentMethod: "Mastercard",
-    status: "PAID",
-    download: "https://www.google.com",
-  },
-  {
-    date: "10/05/2024",
-    invoice: "#982ZK-003",
-    order: "50 GB Residential",
-    amount: "$ 300.00",
-    paymentMethod: "Mastercard",
-    status: "PAID",
-    download: "https://www.google.com",
-  },
-  {
-    date: "10/05/2024",
-    invoice: "#982ZK-003",
-    order: "50 GB Residential",
-    amount: "$ 300.00",
-    paymentMethod: "Mastercard",
-    status: "PAID",
-    download: "https://www.google.com",
-  },
-  {
-    date: "10/05/2024",
-    invoice: "#982ZK-003",
-    order: "50 GB Residential",
-    amount: "$ 300.00",
-    paymentMethod: "Mastercard",
-    status: "PAID",
-    download: "https://www.google.com",
-  },
-  {
-    date: "10/05/2024",
-    invoice: "#982ZK-003",
-    order: "50 GB Residential",
-    amount: "$ 300.00",
-    paymentMethod: "Mastercard",
-    status: "PAID",
-    download: "https://www.google.com",
-  },
-  {
-    date: "10/05/2024",
-    invoice: "#982ZK-003",
-    order: "50 GB Residential",
-    amount: "$ 300.00",
-    paymentMethod: "Mastercard",
-    status: "PAID",
-    download: "https://www.google.com",
-  },
-  {
-    date: "10/05/2024",
-    invoice: "#982ZK-003",
-    order: "50 GB Residential",
-    amount: "$ 300.00",
-    paymentMethod: "Mastercard",
-    status: "PAID",
-    download: "https://www.google.com",
-  },
-  {
-    date: "10/05/2024",
-    invoice: "#982ZK-003",
-    order: "50 GB Residential",
-    amount: "$ 300.00",
-    paymentMethod: "Mastercard",
-    status: "PAID",
-    download: "https://www.google.com",
-  },
-];
+import TableCell from "@/components/Table/TableCell";
+import { ColumnDef } from "@tanstack/react-table";
 
 const UserInvoices = ({ height }: { height?: string }) => {
   const params = useSearchParams();
@@ -130,9 +21,75 @@ const UserInvoices = ({ height }: { height?: string }) => {
 
   function onFilterChange() {}
   const { data: orders } = useQuery({
-    queryKey: QUERY_KEYS.ORDERS,
-    queryFn: () => getOrders({ completed: false, all: true }),
+    queryKey: QUERY_KEYS.TRANSACTIONS,
+    queryFn: () => getTransactions(),
   });
+
+  const TransactionsColumns: ColumnDef<Transaction, any>[] = [
+    {
+      accessorKey: "created",
+      header: "Date",
+      cell: ({ getValue }) => {
+        return <TableCell type={"TEXT"} value={getValue()} />;
+      },
+    },
+    {
+      accessorKey: "id",
+      header: "ID",
+      cell: ({ getValue }) => {
+        return <TableCell type={"TEXT"} value={getValue()} />;
+      },
+    },
+    {
+      accessorKey: "name",
+      header: "Name",
+      cell: ({ getValue }) => {
+        return <TableCell type={"TEXT"} value={getValue()} />;
+      },
+    },
+    {
+      accessorKey: "quantity",
+      header: "Quantity",
+      cell: ({ getValue }) => {
+        return <TableCell type={"TEXT"} value={getValue()} />;
+      },
+    },
+    {
+      accessorKey: "provider",
+      header: "Provider",
+      cell: ({ getValue }) => {
+        return <TableCell type={"TEXT"} value={getValue()} />;
+      },
+    },
+    {
+      accessorKey: "status",
+      header: "Status",
+      cell: ({ getValue }) => {
+        return <TableCell type={"BADGE"} value={getValue()} />;
+      },
+    },
+    {
+      accessorKey: "total_amount",
+      header: "Total Amount",
+      cell: ({ getValue }) => {
+        return <TableCell type={"TEXT"} value={getValue()} />;
+      },
+    },
+    {
+      accessorKey: "duration",
+      header: "Duration",
+      cell: ({ getValue }) => {
+        return <TableCell type={"TEXT"} value={getValue()} />;
+      },
+    },
+    {
+      accessorKey: "download",
+      header: "Download",
+      cell: ({ getValue }) => {
+        return <TableCell type={"DOWNLOAD"} value={getValue()} />;
+      },
+    },
+  ];
 
   return (
     <div className="flex flex-col">
@@ -156,12 +113,13 @@ const UserInvoices = ({ height }: { height?: string }) => {
             className="w-[119px] h-26px"
           />
         </div>
-        <Table columns={InvoiceColumns} data={orders ?? INVOICE_DATA} />
+        <Table columns={TransactionsColumns} data={orders ?? []} />
       </div>
 
       <Pagination
+        color="bg-orange-200 border-orange-200 hover:bg-orange-400"
         noMargin={true}
-        totalCount={INVOICE_DATA.length}
+        totalCount={orders?.length}
         limit={limit}
         offset={offset}
         isDataAvailable={(orders?.length ?? 0) >= limit}

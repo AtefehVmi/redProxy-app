@@ -1,7 +1,6 @@
 "use client";
 
 import PrePlansIcon from "@public/icons/prePlans.svg";
-import ScrapingIcon from "@public/icons/globe.svg";
 import GamingIcon from "@public/icons/gamepad.svg";
 import GenericIcon from "@public/icons/plans.svg";
 import Image from "next/image";
@@ -12,13 +11,11 @@ import NoDataImage from "@public/image/plans.png";
 import { useState } from "react";
 import StatusFilterButton from "../StatusFilterButton";
 import ResidentialPlanCard from "../ResidentialPlanCard";
-
-const filterOptions = [
-  { label: "All" },
-  { label: "Scraping", icon: ScrapingIcon },
-  { label: "Gaming", icon: GamingIcon },
-  { label: "Generic", icon: GenericIcon },
-];
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { QUERY_KEYS } from "@/constants/querykeys";
+import PlusIcon from "@public/icons/plus.svg";
+import GlobeIcon from "@public/icons/globe.svg";
+import { getPoolTypes } from "@/service/api";
 
 const data = [
   {
@@ -89,10 +86,30 @@ const data = [
 
 const PreviousPlansCard = () => {
   const params = useSearchParams();
+  const queryClient = useQueryClient();
+
   const limit = params.get("limit") ? parseInt(params.get("limit")!) : 8;
   const offset = params.get("offset") ? parseInt(params.get("offset")!) : 0;
 
   const [activeFilter, setActiveFilter] = useState("All");
+
+  const { data: poolTypesData } = useQuery({
+    queryKey: QUERY_KEYS.POOL_TYPES,
+    queryFn: () => getPoolTypes(),
+  });
+
+  const filterOptions = [
+    { filterName: "All", icon: PlusIcon },
+    ...(poolTypesData ?? []).map((type) => ({
+      filterName: type.name,
+      icon:
+        type.name === "Gaming"
+          ? GamingIcon
+          : type.name === "Generic"
+          ? GenericIcon
+          : GlobeIcon,
+    })),
+  ];
 
   const paginatedData = data.slice(offset, offset + limit);
 
@@ -104,24 +121,29 @@ const PreviousPlansCard = () => {
           <p className="text-white font-bold text-xl">Previous Plans</p>
         </div>
 
-        <StatusFilterButton className="lg:hidden" />
+        <StatusFilterButton
+          filterOptions={filterOptions}
+          value={activeFilter}
+          onChange={(selected) => setActiveFilter(selected)}
+          className="lg:hidden"
+        />
 
         <div className={cn("hidden lg:flex items-center gap-2.5")}>
           {filterOptions.map((item) => (
             <button
-              onClick={() => setActiveFilter(item.label)}
+              onClick={() => setActiveFilter(item.filterName)}
               className={cn(
                 "flex items-center gap-2.5 border border-darkmode-100 rounded px-3 py-[9px]",
-                activeFilter === item.label
+                activeFilter === item.filterName
                   ? "bg-darkmode-100"
                   : "bg-transparent"
               )}
-              key={item.label}
+              key={item.filterName}
             >
               {item.icon && (
                 <Image className="w-5 h-5" src={item.icon} alt="" />
               )}
-              <p className="text-sm text-white">{item.label}</p>
+              <p className="text-sm text-white">{item.filterName}</p>
             </button>
           ))}
         </div>
@@ -147,13 +169,14 @@ const PreviousPlansCard = () => {
                 purchaseDate={item.purchase_date}
                 expireDate={item.expire_date}
                 remainingGb={item.remainingGb}
-                planId={item.id}
+                planId={"hjh"}
               />
             ))}
           </div>
         )}
 
         <Pagination
+          color="bg-blue-100 border-blue-100 hover:bg-blue-400"
           className="mb-0"
           totalCount={data.length}
           limit={limit}

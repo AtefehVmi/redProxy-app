@@ -16,6 +16,7 @@ export const useUser = (): UseUserResult => {
     queryKey: QUERY_KEYS.PROFILE,
     queryFn: getUserProfile,
   });
+  console.log(data);
 
   return {
     user: data,

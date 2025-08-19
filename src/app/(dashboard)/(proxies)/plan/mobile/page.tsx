@@ -1,4 +1,4 @@
-import MobileControl from "@/modules/MobileControl/MobileControl";
+import MobileControl from "@/modules/Mobile/MobileControl";
 
 const PlanPage = () => {
   return (

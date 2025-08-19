@@ -166,7 +166,7 @@ const DatacenterPage = () => {
         <div className="flex flex-col gap-6">
           {paginatedData.map((config, index) => (
             <IspConfigCard
-              href="/viewConfig/datacenter"
+              href="/generate/datacenter"
               dataUsage={config.dataUsage}
               chartColor="#FF5C5C"
               plan={config.plan}
@@ -185,6 +185,7 @@ const DatacenterPage = () => {
         </div>
 
         <Pagination
+          color="bg-orange-300 border-orange-300 hover:bg-orange-400"
           totalCount={data.length}
           limit={limit}
           offset={offset}

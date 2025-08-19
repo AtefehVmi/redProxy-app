@@ -10,6 +10,34 @@ export type Profile = {
   total_spent: null | string | number;
 };
 
+export type PoolTypes = {
+  price: number | null;
+  name: string;
+  description: string;
+  is_active: boolean;
+};
+
+export type Config = {
+  plan_name: string;
+  plan_uuid: string;
+  pool_type_name: string;
+  username: string;
+  password: string;
+  uuid: string;
+  name: string;
+  protocol: string;
+  format: string;
+  rotation: string;
+  sticky_lifetime: number;
+  country: string;
+  state: string;
+  city: string;
+  quantity: number;
+  is_active: boolean;
+  created: string;
+  updated: string;
+};
+
 export type City = {
   name: string;
   code: string;
@@ -17,27 +45,27 @@ export type City = {
 
 export type State = {
   name: string;
-  code: string;
   cities: City[];
 };
 
 export type Country = {
   code: string;
   name: string;
-  iso_code: string;
   states: State[];
 };
 
 export interface GenerateResidentialProxy {
+  name: string;
+  plan_uuid: string;
+  protocol: string;
+  port: number;
   format: string;
-  port: string;
+  rotation: string;
+  sticky_lifetime: number;
   country: string;
   state: string;
   city: string;
-  rotation: string;
   quantity: number;
-  lifetime: number;
-  plan: string;
 }
 
 export default interface Order {
@@ -65,4 +93,46 @@ export type Plans = {
   name: string;
   active: boolean;
   plans: Plan[];
+};
+
+export type Transaction = {
+  name: string;
+  status: string;
+  duration: string;
+  provider: string;
+  id: number;
+  product: number;
+  plan: number;
+  user_plan: number;
+  quantity: number;
+  order_data: {};
+  total_amount: number;
+  coupon: number;
+  updated: string;
+  created: string;
+  expire_at: string;
+};
+
+export type Orders = {
+  code: string;
+  quantity: number;
+  total_amount: number;
+  created: string;
+};
+
+export type ResidentialPlan = {
+  uuid: string;
+  name: string;
+  pool_type: PoolTypes;
+  type: string;
+  reference_id: string;
+  subuser_id: string;
+  username: string;
+  password: string;
+  expiration: string;
+  created: string;
+  total_gb: number;
+  total_cost: number;
+  available_gb: number;
+  orders: Orders[];
 };

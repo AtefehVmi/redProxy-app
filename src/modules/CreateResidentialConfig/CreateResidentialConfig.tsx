@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "@/components/Input/Input";
 import Image from "next/image";
 import cn from "@/utils/cn";
@@ -12,18 +12,16 @@ import PortIcon from "@public/icons/port.svg";
 import QuantityIcon from "@public/icons/quantity.svg";
 
 import Autocomplete from "@/components/AutoComplete/Autocomplete";
-import {
-  generateProxy,
-  getResiCities,
-  getResiCountries,
-  getResiStates,
-} from "@/service/api";
-import { usePathname } from "next/navigation";
+import { generateProxy, getResiCountries, getUserPlans } from "@/service/api";
+import { usePathname, useSearchParams } from "next/navigation";
 import useFetch from "@/hooks/UseFetch";
 import { City, Country, State } from "@/service/models";
 import ResidentialGenerateTab from "./ResidentialGenerateTab";
+import { useQuery } from "@tanstack/react-query";
+import { QUERY_KEYS } from "@/constants/querykeys";
+import { toast } from "react-toastify";
 
-const portOptions = [
+const protocolOptions = [
   {
     label: "HTTPS",
     value: "http|https",
@@ -64,196 +62,92 @@ const formatOptions = [
   },
 ];
 
-const poolToName = {
-  enterprise_residential: "Enterprise Residential",
-  residential: "Residential",
-  premium_residential: "Premium Residential",
-};
-
 const CreateResidentialConfig = ({ className }: { className?: string }) => {
-  const [port, setPort] = useState(portOptions[0].value);
+  const [protocol, setProtocol] = useState(protocolOptions[0].value);
   const [rotation, setRotation] = useState(rotationOptions[0].value);
   const [format, setFormat] = useState(formatOptions[0].value);
   const [quantity, setQuantity] = useState(0);
+  const [lifetime, setLifetime] = useState(0);
 
-  const path = usePathname();
-  const pool = path.split("/")[2];
-  console.log("pool param value:", pool);
+  // get plans
+  const [plan, setPlan] = useState<string | null>(null);
 
+  const { data: plans, isLoading: plansLoading } = useQuery({
+    queryKey: QUERY_KEYS.PLANS,
+    queryFn: () => getUserPlans(),
+  });
+
+  const planOptions = plansLoading
+    ? [{ label: "Loading...", value: "" }]
+    : plans?.length
+    ? plans.map((plan) => ({
+        label: `${plan.pool_type.name} - (${plan.uuid})`,
+        value: plan.uuid,
+      }))
+    : [];
+
+  // country, state, city
   const [country, setCountry] = useState<string | null>(null);
   const [countryOptions, setCountryOptions] = useState<
     Option<string, Country>[]
   >([]);
+  const [countries, setCountries] = useState<Country[]>([]);
 
   const [state, setState] = useState<string | null>(null);
-  const [stateOptions, setStateOptions] = useState<Option<string, State>[]>([]);
-  const [hasState, setHasState] = useState<boolean>(
-    pool === "enterprise_residential" ? false : true
-  );
 
   const [city, setCity] = useState<string | null>(null);
-  const [cityOptions, setCityOptions] = useState<Option<string, City>[]>([]);
 
-  const { fetch: countriesFetch, loading: countriesLoading } = useFetch(
-    getResiCountries,
-    false,
-    {
-      toastOnError: true,
-    }
-  );
+  const { fetch: CountriesFetch, loading } = useFetch(getResiCountries, false, {
+    toastOnError: true,
+  });
 
-  const { fetch: statesFetch, loading: statesLoading } = useFetch(
-    getResiStates,
-    false,
-    { toastOnError: true }
-  );
+  useEffect(() => {
+    const fetchCountries = async () => {
+      if (!plan) return;
 
-  const { fetch: citiesFetch, loading: citiesLoading } = useFetch(
-    getResiCities,
-    false,
-    { toastOnError: true }
-  );
+      const selected = plans?.find((p) => p.uuid === plan);
+      if (!selected) return;
 
-  //country, state, city logics
+      const fetchedCountries = await CountriesFetch(selected.pool_type.name);
 
-  const handleCountriesFetch = () => {
-    if (countryOptions.length === 0) {
-      if (!countriesLoading) {
-        countriesFetch(pool).then((data) => {
-          let options = [
-            {
-              label: "Random",
-              value: "rand",
-            },
-          ];
-          if (pool === "premium_residential") {
-            options = [
-              ...options,
-              ...data.map((country: Country) => ({
-                label: country.name,
-                value: country.code ?? country.iso_code,
-                extra: country,
-              })),
-            ];
-          } else {
-            options = [
-              ...options,
-              ...data.countries.map((country: Country) => ({
-                label: country.name,
-                value: country.code ?? country.iso_code,
-                extra: country,
-              })),
-            ];
-          }
-          setCountryOptions(options);
-        });
-      }
-    }
-  };
-
-  const handleCountryChange = ({
-    value,
-    option,
-  }: {
-    value: string | null;
-    option?: Option<string | null, Country>;
-  }) => {
-    if (value) {
-      setCountry(() => value);
-      setState(() => null);
-      setStateOptions(() => []);
-      setCity(() => null);
-      setCityOptions(() => []);
-
-      if (pool === "premium_residential") {
-        const states = option?.extra?.states;
-        if (states) {
-          setStateOptions(
-            states.map((state) => ({
-              label: state.name,
-              value: state.code,
-              extra: state,
+      setCountries(fetchedCountries);
+      setCountryOptions(
+        fetchedCountries.length
+          ? fetchedCountries.map((c: Country) => ({
+              label: c.name,
+              value: c.code,
             }))
-          );
-        }
-      } else {
-        if (pool === "enterprise_residential" && value !== "US") {
-          setStateOptions([]);
-          setState("---");
-          setHasState(false);
-          handleStateChange({ value: "random" });
-          return;
-        }
-        setHasState(true);
-        statesFetch(pool, value).then((data) => {
-          const states = data?.states as State[];
-          if (states) {
-            setStateOptions(
-              states.map((state) => ({
-                label: state.name,
-                value: `${state.name}`.replaceAll(" ", ""),
-                extra: state,
-              }))
-            );
-          }
-        });
-      }
-    }
-  };
+          : [{ label: "No data", value: "" }]
+      );
+    };
 
-  const handleStateChange = ({
-    value,
-    option,
-  }: {
-    value: string | null;
-    option?: Option<string | null, State>;
-  }) => {
-    if (value) {
-      setState(() => value);
-      setCity(() => null);
-      setCityOptions(() => []);
-      if (pool === "premium_residential") {
-        const cities = option?.extra?.cities;
-        if (cities) {
-          setCityOptions(
-            cities.map((city) => ({
-              label: city.name,
-              value: city.code,
-              extra: city,
-            }))
-          );
-        }
-      } else {
-        citiesFetch(pool, country, value).then((data) => {
-          const cities = data?.cities as State[];
-          if (cities) {
-            setCityOptions(
-              cities.map((city) => ({
-                label: city.name,
-                value: `${city.name}`.replaceAll(" ", ""),
-                extra: city,
-              }))
-            );
-          }
-        });
-      }
-    }
-  };
+    fetchCountries();
+  }, [plan, plans, CountriesFetch]);
 
-  const handleCityChange = ({
-    value,
-    option,
-  }: {
-    value: string | null;
-    option?: Option<string | null, City>;
-  }) => {
-    if (value) {
-      setCity(() => value);
-    }
-  };
+  const selectedCountryObj = countryOptions.find((c) => c.value === country);
+  const statesFromCountry: Option<string, State>[] =
+    selectedCountryObj?.value && countries?.length
+      ? countries
+          .find((c) => c.code === country)
+          ?.states.map((s) => ({
+            label: s.name,
+            value: s.name,
+          })) ?? []
+      : [];
+
+  const selectedStateObj = statesFromCountry.find((s) => s.value === state);
+  const citiesFromState: Option<string, City>[] =
+    selectedStateObj?.value && country
+      ? countries
+          .find((c) => c.code === country)
+          ?.states.find((s) => s.name === state)
+          ?.cities.map((c) => ({
+            label: c.name,
+            value: c.code,
+          })) ?? []
+      : [];
 
   //generate residential
-
   const { fetch: generateProxyFetch, loading: generateProxyLoading } = useFetch(
     generateProxy,
     false,
@@ -261,14 +155,22 @@ const CreateResidentialConfig = ({ className }: { className?: string }) => {
   );
 
   const handleSubmit = () => {
-    const res = generateProxyFetch(pool, {
+    if (!plan) return;
+
+    const selectedPlan = plans?.find((p) => p.uuid === plan);
+    if (!selectedPlan) return;
+
+    const res = generateProxyFetch({
+      plan_uuid: selectedPlan.uuid,
+      name: selectedPlan.pool_type.name,
       format,
-      port,
+      protocol,
       country,
       state,
       city,
       rotation,
       quantity,
+      sticky_lifetime: lifetime,
     });
 
     console.log(res);
@@ -288,6 +190,16 @@ const CreateResidentialConfig = ({ className }: { className?: string }) => {
             Proxy settings
           </p>
           <div className="col-span-1 grid grid-cols-1 lg:grid-cols-2 gap-x-5 gap-y-4 mt-8">
+            <Autocomplete
+              placeholder="Select a plan"
+              className="col-span-2"
+              value={plan}
+              options={planOptions}
+              onChange={({ value }) => setPlan(value)}
+              label={"Plan *"}
+              startAdornment={<Image src={ConfigIcon} alt="" />}
+            />
+
             <Input
               key={"name"}
               type={"text"}
@@ -297,10 +209,10 @@ const CreateResidentialConfig = ({ className }: { className?: string }) => {
             />
 
             <Autocomplete
-              value={port}
-              options={portOptions}
-              onChange={({ value }) => setPort(value)}
-              label={"Port Type *"}
+              value={protocol}
+              options={protocolOptions}
+              onChange={({ value }) => setProtocol(value)}
+              label={"Protocol Type *"}
               startAdornment={<Image src={PortIcon} alt="" />}
             />
 
@@ -313,11 +225,37 @@ const CreateResidentialConfig = ({ className }: { className?: string }) => {
             />
 
             <Autocomplete
-              value={"germany"}
-              options={countryOptions}
-              onChange={() => {}}
-              onFocus={handleCountriesFetch}
-              label={"Location *"}
+              value={country}
+              options={countryOptions.length ? countryOptions : []}
+              onChange={({ value }) => {
+                setCountry(value);
+                setState(null);
+                setCity(null);
+              }}
+              placeholder="Select a Country"
+              label={"Country *"}
+              startAdornment={<Image src={QuantityIcon} alt="" />}
+            />
+
+            <Autocomplete
+              value={state}
+              options={statesFromCountry.length ? statesFromCountry : []}
+              onChange={({ value }) => {
+                setState(value);
+                setCity(null);
+              }}
+              label={"State *"}
+              placeholder="Select a State"
+              startAdornment={<Image src={QuantityIcon} alt="" />}
+            />
+
+            <Autocomplete
+              value={city}
+              options={citiesFromState.length ? citiesFromState : []}
+              onChange={({ value }) => setCity(value)}
+              placeholder="Select a City"
+              // onFocus={handleCountriesFetch}
+              label={"City *"}
               startAdornment={<Image src={QuantityIcon} alt="" />}
             />
 
@@ -337,6 +275,17 @@ const CreateResidentialConfig = ({ className }: { className?: string }) => {
               placeholder={"Enter Quantity"}
               value={quantity}
               onChange={(e) => setQuantity(Number(e.target.value))}
+            />
+
+            <Input
+              startAdornment={<Image src={QuantityIcon} alt="" />}
+              key={"lifetime"}
+              type={"number"}
+              label={"Lifetime *"}
+              placeholder={"Enter lifetime"}
+              value={lifetime}
+              onChange={(e) => setLifetime(Number(e.target.value))}
+              className="col-span-2"
             />
           </div>
           <div className="flex items-center lg:justify-end col-span-2">

@@ -5,4 +5,9 @@ export const QUERY_KEYS = {
   PRODUCTS: ["products"],
   PRICING: ["pricing"],
   ORDERS: ["orders"],
+  POOL_TYPES: ["pool_types"],
+  USER_CONFIGS: ["user_configs"],
+  TRANSACTIONS: ["transactions"],
+  PLANS: ["plans"],
+  USER_PLAN: ["user_plan"],
 };

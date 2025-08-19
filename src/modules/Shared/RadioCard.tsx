@@ -4,9 +4,9 @@ import { RadioGroup } from "@headlessui/react";
 import cn from "@/utils/cn";
 import React from "react";
 
-type Option<T> = {
-  content: React.ReactNode;
+export type Option<T> = {
   value: T;
+  content: React.ReactNode;
 };
 
 type Props<T> = {
@@ -32,7 +32,7 @@ function RadioCard<T extends string | number>({
             <div
               className={cn(
                 "flex items-center justify-between cursor-pointer",
-                "bg-darkmode-300 rounded px-3",
+                "bg-darkmode-300 rounded px-3 h-full",
                 padding
               )}
             >

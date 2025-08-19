@@ -49,8 +49,8 @@ const UserDataUsage = ({ className }: { className?: string }) => {
           <p className="text-gray-500 text-xs md:text-sm mt-[23px]">
             TOTAL DATA
           </p>
-          <div className="flex justify-center items-center gap-2 mt-[11px]">
-            <p className="text-white text-left text-xl md:text-2xl">
+          <div className="flex flex-wrap sm:justify-center sm:items-center gap-2 mt-[11px]">
+            <p className="text-white text-left text-xl md:text-2xl whitespace-nowrap">
               786.34 GB
             </p>
             <div
@@ -82,15 +82,17 @@ const UserDataUsage = ({ className }: { className?: string }) => {
         </div>
       </div>
 
-      <div className="w-full h-[187px] mt-[35px]">
-        <StackedBarChart
-          data={CHART_DATA}
-          colors={colorMapping}
-          XKey={"month"}
-          barKeys={barKeys}
-          horizontalCartesian={true}
-          barSize={40}
-        />
+      <div className="w-full h-[187px] mt-[35px] overflow-x-auto">
+        <div className="min-w-[800px] h-full">
+          <StackedBarChart
+            data={CHART_DATA}
+            colors={colorMapping}
+            XKey={"month"}
+            barKeys={barKeys}
+            horizontalCartesian={true}
+            barSize={40}
+          />
+        </div>
       </div>
     </div>
   );

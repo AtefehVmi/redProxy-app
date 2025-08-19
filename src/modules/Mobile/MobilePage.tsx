@@ -166,6 +166,7 @@ const MobilePage = () => {
         <div className="flex flex-col gap-6">
           {paginatedData.map((config, index) => (
             <IspConfigCard
+              href="/generate/mobile"
               dataUsage={config.dataUsage}
               chartColor="#FFF85C"
               proxyname="Mobile Proxies"
@@ -184,6 +185,7 @@ const MobilePage = () => {
         </div>
 
         <Pagination
+          color="bg-yellow-100 border-yellow-100 hover:bg-yellow-400"
           totalCount={data.length}
           limit={limit}
           offset={offset}

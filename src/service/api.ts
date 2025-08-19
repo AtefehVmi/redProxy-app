@@ -3,7 +3,15 @@ import { createAppErrorMessage } from "@/utils/createAppErrorMessage";
 import { isServer } from "@/utils/isServer";
 import axios from "axios";
 import { toast } from "react-toastify";
-import Order, { GenerateResidentialProxy, Plans, Profile } from "./models";
+import Order, {
+  Config,
+  GenerateResidentialProxy,
+  Plans,
+  PoolTypes,
+  Profile,
+  ResidentialPlan,
+  Transaction,
+} from "./models";
 
 export const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASEURL,
@@ -39,8 +47,8 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   async function (response) {
     if (
-      response.config.url === "users/register/" ||
-      response.config.url === "users/login/"
+      response.config.url === "/users/register/" ||
+      response.config.url === "/users/login/"
     ) {
       if (response.status === 200 || response.status === 201) {
         const {
@@ -60,7 +68,7 @@ instance.interceptors.response.use(
     if (response.status === 500) {
       toast.error("Something unexpected happened");
     }
-    return response;
+    return response.data;
   },
   async function (error) {
     error.appError = createAppErrorMessage(error);
@@ -78,9 +86,11 @@ instance.interceptors.response.use(
   }
 );
 
+//auth
+
 export async function regisetrUser(payload: any): Promise<any> {
   const { data } = await axios.post(
-    `${process.env.NEXT_PUBLIC_API_BASEURL}users/register/`,
+    `${process.env.NEXT_PUBLIC_API_BASEURL}/users/register/`,
     {
       email: payload?.email,
       password: payload?.password,
@@ -95,7 +105,7 @@ export async function regisetrUser(payload: any): Promise<any> {
 
 export async function loginUser(payload: any): Promise<any> {
   const { data } = await axios.post(
-    `${process.env.NEXT_PUBLIC_API_BASEURL}users/login/`,
+    `${process.env.NEXT_PUBLIC_API_BASEURL}/users/login/`,
     {
       email: payload?.email,
       password: payload?.password,
@@ -109,66 +119,78 @@ export async function loginUser(payload: any): Promise<any> {
 }
 
 export async function getUserProfile(): Promise<Profile> {
-  const { data } = await instance.get("users/profile/");
-  return data;
+  return await instance.get("/users/profile/");
+}
+
+//user configs
+export async function getUserConfigs(params?: {
+  plan_uuid?: string;
+  active_only?: boolean;
+}): Promise<Config[]> {
+  return await instance.get("/plans/configurations/", { params });
+}
+
+//residential
+export async function getPoolTypes(): Promise<PoolTypes[]> {
+  return await instance.get("/plans/pool-types/");
 }
 
 export async function getPlanDetails(plan_id?: string): Promise<any> {
-  const { data } = await instance.get("proxies/plan/details/", {
+  const { data } = await instance.get("/proxies/plan/details/", {
     params: { plan_id },
   });
   return data;
 }
 
-export async function getResiCountries(pool: string): Promise<any> {
-  const { data } = await instance.get(`residential/${pool}/countries/`);
-  return data;
-}
-
-export async function getResiStates(
-  pool: string,
-  country: string
-): Promise<any> {
-  const { data } = await instance.get(
-    `residential/${pool}/states/?country=${country}`
-  );
-  return data;
-}
-
-export async function getResiCities(
-  pool: string,
-  country: string,
-  state: string
-): Promise<any> {
-  const { data } = await instance.get(
-    `residential/${pool}/cities/?country=${country}&state=${state}`
-  );
-  return data;
+export async function getResiCountries(name: string): Promise<any> {
+  return await instance.get(`/plans/pool-types/${name}/countries`);
 }
 
 export async function generateProxy(
-  pool: string,
   payload: GenerateResidentialProxy
 ): Promise<any> {
-  const { data } = await instance.post(
-    `residential/${pool}/generate/`,
-    payload
-  );
-  return data;
+  return await instance.post(`/plans/configurations/`, payload);
 }
 
 export async function getProductPlans(name: string): Promise<Plans> {
-  const { data } = await instance.get(`products/${name}/plans/`);
+  const { data } = await instance.get(`/products/${name}/plans/`);
   return data;
 }
 
-export async function getPricings() {
-  const { data } = await instance.get(`residential/enterprise/plans/`);
-  return data;
+export async function getUserPlans(
+  pool_type?: string | null,
+  active_only?: boolean | null,
+  search?: string | null
+): Promise<ResidentialPlan[]> {
+  return await instance.get(`/plans/`, {
+    params: { pool_type, active_only, search },
+  });
 }
 
-export async function getUserPlans(name: string = "enterprise"): Promise<any> {
-  const { data } = await instance.get(`residential/${name}/plans/`);
+export async function getPlanById(plan_uuid: string): Promise<ResidentialPlan> {
+  return await instance.get(`/plans/${plan_uuid}/`);
+}
+
+export async function estimateResi(
+  name: string,
+  payload: { quantity: number; coupon: string }
+): Promise<any> {
+  return await instance.post(`/payment/purchase/estimate/${name}`, payload);
+}
+
+export async function purchaseResi(
+  name: string,
+  quantity: number,
+  method: number,
+  coupon?: string,
+  plan?: string
+): Promise<any> {
+  const { data } = await instance.post(`/payment/purchase/rotating/${name}/`, {
+    quantity,
+    method,
+    coupon,
+    plan,
+  });
   return data;
 }
 
@@ -176,24 +198,56 @@ export async function getProxyUsageDetails(
   name: "residential" | "premium_residential" | "enterprise_residential",
   plan_id?: string
 ): Promise<any> {
-  const { data } = await instance.get(`residential/${name}/details/`, {
+  const { data } = await instance.get(`/residential/${name}/details/`, {
     params: { plan_id },
   });
   return data;
 }
 
 export async function getPlan(plan_id?: string): Promise<any> {
-  const { data } = await instance.get(`proxies/plan/details/`, {
+  const { data } = await instance.get(`/proxies/plan/details/`, {
     params: { plan_id },
   });
   return data;
 }
 
+// other proxies
+export async function estimatePrice(payload: {
+  plan: number;
+  quantity: number;
+  coupon: string;
+}): Promise<any> {
+  return await instance.post(`/payment/purchase/estimate/`, payload);
+}
+
+export async function purchaseProxy(
+  name: string,
+  method: number,
+  quantity: number,
+  location?: number,
+  location_name?: string,
+  port?: string,
+  coupon?: string,
+  plan?: number
+): Promise<any> {
+  const { data } = await instance.post(`/payment/purchase/static/${name}/`, {
+    method,
+    plan,
+    location,
+    location_name,
+    quantity,
+    port,
+    coupon,
+  });
+  return data;
+}
+
+//payments
 export async function depositBalance(
   amount: number,
   method: number
 ): Promise<any> {
-  return await instance.post("payment/deposit/", { amount, method });
+  return await instance.post("/payment/deposit/", { amount, method });
 }
 
 export async function getOrders({
@@ -217,57 +271,30 @@ export async function getOrders({
   params.append("completed", completed.toString());
   queryString = `?${params.toString()}`;
 
-  const { data } = await instance.get(`payment/orders/${queryString}`);
+  const { data } = await instance.get(`/payment/orders/${queryString}`);
   return data;
 }
 
-export async function getTransactions(): Promise<any> {
-  const { data } = await instance.get("payment/orders/transactions/");
-  return data;
+export async function getTransactions(): Promise<Transaction[]> {
+  return await instance.get("/payment/orders/transactions/");
 }
 
 export async function getProxiesByName(name: string): Promise<any> {
-  const { data } = await instance.get(`payment/orders/?product=${name}`);
+  const { data } = await instance.get(`/payment/orders/?product=${name}`);
   return data;
 }
 
 export async function getPackages(name: string): Promise<any> {
-  const { data } = await instance.get(`payment/purchase/packages/${name}/`);
+  const { data } = await instance.get(`/payment/purchase/packages/${name}/`);
   return data;
 }
 
 export async function getPurchaseSeries(): Promise<any> {
-  const { data } = await instance.get(`payment/orders/chart/`);
+  const { data } = await instance.get(`/payment/orders/chart/`);
   return data;
 }
 
 export async function getPurchaseOverview(): Promise<any> {
-  const { data } = await instance.get(`payment/orders/purchase-details/`);
-  return data;
-}
-
-export async function calculateDiscount(
-  code: string,
-  amount: number
-): Promise<any> {
-  const { data } = await instance.get(
-    `/payment/coupon/${code}?amount=${amount}`
-  );
-  return data;
-}
-
-export async function purchaseRotatingProxy(
-  name: string,
-  quantity: number,
-  method: number,
-  coupon?: string,
-  plan?: string
-): Promise<any> {
-  const { data } = await instance.post(`payment/purchase/rotating/${name}/`, {
-    quantity,
-    method,
-    coupon,
-    plan,
-  });
+  const { data } = await instance.get(`/payment/orders/purchase-details/`);
   return data;
 }

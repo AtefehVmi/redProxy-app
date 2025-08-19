@@ -12,6 +12,7 @@ import ProxiesModal from "@/components/Modal/ProxiesModal";
 import rawArrowRightIcon from "@public/icons/arrow-small-right.svg";
 import Link from "next/link";
 import AreaLineChart from "@/components/Charts/AreaLineChart";
+import DeleteModal from "@/components/Modal/DeleteModal";
 
 interface IspConfigCardProps {
   configName: string;
@@ -26,12 +27,13 @@ interface IspConfigCardProps {
   plan: string;
   dataUsage: { month: string; usage: number }[];
   chartColor: string;
-  href?: string;
+  href: string;
 }
 
 const IspConfigCard = (props: IspConfigCardProps) => {
   const [copiedField, setCopiedField] = useState<string | null>(null);
   const [showProxies, setShowProxies] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleCopyAll = () => {
     const text = `Location: ${props.location}
@@ -52,11 +54,6 @@ Date: ${props.date}`;
   const containerStyle = "w-auto h-auto flex flex-col items-start gap-0.5";
   const headingStyle = "text-xs font-medium text-config-card-heading-text";
   const valueStyle = "text-sm leading-6 font-semibold text-white";
-
-  const handleCardClick = (e: any) => {
-    e.preventDefault();
-    setShowProxies(true);
-  };
 
   return (
     <div
@@ -134,7 +131,7 @@ Date: ${props.date}`;
               handleCopyAll();
             }}
           >
-            <p className="text-xs font-medium text-white">
+            <p className="text-white">
               {copiedField === "ALL" ? "Copied" : "Copy"}
             </p>
           </Button>
@@ -143,35 +140,25 @@ Date: ${props.date}`;
             className="md:col-span-1 w-1/2 md:w-fit"
             onClick={(e) => {
               e.stopPropagation();
+              setOpen(true);
             }}
             variant="secondary"
             icon={<Image src={trashIcon} alt={""} className="w-4 h-4" />}
           >
-            <p className="text-xs font-medium text-white">Delete</p>
+            <p className="text-white">Delete</p>
           </Button>
+          {open && <DeleteModal open={open} onClose={() => setOpen(false)} />}
         </div>
-        {["Mobile Proxies"].includes(props.proxyname) ? (
+        <Link className="md:col-span-2" href={props.href}>
           <Button
-            onClick={handleCardClick}
+            className="px-10 w-full md:w-fit"
             rightIcon={
               <Image src={rawArrowRightIcon} alt={""} className="w-4 h-4" />
             }
-            className="col-span-2 px-9"
           >
             Proxy List
           </Button>
-        ) : props.href ? (
-          <Link className="md:col-span-2" href={props.href}>
-            <Button
-              className="px-9 w-full md:w-fit"
-              rightIcon={
-                <Image src={rawArrowRightIcon} alt={""} className="w-4 h-4" />
-              }
-            >
-              Proxy List
-            </Button>
-          </Link>
-        ) : null}
+        </Link>
       </div>
 
       <ProxiesModal

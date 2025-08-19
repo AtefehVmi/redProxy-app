@@ -6,6 +6,7 @@ import MyProfile from "./MyProfile";
 import { useRouter, useSearchParams } from "next/navigation";
 import UserInvoices from "../Transactions/UserInvoices";
 import NotificationTab from "./NotificationTab";
+import SecurityTab from "./SecurityTab";
 
 const profileItems = [
   { name: "My profile", key: "profile", content: <MyProfile /> },
@@ -15,6 +16,7 @@ const profileItems = [
     content: <UserInvoices height="h-[600px]" />,
   },
   { name: "Notification", key: "notification", content: <NotificationTab /> },
+  { name: "Security", key: "security", content: <SecurityTab /> },
   { name: "Delete Account", key: "delete" },
 ];
 

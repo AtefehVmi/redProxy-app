@@ -39,7 +39,7 @@ const FirstView: React.FC<Props> = ({
   return (
     <div
       className={cn(
-        "bg-darkmode-200 border border-darkmode-100 rounded py-6 pl-6 pr-4 md:p-8 relative overflow-hidden",
+        "bg-darkmode-200 border border-darkmode-100 rounded p-6 md:p-8 relative overflow-hidden",
         className
       )}
     >

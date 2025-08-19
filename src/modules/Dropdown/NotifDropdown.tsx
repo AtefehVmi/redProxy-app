@@ -7,6 +7,7 @@ import Image from "next/image";
 import bellIcon from "@public/icons/cowbell.svg";
 import CrossIcon from "@public/icons/cross.svg";
 import RingIcon from "@public/icons/ring.svg";
+import Link from "next/link";
 
 const notifs = [
   {
@@ -57,7 +58,7 @@ const NotifDropdown = ({ className }: { className?: string }) => {
   }, [isOpen]);
 
   return (
-    <div ref={dropdownRef}>
+    <div ref={dropdownRef} className={cn(className)}>
       <Button
         variant="ghost"
         onClick={() => setIsOpen(!isOpen)}
@@ -153,11 +154,13 @@ const NotifDropdown = ({ className }: { className?: string }) => {
           </div>
 
           <div className="border-t border-darkmode-100 flex items-center justify-between py-3 px-6">
-            <p className="m-2 text-white text-sm font-semibold">
+            <button className="m-2 text-white text-sm font-semibold">
               Mark all as read
-            </p>
+            </button>
 
-            <Button>View all notification</Button>
+            <Link href={"/profile?tab=notification"}>
+              <Button>View all notification</Button>
+            </Link>
           </div>
         </div>
       )}

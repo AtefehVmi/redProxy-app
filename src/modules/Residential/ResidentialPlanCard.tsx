@@ -11,25 +11,35 @@ import GlobeIcon from "@public/icons/globe-big.svg";
 import EyeIcon from "@public/icons/eye.svg";
 import PurchaseIcon from "@public/icons/shopping-cart.svg";
 import Button from "@/components/Button/Button";
+import Link from "next/link";
 
 type Props = {
   name: string;
   desc: string;
   purchaseDate: string;
   expireDate: string;
-  remainingGb: number;
-  planId: number;
+  remainingGb?: number;
+  planId: string;
 };
 
 const ResidentialPlanCard: React.FC<Props> = ({
-  name,
+  name: initialName,
   desc,
   purchaseDate,
   expireDate,
-  remainingGb,
+  remainingGb = 12,
   planId,
 }) => {
   const [showGb, setShowGb] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [name, setName] = useState(initialName);
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
+  };
+  const handleNameSubmit = () => {
+    setIsEditing(false);
+  };
 
   return (
     <div className="border border-darkmode-100 bg-darkmode-300 rounded-lg p-4">
@@ -37,8 +47,28 @@ const ResidentialPlanCard: React.FC<Props> = ({
         <div className="flex items-center justify-between">
           <div>
             <div className="flex items-center gap-1">
-              <p className="text-white font-semibold text-base">{name}</p>
-              <Image src={EditIcon} alt="" />
+              {isEditing ? (
+                <input
+                  type="text"
+                  value={name}
+                  onChange={handleNameChange}
+                  onBlur={handleNameSubmit}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") handleNameSubmit();
+                  }}
+                  className="bg-transparent border-b border-grey-400 text-white font-semibold text-base focus:outline-none w-[150px]"
+                  autoFocus
+                />
+              ) : (
+                <p className="text-white font-semibold text-base">{name}</p>
+              )}
+
+              <button
+                onClick={() => setIsEditing(true)}
+                className="hover:opacity-80"
+              >
+                <Image src={EditIcon} alt="" />
+              </button>
             </div>
             <p className="text-grey-400 text-xs">{desc}</p>
           </div>
@@ -91,9 +121,11 @@ const ResidentialPlanCard: React.FC<Props> = ({
       </div>
 
       <div className="mt-4 w-full">
-        <Button className="w-full" icon={<Image src={PurchaseIcon} alt="" />}>
-          Add Bandwidth
-        </Button>
+        <Link href={`/purchase/${planId}`}>
+          <Button className="w-full" icon={<Image src={PurchaseIcon} alt="" />}>
+            Add Bandwidth
+          </Button>
+        </Link>
       </div>
     </div>
   );

@@ -1,6 +1,10 @@
 import React from "react";
 import CustomLink from "@/components/CustomLink/customLink";
-import CreateDatacenterConfig from "@/modules/CreateDatacenterConfig/CreateDatacenterConfig";
+import CreateConfig from "@/modules/Shared/CreateConfig";
+import Image from "next/image";
+import Button from "@/components/Button/Button";
+import Link from "next/link";
+import ArrowIcon from "@public/icons/arrow-left.svg";
 
 const Page = () => {
   return (
@@ -14,12 +18,12 @@ const Page = () => {
             Configure your new proxy settings
           </p>
         </div>
-        <CustomLink href={"/proxy/datacenter"} className="py-2 px-4">
-          <p>Cancel configuration</p>
-        </CustomLink>
+        <Link href={"/proxy/datacenter"}>
+          <Button icon={<Image src={ArrowIcon} alt="" />}>Go Back</Button>
+        </Link>
       </div>
       <div className="w-full mt-[30px]">
-        <CreateDatacenterConfig />
+        <CreateConfig />
       </div>
     </div>
   );

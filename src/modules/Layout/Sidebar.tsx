@@ -11,16 +11,21 @@ const Sidebar = ({ className }: { className?: string }) => {
   const matchPathMap: Record<string, string[]> = {
     [APP_ROUTES.residentialProxy]: [
       "/plan/residential",
-      "/purchase/residential",
+      "/purchase/new",
       "/generate/residential",
+      "/purchase/",
     ],
     [APP_ROUTES.datacenterProxy]: [
-      "/viewConfig/datacenter",
+      "/generate/datacenter",
       "/plan/datacenter",
       "/firstView/datacenter",
     ],
-    [APP_ROUTES.mobileProxy]: ["/plan/mobile", "/firstView/mobile"],
-    [APP_ROUTES.ispProxy]: ["/plan/isp", "/firstView/isp", "/viewConfig/isp"],
+    [APP_ROUTES.mobileProxy]: [
+      "/plan/mobile",
+      "/firstView/mobile",
+      "/generate/mobile",
+    ],
+    [APP_ROUTES.ispProxy]: ["/plan/isp", "/firstView/isp", "/generate/isp"],
   };
 
   return (

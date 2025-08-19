@@ -5,6 +5,7 @@ interface PaginationButtonProps {
   currentPage: number;
   onClick: (pageNumber: number) => void;
   disabled?: boolean;
+  color?: string;
 }
 
 const PaginationButton: React.FC<PaginationButtonProps> = ({
@@ -12,12 +13,13 @@ const PaginationButton: React.FC<PaginationButtonProps> = ({
   currentPage,
   onClick,
   disabled = false,
+  color,
 }) => {
   return (
     <button
       className={`px-2.5 py-[3px] h-full text-sm font-semibold rounded border ${
         currentPage === pageNumber
-          ? "text-darkmode-100 bg-orange-200 border-orange-200 hover:bg-orange-400"
+          ? `text-grey-50  ${color}`
           : "border-darkmode-100 bg-darkmode-100 text-grey-400 hover:bg-darkmode-200"
       }`}
       onClick={() => onClick(pageNumber)}
