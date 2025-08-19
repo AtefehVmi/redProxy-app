@@ -9,4 +9,5 @@ export const QUERY_KEYS = {
   USER_CONFIGS: ["user_configs"],
   TRANSACTIONS: ["transactions"],
   PLANS: ["plans"],
+  USER_PLAN: ["user_plan"],
 };

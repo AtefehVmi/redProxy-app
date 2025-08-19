@@ -47,7 +47,7 @@ const ResidentialConfigTab = ({ planUuid }: { planUuid?: string }) => {
               </p>
               <Link
                 className="mt-6 flex items-center justify-center"
-                href={"/generate/residential"}
+                href={`/generate/residential/plan=${planUuid}`}
               >
                 <Button
                   className="px-4 py-3 text-base"
@@ -72,8 +72,8 @@ const ResidentialConfigTab = ({ planUuid }: { planUuid?: string }) => {
               quantityGenerated={config.quantity}
               format={config.format}
               port={config.quantity}
-              username={config.city}
-              password={config.city}
+              username={config.username}
+              password={config.password}
               dataUsed={config.quantity}
             />
           ))}

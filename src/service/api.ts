@@ -172,6 +172,25 @@ export async function getUserPlans(
   });
 }
 
+export async function getPlanById(plan_uuid: string): Promise<ResidentialPlan> {
+  return await instance.get(`/plans/${plan_uuid}/`);
+}
+
+export async function estimateResi(
+  name: string,
+  payload: { quantity: number; coupon: string }
+): Promise<any> {
+  return await instance.post(`/payment/purchase/estimate/${name}`, payload);
+}
+
+export async function estimatePrice(payload: {
+  plan: number;
+  quantity: number;
+  coupon: string;
+}): Promise<any> {
+  return await instance.post(`/payment/purchase/estimate/`, payload);
+}
+
 export async function getProxyUsageDetails(
   name: "residential" | "premium_residential" | "enterprise_residential",
   plan_id?: string
@@ -243,16 +262,6 @@ export async function getPurchaseSeries(): Promise<any> {
 
 export async function getPurchaseOverview(): Promise<any> {
   const { data } = await instance.get(`/payment/orders/purchase-details/`);
-  return data;
-}
-
-export async function calculateDiscount(
-  code: string,
-  amount: number
-): Promise<any> {
-  const { data } = await instance.get(
-    `/payment/coupon/${code}?amount=${amount}`
-  );
   return data;
 }
 

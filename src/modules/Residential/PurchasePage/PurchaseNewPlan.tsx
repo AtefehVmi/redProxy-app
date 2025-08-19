@@ -13,11 +13,30 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import PreviousPlanCard from "./PreviousPlanCard";
 
+const plans = [
+  { id: 1, gb: 1, perPrice: 2, total: 12, discount: 5 },
+  { id: 2, gb: 2, perPrice: 2, total: 12, discount: 5 },
+  { id: 3, gb: 3, perPrice: 2, total: 12, discount: 5 },
+  { id: 4, gb: 5, perPrice: 2, total: 12, discount: 20, recommend: true },
+  { id: 5, gb: 10, perPrice: 2, total: 12, discount: 20, recommend: true },
+  { id: 6, gb: 20, perPrice: 2, total: 12, discount: 5 },
+  { id: 7, gb: 50, perPrice: 2, total: 12, discount: 5 },
+  { id: 8, gb: 100, perPrice: 2, total: 12, discount: 5 },
+];
+
 const PurchaseNewPlan = ({ className }: { className?: string }) => {
-  const [selectedPlanId, setSelectedPlanId] = useState<number | null>(null);
+  const [selectedPlanId, setSelectedPlanId] = useState<number | null>(
+    plans[0].id
+  );
   const [coupon, setCoupon] = useState("");
+  const [qty, setQty] = useState<number | null>(null);
   const [bannerVisibility, setBannerVisibility] = useState(true);
+  const [customAppliedQty, setCustomAppliedQty] = useState<number | null>(null);
+  const [estimatedPrice, setEstimatedPrice] = useState<number | null>(null);
+
   const pathname = usePathname();
+  const selectedPlan =
+    plans.find((plan) => plan.id === selectedPlanId) ?? plans[0];
 
   const handleSelectPlan = (id: number) => {
     setSelectedPlanId(id);
@@ -55,99 +74,82 @@ const PurchaseNewPlan = ({ className }: { className?: string }) => {
             <>
               <div>
                 <div className="grid md:grid-cols-3 gap-4">
-                  <ResidentialPlan
-                    id={1}
-                    isSelected={selectedPlanId === 3}
-                    onSelect={handleSelectPlan}
-                    gb={1}
-                    perPrice={2}
-                    total={12}
-                    discount={5}
-                  />
-                  <ResidentialPlan
-                    id={2}
-                    isSelected={selectedPlanId === 4}
-                    onSelect={handleSelectPlan}
-                    gb={2}
-                    perPrice={2}
-                    total={12}
-                    discount={5}
-                  />
-                  <ResidentialPlan
-                    id={3}
-                    isSelected={selectedPlanId === 5}
-                    onSelect={handleSelectPlan}
-                    gb={3}
-                    perPrice={2}
-                    total={12}
-                    discount={5}
-                  />
+                  {plans.slice(0, 3).map((plan) => (
+                    <ResidentialPlan
+                      key={plan.id}
+                      id={plan.id}
+                      gb={plan.gb}
+                      perPrice={plan.perPrice}
+                      total={plan.total}
+                      discount={plan.discount}
+                      isSelected={selectedPlanId === plan.id}
+                      onSelect={handleSelectPlan}
+                    />
+                  ))}
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-4 mt-6">
-                  <ResidentialPlan
-                    id={4}
-                    gb={5}
-                    recommend={true}
-                    perPrice={2}
-                    total={12}
-                    discount={20}
-                    isSelected={selectedPlanId === 1}
-                    onSelect={handleSelectPlan}
-                  />
-                  <ResidentialPlan
-                    id={5}
-                    gb={10}
-                    recommend={true}
-                    perPrice={2}
-                    total={12}
-                    discount={20}
-                    isSelected={selectedPlanId === 2}
-                    onSelect={handleSelectPlan}
-                  />
+                  {plans.slice(3, 5).map((plan) => (
+                    <ResidentialPlan
+                      key={plan.id}
+                      id={plan.id}
+                      gb={plan.gb}
+                      perPrice={plan.perPrice}
+                      total={plan.total}
+                      discount={plan.discount}
+                      recommend={plan.recommend}
+                      isSelected={selectedPlanId === plan.id}
+                      onSelect={handleSelectPlan}
+                    />
+                  ))}
                 </div>
 
                 <div className="grid md:grid-cols-3 mt-6 gap-4">
-                  <ResidentialPlan
-                    id={6}
-                    isSelected={selectedPlanId === 3}
-                    onSelect={handleSelectPlan}
-                    gb={20}
-                    perPrice={2}
-                    total={12}
-                    discount={5}
-                  />
-                  <ResidentialPlan
-                    id={7}
-                    isSelected={selectedPlanId === 4}
-                    onSelect={handleSelectPlan}
-                    gb={50}
-                    perPrice={2}
-                    total={12}
-                    discount={5}
-                  />
-                  <ResidentialPlan
-                    id={8}
-                    isSelected={selectedPlanId === 5}
-                    onSelect={handleSelectPlan}
-                    gb={100}
-                    perPrice={2}
-                    total={12}
-                    discount={5}
-                  />
+                  {plans.slice(5).map((plan) => (
+                    <ResidentialPlan
+                      key={plan.id}
+                      id={plan.id}
+                      gb={plan.gb}
+                      perPrice={plan.perPrice}
+                      total={plan.total}
+                      discount={plan.discount}
+                      isSelected={selectedPlanId === plan.id}
+                      onSelect={handleSelectPlan}
+                    />
+                  ))}
                 </div>
               </div>
 
-              <CustomAmountCard className="mt-8" />
+              <CustomAmountCard
+                selectedPlanGb={selectedPlan.gb}
+                quantity={qty}
+                setQuantity={setQty}
+                onApply={() => {
+                  setCustomAppliedQty(qty ?? selectedPlan.gb);
+                  setSelectedPlanId(null);
+                }}
+                className="mt-8"
+              />
             </>
           ) : (
             <PreviousPlanCard />
           )}
         </div>
         <div className="xl:col-span-3">
-          <CouponCard coupon={coupon} setCoupon={setCoupon} />
+          <CouponCard
+            residentialDiscount={true}
+            amount={customAppliedQty ?? selectedPlan.gb}
+            coupon={coupon}
+            setCoupon={setCoupon}
+            setEstimatedPrice={setEstimatedPrice}
+          />
           <CustomPlanCard className="mt-4" />
-          <OrderSummaryCard price={4.0} residentialPlan={1} className="mt-4" />
+          <OrderSummaryCard
+            quantity={customAppliedQty ?? selectedPlan.gb}
+            price={estimatedPrice ?? 4.0}
+            residentialPlan={selectedPlan}
+            className="mt-4"
+          />
         </div>
       </div>
     </>

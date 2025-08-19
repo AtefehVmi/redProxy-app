@@ -96,7 +96,7 @@ const Navbar = ({ className }: { className?: string }) => {
           width={24}
           height={24}
           unoptimized
-          className="min-w-6 min-h-6"
+          className="min-w-6 min-h-6 block lg:hidden"
         />
 
         <p className="text-left text-white text-lg md:text-2xl font-bold">

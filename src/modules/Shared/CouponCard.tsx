@@ -4,39 +4,80 @@ import Button from "@/components/Button/Button";
 import InputText from "@/components/Input/Input";
 import Loader from "@/components/Loader/Loader";
 import useFetch from "@/hooks/UseFetch";
-import { calculateDiscount } from "@/service/api";
+import { estimatePrice, estimateResi } from "@/service/api";
 import CouponIcon from "@public/icons/coupon.svg";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 type Props = {
   coupon: string;
   setCoupon: (coupon: string) => void;
   amount?: number;
+  residentialDiscount?: boolean;
+  selectedPlanId?: number;
+  setEstimatedPrice: (price: number) => void;
 };
 
-const CouponCard = ({ coupon, setCoupon, amount }: Props) => {
+const CouponCard = ({
+  coupon,
+  setCoupon,
+  amount,
+  residentialDiscount = false,
+  selectedPlanId,
+  setEstimatedPrice,
+}: Props) => {
   const [inputValue, setInputValue] = useState(coupon ?? "");
+  const params = useSearchParams();
+  const pool = params.get("pool");
 
-  const {
-    fetch: discountFetch,
-    loading: discountLoading,
-    data: discountData,
-  } = useFetch(calculateDiscount, false, { toastOnError: true });
+  const { fetch: estimateFetch, loading: estimateLoading } = useFetch(
+    estimatePrice,
+    false,
+    {
+      toastOnError: true,
+    }
+  );
+
+  const { fetch: estimateResiFetch, loading: estimateResiLoading } = useFetch(
+    estimateResi,
+    false,
+    {
+      toastOnError: true,
+    }
+  );
 
   const handleCouponCheckClick = async (
     e: React.FormEvent<HTMLFormElement>
   ) => {
+    e.preventDefault();
+    if (!inputValue.trim()) return;
+
     try {
-      e.preventDefault();
+      let result;
+      if (residentialDiscount) {
+        if (!pool) return;
+        result = await estimateResiFetch(pool, {
+          quantity: amount ?? 1,
+          coupon: inputValue,
+        });
+      } else {
+        if (!selectedPlanId) return;
+        result = await estimateFetch({
+          plan: selectedPlanId,
+          quantity: amount ?? 1,
+          coupon: inputValue,
+        });
+      }
 
-      if (!inputValue.trim()) return;
-
-      await discountFetch(inputValue, amount ?? 1);
+      if (result?.price != null) {
+        setEstimatedPrice(result.price);
+      }
       setCoupon(inputValue);
     } catch {
       setCoupon("");
       setInputValue("");
+      setEstimatedPrice(0);
     }
   };
 
@@ -58,11 +99,11 @@ const CouponCard = ({ coupon, setCoupon, amount }: Props) => {
           startAdornment={<Image src={CouponIcon} alt="" />}
         />
         <Button
-          disabled={discountLoading}
+          disabled={estimateResiLoading}
           type="submit"
           className="w-full text-base py-3"
         >
-          {discountLoading ? (
+          {estimateResiLoading ? (
             <>
               Continue <Loader />
             </>

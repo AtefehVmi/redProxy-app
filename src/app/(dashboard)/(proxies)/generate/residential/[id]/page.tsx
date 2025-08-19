@@ -8,6 +8,7 @@ import ArrowIcon from "@public/icons/arrow-left.svg";
 import Button from "@/components/Button/Button";
 import Link from "next/link";
 import Image from "next/image";
+import ResidentialConfig from "@/modules/CreateResidentialConfig/ResidentialConfig";
 
 const Page = () => {
   return (
@@ -27,15 +28,7 @@ const Page = () => {
           </Button>
         </Link>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-9 mt-[30px] gap-4">
-        <CreateResidentialConfig className="lg:col-span-6" />
-
-        <div className="lg:col-span-3">
-          <AddBandwidthCard />
-          <ResiDetailCard />
-          <PurchaseHistory className="mt-4" />
-        </div>
-      </div>
+      <ResidentialConfig />
     </div>
   );
 };

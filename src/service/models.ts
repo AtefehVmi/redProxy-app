@@ -113,6 +113,13 @@ export type Transaction = {
   expire_at: string;
 };
 
+export type Orders = {
+  code: string;
+  quantity: number;
+  total_amount: number;
+  created: string;
+};
+
 export type ResidentialPlan = {
   uuid: string;
   name: string;
@@ -126,4 +133,6 @@ export type ResidentialPlan = {
   created: string;
   total_gb: number;
   total_cost: number;
+  available_gb: number;
+  orders: Orders[];
 };

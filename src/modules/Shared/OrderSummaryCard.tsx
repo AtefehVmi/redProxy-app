@@ -5,10 +5,14 @@ import PaymentRadioGroup from "@/components/PaymentRadioGroup/PaymentRadioGroup"
 import { QUERY_KEYS } from "@/constants/querykeys";
 import { PAYMENT_METHODS } from "@/constants/variables";
 import useFetch from "@/hooks/UseFetch";
-import { purchaseRotatingProxy } from "@/service/api";
+import {
+  estimatePrice,
+  estimateResi,
+  purchaseRotatingProxy,
+} from "@/service/api";
 import cn from "@/utils/cn";
 import { useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 
@@ -19,7 +23,14 @@ import TopUpBalanceModal from "@/components/Modal/TopUpBalanceModal";
 
 type Props = {
   coupon?: string;
-  residentialPlan?: number;
+  residentialPlan?: {
+    id: number;
+    gb: number;
+    perPrice: number;
+    total: number;
+    discount?: number;
+    recommend?: boolean;
+  };
   quantity?: number;
   price: number;
   pricePerGb?: number;
@@ -44,9 +55,15 @@ const OrderSummaryCard: React.FC<Props> = ({
   className,
   location,
 }) => {
+  const router = useRouter();
+  const queryClient = useQueryClient();
+
   const [selectedPayment, setSelectedPayment] = useState(0);
   const [openFirst, setOpenFirst] = useState(false);
   const [openSecond, setOpenSecond] = useState(false);
+
+  const params = useSearchParams();
+  const pool = params.get("pool");
 
   const balance = 0;
 
@@ -55,9 +72,6 @@ const OrderSummaryCard: React.FC<Props> = ({
     false,
     { toastOnError: true }
   );
-
-  const router = useRouter();
-  const queryClient = useQueryClient();
 
   const handlePurchaseBandwidth = () => {
     if (balance <= 0) {
@@ -107,18 +121,18 @@ const OrderSummaryCard: React.FC<Props> = ({
           <div className="flex items-center justify-between">
             <p className="text-sm text-grey-500">Price</p>
             <p className="text-base text-white font-semibold">
-              ${price.toFixed(2)}
+              ${residentialPlan.perPrice.toFixed(2)}
             </p>
           </div>
 
           <div className="flex items-center justify-between">
             <p className="text-sm text-grey-500">Plan</p>
-            <p className="text-base text-white font-semibold">{plan}GB</p>
+            <p className="text-base text-white font-semibold">{quantity}GB</p>
           </div>
 
           <div className="flex items-center justify-between">
             <p className="text-sm text-grey-500">Pool</p>
-            <p className="text-base text-white font-semibold">Scraping</p>
+            <p className="text-base text-white font-semibold">{pool}</p>
           </div>
 
           <div className="flex items-center justify-between">
@@ -126,10 +140,19 @@ const OrderSummaryCard: React.FC<Props> = ({
             <p className="text-base text-white font-semibold">13/Dec/2024</p>
           </div>
 
+          <div className="flex items-center justify-between">
+            <p className="text-sm text-grey-500">Sale</p>
+            <p className="text-base text-orange-200 font-semibold">
+              {residentialPlan.discount}%
+            </p>
+          </div>
+
           {coupon && (
             <div className="flex items-center justify-between mt-2.5">
-              <p className="text-sm text-grey-500">Sale</p>
-              <p className="text-base text-orange-200 font-semibold">20%</p>
+              <p className="text-sm text-grey-500">Coupon</p>
+              <p className="text-base text-orange-200 font-semibold">
+                {coupon}%
+              </p>
             </div>
           )}
 
@@ -142,7 +165,7 @@ const OrderSummaryCard: React.FC<Props> = ({
         </div>
       )}
 
-      {plan && (
+      {!residentialPlan && (
         <div className="mt-8 bg-darkmode-300 rounded-lg p-[18px]">
           <div className="flex items-center justify-between">
             <p className="text-sm text-grey-500">Price</p>
