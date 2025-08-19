@@ -54,7 +54,11 @@ const SearchInput = ({
   };
 
   const classes = {
-    root: cn("flex flex-col gap-1", fullWidth && "w-full", className),
+    root: cn(
+      "flex flex-col gap-1 text-white",
+      fullWidth && "w-full",
+      className
+    ),
     label: cn("text-sm text-grey-300", error && "text-error-main"),
     description: cn(
       "text-xs text-primary-200",

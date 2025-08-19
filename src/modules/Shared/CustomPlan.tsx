@@ -52,6 +52,8 @@ const CustomPlan: React.FC<Props> = ({
   const pathname = usePathname();
   const [selectedCountry, setSelectedCountry] = useState<string>("");
   const [selectedCity, setSelectedCity] = useState<string>("");
+  const [countrySearch, setCountrySearch] = useState("");
+  const [citySearch, setCitySearch] = useState("");
 
   const [isExpanded, setIsExpanded] = useState({
     city: false,
@@ -92,6 +94,24 @@ const CustomPlan: React.FC<Props> = ({
 
   const visibleCities = isExpanded.city ? cityOptions : cityOptions.slice(0, 4);
 
+  const getOptionString = (option: Option<string>): string => {
+    if (!option.content) return "";
+    if (typeof option.content === "string") return option.content;
+    if (React.isValidElement(option.content)) {
+      const children = option.content.props.children;
+      if (typeof children === "string") return children;
+    }
+    return "";
+  };
+
+  const filteredLocations = visibleLocations.filter((option) =>
+    getOptionString(option).toLowerCase().includes(countrySearch.toLowerCase())
+  );
+
+  const filteredCities = visibleCities.filter((option) =>
+    getOptionString(option).toLowerCase().includes(citySearch.toLowerCase())
+  );
+
   const mobilePage = pathname === "/plan/mobile";
 
   return (
@@ -124,6 +144,8 @@ const CustomPlan: React.FC<Props> = ({
             paddingY="py-2"
             className="w-full md:w-[220px] mt-2 md:mt-0"
             placeholder="Search"
+            value={countrySearch}
+            onChange={(e) => setCountrySearch(e.target.value)}
             endAdornment={
               <div className="border-l border-darkmode-200">
                 <Image src={SearchIcon} alt="" className="ml-3" />
@@ -155,7 +177,7 @@ const CustomPlan: React.FC<Props> = ({
 
                 setSelectedCity("");
               }}
-              options={visibleLocations}
+              options={filteredLocations}
               padding="py-[9px]"
             />
 
@@ -190,6 +212,8 @@ const CustomPlan: React.FC<Props> = ({
           <div className="flex flex-col md:flex-row md:items-center justify-between">
             <p className="text-sm text-white font-semibold">Choose a City</p>
             <SearchInput
+              value={citySearch}
+              onChange={(e) => setCitySearch(e.target.value)}
               paddingY="py-2"
               className="w-full md:w-[220px] mt-2 md:mt-0"
               placeholder="Search"
@@ -221,7 +245,7 @@ const CustomPlan: React.FC<Props> = ({
                   setLocation(cityName as string);
                 }
               }}
-              options={visibleCities}
+              options={filteredCities}
               padding="py-[9px]"
             />
 
