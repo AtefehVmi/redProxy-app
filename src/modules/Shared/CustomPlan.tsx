@@ -29,7 +29,7 @@ type Props = {
   setQuantity: (quantity: number) => void;
   location: string;
   setLocation: (location: string) => void;
-  planOptions: PlanOption[];
+  planOptions?: PlanOption[];
 };
 
 const qtyOptions = [
@@ -129,7 +129,7 @@ const CustomPlan: React.FC<Props> = ({
               const newPlan = plans.find((p) => p.value === val);
               if (newPlan) setPlan(newPlan);
             }}
-            options={planOptions}
+            options={planOptions ?? []}
             padding="py-[9px]"
           />
         </div>

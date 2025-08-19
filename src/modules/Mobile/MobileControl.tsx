@@ -8,7 +8,6 @@ import CustomPlan from "../Shared/CustomPlan";
 
 const MobileControl = ({ className }: { className?: string }) => {
   const [coupon, setCoupon] = useState("");
-  const [plan, setPlan] = useState("1 Day");
   const [quantity, setQuantity] = useState(1);
   const [location, setLocation] = useState("");
   const [estimatedPrice, setEstimatedPrice] = useState<number | null>(null);
@@ -17,8 +16,6 @@ const MobileControl = ({ className }: { className?: string }) => {
     <div className={cn("grid grid-cols-1 xl:grid-cols-11 gap-4", className)}>
       <div className="xl:col-span-8">
         <CustomPlan
-          plan={plan}
-          setPlan={setPlan}
           quantity={quantity}
           setQuantity={setQuantity}
           location={location}
@@ -38,7 +35,7 @@ const MobileControl = ({ className }: { className?: string }) => {
           price={estimatedPrice ?? 4.0}
           quantity={quantity}
           coupon={coupon}
-          plan={plan}
+          plan={{ price: 4.0, name: "LTE/Mobile" }}
           location={location}
         />
       </div>
