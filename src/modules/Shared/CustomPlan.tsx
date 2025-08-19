@@ -225,49 +225,56 @@ const CustomPlan: React.FC<Props> = ({
             />
           </div>
 
-          <div
-            className={cn(
-              "flex flex-col justify-center gap-3",
-              isExpanded.city ? "md:flex-col" : "md:flex-row md:items-center"
-            )}
-          >
-            <RadioCard<string>
-              selected={selectedCity}
-              onChange={(val) => {
-                setSelectedCity(val);
-
-                const city = cityOptions.find((c) => c.value === val);
-                if (city) {
-                  const cityName =
-                    typeof city.content === "string"
-                      ? city.content
-                      : (city.content as React.ReactElement).props.children;
-                  setLocation(cityName as string);
-                }
-              }}
-              options={filteredCities}
-              padding="py-[9px]"
-            />
-
-            <button
-              onClick={() =>
-                setIsExpanded((prev) => ({
-                  ...prev,
-                  city: !prev.city,
-                }))
-              }
-              className="flex items-center gap-1 group w-fit mt-4"
+          {!selectedCountry ? (
+            <p className="text-white text-xs">Select a Country first</p>
+          ) : (
+            <div
+              className={cn(
+                "flex flex-col justify-center gap-3",
+                isExpanded.city ? "md:flex-col" : "md:flex-row md:items-center"
+              )}
             >
-              <p className="text-white text-xs whitespace-nowrap">
-                {isExpanded.city ? "Show Less" : `+30 more Cities`}
-              </p>
-              <Image
-                src={ChevronIcon}
-                alt=""
-                className="group-hover:rotate-180 transition-transform delay-75 ease-in-out"
+              <RadioCard<string>
+                className={cn(
+                  "grid grid-cols-1 md:grid-cols-2 gap-3 mt-4 w-full",
+                  isExpanded.city ? "lg:grid-cols-5" : "lg:grid-cols-4"
+                )}
+                selected={selectedCity}
+                onChange={(val) => {
+                  setSelectedCity(val);
+
+                  const city = cityOptions.find((c) => c.value === val);
+                  if (city) {
+                    const cityName =
+                      typeof city.content === "string"
+                        ? city.content
+                        : (city.content as React.ReactElement).props.children;
+                  }
+                }}
+                options={filteredCities}
+                padding="py-[9px]"
               />
-            </button>
-          </div>
+
+              <button
+                onClick={() =>
+                  setIsExpanded((prev) => ({
+                    ...prev,
+                    city: !prev.city,
+                  }))
+                }
+                className="flex items-center gap-1 group w-fit mt-4"
+              >
+                <p className="text-white text-xs whitespace-nowrap">
+                  {isExpanded.city ? "Show Less" : `+30 more Cities`}
+                </p>
+                <Image
+                  src={ChevronIcon}
+                  alt=""
+                  className="group-hover:rotate-180 transition-transform delay-75 ease-in-out"
+                />
+              </button>
+            </div>
+          )}
         </div>
       )}
 
