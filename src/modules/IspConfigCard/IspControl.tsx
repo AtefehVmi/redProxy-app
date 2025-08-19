@@ -11,6 +11,7 @@ const IspControl = ({ className }: { className?: string }) => {
   const [plan, setPlan] = useState("1 Day");
   const [quantity, setQuantity] = useState(1);
   const [location, setLocation] = useState("Germany");
+  const [estimatedPrice, setEstimatedPrice] = useState<number | null>(null);
 
   return (
     <div className={cn("grid grid-cols-1 xl:grid-cols-11 gap-4", className)}>
@@ -26,12 +27,16 @@ const IspControl = ({ className }: { className?: string }) => {
       </div>
 
       <div className="xl:col-span-3">
-        <CouponCard coupon={coupon} setCoupon={setCoupon} />
+        <CouponCard
+          setEstimatedPrice={setEstimatedPrice}
+          coupon={coupon}
+          setCoupon={setCoupon}
+        />
 
         <OrderSummaryCard
           className="mt-4"
           location={location}
-          price={2}
+          price={estimatedPrice ?? 2.0}
           quantity={quantity}
           coupon={coupon}
           plan={plan}
