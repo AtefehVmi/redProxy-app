@@ -3,14 +3,18 @@
 import Image from "next/image";
 import QuantityIcon from "@public/icons/coupon.svg";
 import InputText from "@/components/Input/Input";
-import React, { useState } from "react";
-import RadioCard from "../Shared/RadioCard";
+import React, { useEffect, useState } from "react";
+import RadioCard, { Option } from "../Shared/RadioCard";
 import USFlag from "@public/icons/us.svg";
 import ChevronIcon from "@public/icons/angle-small-down.svg";
 import SearchInput from "@/components/SearchInput/SearchInput";
 import SearchIcon from "@public/icons/search.svg";
 import cn from "@/utils/cn";
 import { usePathname } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { QUERY_KEYS } from "@/constants/querykeys";
+import { getResiCountries } from "@/service/api";
+import { City, Country, State } from "@/service/models";
 
 type PlanOption = {
   value: number;
@@ -27,63 +31,6 @@ type Props = {
   setLocation: (location: string) => void;
   planOptions: PlanOption[];
 };
-
-const locationOptions = [
-  {
-    value: "us",
-    content: (
-      <div className="flex items-center gap-1">
-        <Image src={USFlag} alt="" />
-        <p className="text-grey-400 text-sm">United States</p>
-      </div>
-    ),
-  },
-  {
-    value: "uk",
-    content: (
-      <div className="flex items-center gap-1">
-        <Image src={USFlag} alt="" />
-        <p className="text-grey-400 text-sm">United States</p>
-      </div>
-    ),
-  },
-  {
-    value: "ir",
-    content: (
-      <div className="flex items-center gap-1">
-        <Image src={USFlag} alt="" />
-        <p className="text-grey-400 text-sm">United States</p>
-      </div>
-    ),
-  },
-  {
-    value: "po",
-    content: (
-      <div className="flex items-center gap-1">
-        <Image src={USFlag} alt="" />
-        <p className="text-grey-400 text-sm">United States</p>
-      </div>
-    ),
-  },
-  {
-    value: "sr",
-    content: (
-      <div className="flex items-center gap-1">
-        <Image src={USFlag} alt="" />
-        <p className="text-grey-400 text-sm">United States</p>
-      </div>
-    ),
-  },
-  {
-    value: "gr",
-    content: (
-      <div className="flex items-center gap-1">
-        <Image src={USFlag} alt="" />
-        <p className="text-grey-400 text-sm">United States</p>
-      </div>
-    ),
-  },
-];
 
 const qtyOptions = [
   { content: <p className="text-white text-sm">1 IP</p>, value: 1 },
@@ -103,19 +50,47 @@ const CustomPlan: React.FC<Props> = ({
   plans,
 }) => {
   const pathname = usePathname();
-  const [selectedlocation, setSelectedLocation] = useState("us");
+  const [selectedCountry, setSelectedCountry] = useState<string>("");
+  const [selectedCity, setSelectedCity] = useState<string>("");
 
   const [isExpanded, setIsExpanded] = useState({
     city: false,
     country: false,
   });
+
+  const { data: locations, isLoading } = useQuery({
+    queryKey: QUERY_KEYS.RESI_COUNTRY,
+    queryFn: () => getResiCountries("das"),
+  });
+
+  useEffect(() => {
+    if (locations && location) {
+      const country = locations.find((c: Country) => c.name === location);
+      if (country) setSelectedCountry(country.code);
+    }
+  }, [locations, location]);
+
+  const locationOptions: Option<string>[] =
+    locations?.map((country: Country) => ({
+      value: country.code,
+      content: <p className="text-grey-400 text-sm">{country.name}</p>,
+    })) ?? [];
+
+  const cityOptions: Option<string>[] =
+    locations
+      ?.find((c: Country) => c.code === selectedCountry)
+      ?.states.flatMap((state: State) =>
+        state.cities.map((city: City) => ({
+          value: city.code,
+          content: <p className="text-grey-400 text-sm">{city.name}</p>,
+        }))
+      ) ?? [];
+
   const visibleLocations = isExpanded.country
     ? locationOptions
     : locationOptions.slice(0, 4);
 
-  const visibleCities = isExpanded.city
-    ? locationOptions
-    : locationOptions.slice(0, 4);
+  const visibleCities = isExpanded.city ? cityOptions : cityOptions.slice(0, 4);
 
   const mobilePage = pathname === "/plan/mobile";
 
@@ -157,46 +132,57 @@ const CustomPlan: React.FC<Props> = ({
           />
         </div>
 
-        <div
-          className={cn(
-            "flex flex-col justify-center gap-3",
-            isExpanded.country ? "md:flex-col" : "md:flex-row md:items-center"
-          )}
-        >
-          <RadioCard<string>
+        {isLoading ? (
+          <p className="text-white">Loading locations...</p>
+        ) : (
+          <div
             className={cn(
-              "grid grid-cols-1 md:grid-cols-2 gap-3 mt-4 w-full",
-              isExpanded.country ? "lg:grid-cols-5" : "lg:grid-cols-4"
+              "flex flex-col justify-center gap-3",
+              isExpanded.country ? "md:flex-col" : "md:flex-row md:items-center"
             )}
-            selected={selectedlocation}
-            onChange={setSelectedLocation}
-            options={visibleLocations}
-            padding="py-[9px]"
-          />
-
-          <button
-            onClick={() =>
-              setIsExpanded((prev) => ({
-                ...prev,
-                country: !prev.country,
-              }))
-            }
-            className="flex items-center gap-1 group w-fit mt-4"
           >
-            <p className="text-white text-xs whitespace-nowrap">
-              {isExpanded.country
-                ? "Show Less"
-                : mobilePage
-                ? `+30 more countries`
-                : "Expand All countries"}
-            </p>
-            <Image
-              src={ChevronIcon}
-              alt=""
-              className="group-hover:rotate-180 transition-transform delay-75 ease-in-out"
+            <RadioCard<string>
+              className={cn(
+                "grid grid-cols-1 md:grid-cols-2 gap-3 mt-4 w-full",
+                isExpanded.country ? "lg:grid-cols-5" : "lg:grid-cols-4"
+              )}
+              selected={selectedCountry}
+              onChange={(val) => {
+                setSelectedCountry(val);
+
+                const country = locations?.find((c: any) => c.code === val);
+                if (country) setLocation(country.name);
+
+                setSelectedCity("");
+              }}
+              options={visibleLocations}
+              padding="py-[9px]"
             />
-          </button>
-        </div>
+
+            <button
+              onClick={() =>
+                setIsExpanded((prev) => ({
+                  ...prev,
+                  country: !prev.country,
+                }))
+              }
+              className="flex items-center gap-1 group w-fit mt-4"
+            >
+              <p className="text-white text-xs whitespace-nowrap">
+                {isExpanded.country
+                  ? "Show Less"
+                  : mobilePage
+                  ? `+30 more countries`
+                  : "Expand All countries"}
+              </p>
+              <Image
+                src={ChevronIcon}
+                alt=""
+                className="group-hover:rotate-180 transition-transform delay-75 ease-in-out"
+              />
+            </button>
+          </div>
+        )}
       </div>
 
       {mobilePage && (
@@ -222,12 +208,19 @@ const CustomPlan: React.FC<Props> = ({
             )}
           >
             <RadioCard<string>
-              className={cn(
-                "grid grid-cols-1 md:grid-cols-2 gap-3 mt-4 w-full",
-                isExpanded.city ? "lg:grid-cols-5" : "lg:grid-cols-4"
-              )}
-              selected={selectedlocation}
-              onChange={setSelectedLocation}
+              selected={selectedCity}
+              onChange={(val) => {
+                setSelectedCity(val);
+
+                const city = cityOptions.find((c) => c.value === val);
+                if (city) {
+                  const cityName =
+                    typeof city.content === "string"
+                      ? city.content
+                      : (city.content as React.ReactElement).props.children;
+                  setLocation(cityName as string);
+                }
+              }}
               options={visibleCities}
               padding="py-[9px]"
             />

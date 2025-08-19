@@ -17,7 +17,7 @@ const IspControl = ({ className }: { className?: string }) => {
   const [coupon, setCoupon] = useState("");
   const [plan, setPlan] = useState(plans[0]);
   const [quantity, setQuantity] = useState(1);
-  const [location, setLocation] = useState("Germany");
+  const [location, setLocation] = useState("Austria");
   const [estimatedPrice, setEstimatedPrice] = useState<number | null>(null);
 
   return (
