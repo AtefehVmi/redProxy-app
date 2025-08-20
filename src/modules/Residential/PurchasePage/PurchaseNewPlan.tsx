@@ -27,6 +27,14 @@ const PurchaseNewPlan = ({ className }: { className?: string }) => {
   const [bannerVisibility, setBannerVisibility] = useState(true);
   const [customAppliedQty, setCustomAppliedQty] = useState<number | null>(null);
   const [estimatedPrice, setEstimatedPrice] = useState<number | null>(null);
+  const [planName, setPlanName] = useState("");
+
+  const [customPlan, setCustomPlan] = useState<{
+    total_price: string;
+    coupon_discount: number;
+    bulk_discount: number;
+    unit_price: string;
+  } | null>(null);
 
   const params = useSearchParams();
   const pool = params.get("pool");
@@ -52,9 +60,10 @@ const PurchaseNewPlan = ({ className }: { className?: string }) => {
 
   const handleSelectPlan = (id: number) => {
     setSelectedPlanId(id);
+    setCustomPlan(null);
+    setCustomAppliedQty(null);
     setCoupon("");
     setCouponData(null);
-    setCustomAppliedQty(null);
     setEstimatedPrice(null);
   };
 
@@ -112,10 +121,17 @@ const PurchaseNewPlan = ({ className }: { className?: string }) => {
                 selectedPlanGb={selectedPlan?.gb}
                 quantity={qty}
                 setQuantity={setQty}
-                onApply={(appliedQty, price) => {
-                  setCustomAppliedQty(appliedQty);
-                  setEstimatedPrice(price);
-                  setSelectedPlanId(null);
+                onApply={(appliedQty, result) => {
+                  if (result) {
+                    setCustomAppliedQty(appliedQty);
+                    setCustomPlan({
+                      ...result,
+                      coupon_discount: result.coupon_discount ?? 0,
+                    });
+                    setSelectedPlanId(null);
+                  } else {
+                    setCustomPlan(null);
+                  }
                 }}
                 className="mt-8"
               />
@@ -131,8 +147,14 @@ const PurchaseNewPlan = ({ className }: { className?: string }) => {
             amount={customAppliedQty ?? selectedPlan?.gb}
             setCouponData={setCouponData}
           />
-          <CustomPlanCard className="mt-4" />
+          <CustomPlanCard
+            planName={planName}
+            setPlanName={setPlanName}
+            className="mt-4"
+          />
           <OrderSummaryCard
+            planName={planName}
+            customPlan={customPlan}
             coupon={coupon}
             quantity={customAppliedQty ?? selectedPlan?.gb}
             couponData={couponData}

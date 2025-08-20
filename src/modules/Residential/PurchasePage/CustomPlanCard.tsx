@@ -3,7 +3,15 @@ import cn from "@/utils/cn";
 import LayerIcon from "@public/icons/layer-grey.svg";
 import Image from "next/image";
 
-const CustomPlanCard = ({ className }: { className?: string }) => {
+const CustomPlanCard = ({
+  className,
+  planName,
+  setPlanName,
+}: {
+  className?: string;
+  planName: string;
+  setPlanName: (planName: string) => void;
+}) => {
   return (
     <div
       className={cn(
@@ -16,6 +24,8 @@ const CustomPlanCard = ({ className }: { className?: string }) => {
       </p>
 
       <InputText
+        value={planName}
+        onChange={(e) => setPlanName(e.target.value)}
         startAdornment={<Image src={LayerIcon} alt="" />}
         label="Plan name *"
         placeholder="Enter Plan name"

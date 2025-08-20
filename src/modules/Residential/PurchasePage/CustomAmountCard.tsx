@@ -24,7 +24,15 @@ const CustomAmountCard = ({
   quantity: number | null;
   setQuantity: (qty: number) => void;
   selectedPlanGb?: number;
-  onApply: (appliedQty: number, estimatedPrice: number | null) => void;
+  onApply: (
+    appliedQty: number,
+    result: {
+      total_price: string;
+      coupon_discount: number;
+      bulk_discount: number;
+      unit_price: string;
+    } | null
+  ) => void;
 }) => {
   const { fetch: estimateResiFetch, loading: estimateResiLoading } = useFetch(
     estimateResi,
@@ -42,13 +50,12 @@ const CustomAmountCard = ({
         quantity,
         coupon,
       });
-      const price = result?.price ?? null;
 
-      if (result?.price != null) {
-        console.log("Estimated price:", result.price);
+      if (result) {
+        console.log("Estimate result:", result);
       }
 
-      onApply(quantity, price);
+      onApply(quantity, result ?? null);
     } catch (err) {
       console.error("Custom estimate failed:", err);
       onApply(quantity, null);
