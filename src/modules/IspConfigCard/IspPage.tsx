@@ -166,6 +166,7 @@ const IspPage = () => {
         <div className="flex flex-col gap-6">
           {paginatedData.map((config, index) => (
             <IspConfigCard
+              configUuid={""}
               href="/generate/isp"
               chartColor="#735CFF"
               dataUsage={config.dataUsage}

@@ -28,6 +28,7 @@ interface IspConfigCardProps {
   dataUsage: { month: string; usage: number }[];
   chartColor: string;
   href: string;
+  configUuid: string;
 }
 
 const IspConfigCard = (props: IspConfigCardProps) => {
@@ -147,7 +148,13 @@ Date: ${props.date}`;
           >
             <p className="text-white">Delete</p>
           </Button>
-          {open && <DeleteModal open={open} onClose={() => setOpen(false)} />}
+          {open && (
+            <DeleteModal
+              configUuid={props.configUuid}
+              open={open}
+              onClose={() => setOpen(false)}
+            />
+          )}
         </div>
         <Link className="md:col-span-2" href={props.href}>
           <Button

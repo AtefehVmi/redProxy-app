@@ -24,6 +24,7 @@ const PurchaseNewPlan = ({ className }: { className?: string }) => {
     total_price: string;
     discount: number;
   } | null>(null);
+
   const [qty, setQty] = useState<number | null>(null);
   const [bannerVisibility, setBannerVisibility] = useState(true);
   const [customAppliedQty, setCustomAppliedQty] = useState<number | null>(null);

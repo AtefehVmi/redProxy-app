@@ -11,6 +11,10 @@ const MobileControl = ({ className }: { className?: string }) => {
   const [quantity, setQuantity] = useState(1);
   const [location, setLocation] = useState("");
   const [estimatedPrice, setEstimatedPrice] = useState<number | null>(null);
+  const [couponData, setCouponData] = useState<{
+    total_price: string;
+    discount: number;
+  } | null>(null);
 
   return (
     <div className={cn("grid grid-cols-1 xl:grid-cols-11 gap-4", className)}>
@@ -25,7 +29,7 @@ const MobileControl = ({ className }: { className?: string }) => {
 
       <div className="xl:col-span-3">
         <CouponCard
-          setEstimatedPrice={setEstimatedPrice}
+          setCouponData={setCouponData}
           coupon={coupon}
           setCoupon={setCoupon}
         />
