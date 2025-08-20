@@ -4,6 +4,9 @@ import CustomCard from "@/components/CustomCard/customCard";
 import { formatBytes } from "@/utils/converter";
 import PaddingPieChart from "@/components/Charts/PaddingPieChart";
 import cn from "@/utils/cn";
+import { useQuery } from "@tanstack/react-query";
+import { QUERY_KEYS } from "@/constants/querykeys";
+import { getPurchaseOverview } from "@/service/api";
 
 const CHART_DATA = [
   { name: "RESIDENTIAL", value: 400 },
@@ -14,6 +17,11 @@ const CHART_DATA = [
 const COLORS = ["#2ECB6D", "#2ECB6D80", "#2ECB6D33"];
 const UserBalance = ({ className }: { className?: string }) => {
   const [mounted, setMounted] = useState(false);
+
+  const { data: overview } = useQuery({
+    queryKey: QUERY_KEYS.PURCHASE_OVERVIEW,
+    queryFn: () => getPurchaseOverview(),
+  });
 
   useEffect(() => {
     setMounted(true);

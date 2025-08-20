@@ -11,4 +11,6 @@ export const QUERY_KEYS = {
   PLANS: ["plans"],
   USER_PLAN: ["user_plan"],
   RESI_PACKAGES: ["resi_packages"],
+  PURCHASE_OVERVIEW: ["purchase_overview"],
+  DATA_USAGE: ["data_usage"],
 };

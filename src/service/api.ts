@@ -271,12 +271,12 @@ export async function getPackages(name: string): Promise<any> {
   return data;
 }
 
-export async function getPurchaseSeries(): Promise<any> {
+export async function getDataUsage(): Promise<any> {
   const { data } = await instance.get(`/payment/orders/chart/`);
   return data;
 }
 
 export async function getPurchaseOverview(): Promise<any> {
   const { data } = await instance.get(`/payment/orders/purchase-details/`);
-  return data;
+  return data ?? {};
 }

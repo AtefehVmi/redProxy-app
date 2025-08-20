@@ -6,6 +6,9 @@ import growUpIcon from "@public/icons/arrow-up.svg";
 import SelectWithCustomCard from "@/components/CustomSelect/SelectWithCustomCard";
 import StackedBarChart from "@/components/Charts/StackedBarChart";
 import cn from "@/utils/cn";
+import { useQuery } from "@tanstack/react-query";
+import { QUERY_KEYS } from "@/constants/querykeys";
+import { getDataUsage } from "@/service/api";
 
 const CHART_DATA = [
   { month: "January", residential: 73, mobile: 45, datacenter: 103 },
@@ -32,6 +35,51 @@ const barKeys = ["mobile", "residential", "datacenter"];
 
 const UserDataUsage = ({ className }: { className?: string }) => {
   function onChartFilterChange() {}
+
+  const { data: dataUsage } = useQuery({
+    queryKey: QUERY_KEYS.DATA_USAGE,
+    queryFn: () => getDataUsage(),
+  });
+
+  const transformData = (rawData: Array<any>) => {
+    const providerMap = {
+      premium_residential: {},
+      enterprise_residential: {},
+      residential: {},
+    } as any;
+
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth();
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+    const dates = Array.from({ length: daysInMonth }, (_, i) => {
+      const day = i + 1;
+      return `${currentYear}-${String(currentMonth + 1).padStart(
+        2,
+        "0"
+      )}-${String(day).padStart(2, "0")}`;
+    });
+
+    dates.forEach((date) => {
+      Object.keys(providerMap).forEach((provider) => {
+        providerMap[provider][date] = 0;
+      });
+    });
+
+    rawData?.forEach((item) => {
+      if (providerMap[item.provider]) {
+        providerMap[item.provider][item.created__date] = parseFloat(item.total);
+      }
+    });
+
+    return Object.keys(providerMap).map((provider) => ({
+      provider,
+      data: dates.map((date) => providerMap[provider][date]),
+    }));
+  };
+
+  const series = transformData(dataUsage);
 
   return (
     <div
@@ -85,7 +133,7 @@ const UserDataUsage = ({ className }: { className?: string }) => {
       <div className="w-full h-[187px] mt-[35px] overflow-x-auto">
         <div className="min-w-[800px] h-full">
           <StackedBarChart
-            data={CHART_DATA}
+            data={series}
             colors={colorMapping}
             XKey={"month"}
             barKeys={barKeys}
