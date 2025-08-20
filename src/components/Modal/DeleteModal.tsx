@@ -1,16 +1,38 @@
+"use client";
+
 import Button from "@/components/Button/Button";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import Image from "next/image";
 import XIcon from "@public/icons/cross.svg";
 import TrashImage from "@public/image/recycle-bin.png";
+import useFetch from "@/hooks/UseFetch";
+import { deleteUserConfig } from "@/service/api";
+import { toast } from "react-toastify";
 
 const DeleteModal = ({
   open,
   onClose,
+  configUuid,
+  onDeleted,
 }: {
   open: boolean;
   onClose: () => void;
+  configUuid: string;
+  onDeleted?: () => void;
 }) => {
+  const { fetch: deleteFetch, loading } = useFetch(deleteUserConfig, false, {
+    toastOnError: true,
+  });
+
+  const handleDelete = async () => {
+    try {
+      await deleteFetch(configUuid);
+      toast.success("Proxy deleted successfully!");
+      onDeleted?.();
+      onClose();
+    } catch (err) {}
+  };
+
   return (
     <Dialog
       open={open}
@@ -47,7 +69,13 @@ const DeleteModal = ({
             <Button variant="secondary" onClick={onClose} className="w-full">
               No, Cancel
             </Button>
-            <Button className="w-full">Yes, Delete</Button>
+            <Button
+              onClick={handleDelete}
+              disabled={loading}
+              className="w-full"
+            >
+              {loading ? "Deleting..." : "Yes, Delete"}
+            </Button>
           </div>
         </div>
       </DialogPanel>

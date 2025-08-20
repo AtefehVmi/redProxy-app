@@ -106,25 +106,19 @@ const OrderSummaryCard: React.FC<Props> = ({
     }
 
     if (residentialPlan) {
-      // Residential plan purchase
-      purchaseResiFetch(
-        pool,
-        quantity,
-        selectedPayment,
-        coupon,
-        "Bandwidth"
-      ).then((resp) => {
-        if (selectedPayment === PAYMENT_METHODS.CRYPTO) {
-          toast.success("You'll be redirected soon...");
-          return router.push(resp.url);
+      purchaseResiFetch(pool, quantity, selectedPayment, coupon ?? "").then(
+        (resp) => {
+          if (selectedPayment === PAYMENT_METHODS.CRYPTO) {
+            toast.success("You'll be redirected soon...");
+            return router.push(resp.url);
+          }
+          toast.success("Purchased Successfully!");
+          queryClient.invalidateQueries({ queryKey: ["refreshable"] });
+          queryClient.invalidateQueries({ queryKey: QUERY_KEYS.PROFILE });
+          router.refresh();
         }
-        toast.success("Purchased Successfully!");
-        queryClient.invalidateQueries({ queryKey: ["refreshable"] });
-        queryClient.invalidateQueries({ queryKey: QUERY_KEYS.PROFILE });
-        router.refresh();
-      });
+      );
     } else {
-      // other proxies purchase
       purchaseProxyFetch(
         plan, // name
         selectedPayment, // method

@@ -26,6 +26,7 @@ interface ResidentialConfigCardProps {
   port: number;
   username: string;
   password: string;
+  configUuid: string;
 }
 
 const ResidentialConfigCard = (props: ResidentialConfigCardProps) => {
@@ -189,7 +190,13 @@ PASSWORD: ${props.password}`;
           >
             <p className="text-white">Delete</p>
           </Button>
-          {open && <DeleteModal open={open} onClose={() => setOpen(false)} />}
+          {open && (
+            <DeleteModal
+              configUuid={props.configUuid}
+              open={open}
+              onClose={() => setOpen(false)}
+            />
+          )}
         </div>
 
         <Link className="1940:w-full" href={"/generate/residential"}>

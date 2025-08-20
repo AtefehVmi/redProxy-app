@@ -63,6 +63,7 @@ const ResidentialConfigTab = ({ planUuid }: { planUuid?: string }) => {
         <div className="flex flex-col gap-6">
           {paginatedData?.map((config, index) => (
             <ResidentialConfigCard
+              configUuid={config.uuid}
               key={index}
               configName={config.name}
               // dataUsage={config.dataUsage}
