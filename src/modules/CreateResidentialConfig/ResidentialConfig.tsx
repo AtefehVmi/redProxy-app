@@ -9,11 +9,6 @@ import { QUERY_KEYS } from "@/constants/querykeys";
 import { getPlanById } from "@/service/api";
 
 const ResidentialConfig = () => {
-  const { data } = useQuery({
-    queryKey: QUERY_KEYS.USER_PLAN,
-    queryFn: () => getPlanById("jdkjked"),
-  });
-
   return (
     <div className="grid grid-cols-1 lg:grid-cols-9 mt-[30px] gap-4">
       <CreateResidentialConfig className="lg:col-span-6" />

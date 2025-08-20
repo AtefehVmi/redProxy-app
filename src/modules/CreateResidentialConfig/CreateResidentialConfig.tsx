@@ -24,7 +24,7 @@ import { toast } from "react-toastify";
 const protocolOptions = [
   {
     label: "HTTPS",
-    value: "http|https",
+    value: "https",
   },
   {
     label: "Socks5",
@@ -45,20 +45,16 @@ const rotationOptions = [
 
 const formatOptions = [
   {
-    label: "host:port:username:password",
-    value: "{hostname}:{port}:{username}:{password}",
+    label: "ip:port",
+    value: "ip:port",
   },
   {
-    label: "host:port@username:password",
-    value: "{hostname}:{port}@{username}:{password}",
+    label: "ip:port:user:pass",
+    value: "ip:port:user:pass",
   },
   {
-    label: "username:password@host:port",
-    value: "{username}:{password}@{hostname}:{port}",
-  },
-  {
-    label: "username:password:host:port",
-    value: "{username}:{password}:{hostname}:{port}",
+    label: "user:pass@ip:port",
+    value: "user:pass@ip:port",
   },
 ];
 
@@ -122,7 +118,7 @@ const CreateResidentialConfig = ({ className }: { className?: string }) => {
     };
 
     fetchCountries();
-  }, [plan, plans, CountriesFetch]);
+  }, [plan]);
 
   const selectedCountryObj = countryOptions.find((c) => c.value === country);
   const statesFromCountry: Option<string, State>[] =
@@ -162,7 +158,7 @@ const CreateResidentialConfig = ({ className }: { className?: string }) => {
 
     const res = generateProxyFetch({
       plan_uuid: selectedPlan.uuid,
-      name: selectedPlan.pool_type.name,
+      name: selectedPlan.name,
       format,
       protocol,
       country,
