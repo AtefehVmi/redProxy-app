@@ -13,4 +13,5 @@ export const QUERY_KEYS = {
   RESI_PACKAGES: ["resi_packages"],
   PURCHASE_OVERVIEW: ["purchase_overview"],
   DATA_USAGE: ["data_usage"],
+  COUPON: ["coupon"],
 };

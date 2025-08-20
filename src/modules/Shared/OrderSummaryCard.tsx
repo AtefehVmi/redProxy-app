@@ -14,7 +14,7 @@ import {
 import cn from "@/utils/cn";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 import CryptoIcon from "@public/icons/crypto.svg";
@@ -24,6 +24,7 @@ import TopUpBalanceModal from "@/components/Modal/TopUpBalanceModal";
 
 type Props = {
   coupon?: string;
+  couponData?: { total_price: string; discount: number } | null;
   residentialPlan?: {
     id: number;
     gb: number;
@@ -33,7 +34,7 @@ type Props = {
     recommend?: boolean;
   };
   quantity?: number;
-  price: number;
+  price?: number;
   pricePerGb?: number;
   plan?: { price: number; name: string };
   selectedPlan?: any;
@@ -49,12 +50,12 @@ const OrderSummaryCard: React.FC<Props> = ({
   residentialPlan,
   coupon,
   price,
-  pricePerGb,
   quantity,
   plan,
   selectedPlan,
   className,
   location,
+  couponData,
 }) => {
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -62,6 +63,11 @@ const OrderSummaryCard: React.FC<Props> = ({
   const [selectedPayment, setSelectedPayment] = useState(0);
   const [openFirst, setOpenFirst] = useState(false);
   const [openSecond, setOpenSecond] = useState(false);
+
+  const [totalPrice, setTotalPrice] = useState<number>(
+    residentialPlan?.total ?? plan?.price ?? 0
+  );
+  const [discount, setDiscount] = useState<number>(couponData?.discount ?? 0);
 
   const params = useSearchParams();
   const pool = params.get("pool");
@@ -79,6 +85,19 @@ const OrderSummaryCard: React.FC<Props> = ({
     false,
     { toastOnError: true }
   );
+
+  useEffect(() => {
+    if (couponData) {
+      setTotalPrice(parseFloat(couponData.total_price));
+      setDiscount(couponData.discount);
+    } else if (residentialPlan) {
+      setTotalPrice(residentialPlan.total);
+      setDiscount(residentialPlan.discount ?? 0);
+    } else if (plan) {
+      setTotalPrice(plan.price);
+      setDiscount(0);
+    }
+  }, [couponData, residentialPlan, plan, quantity]);
 
   const handlePurchase = () => {
     if (balance >= 1) {
@@ -169,15 +188,15 @@ const OrderSummaryCard: React.FC<Props> = ({
           <div className="flex items-center justify-between">
             <p className="text-sm text-grey-500">Sale</p>
             <p className="text-base text-orange-200 font-semibold">
-              {residentialPlan.discount}%
+              {residentialPlan.discount ?? 0}%
             </p>
           </div>
 
-          {coupon && (
+          {couponData && (
             <div className="flex items-center justify-between mt-2.5">
               <p className="text-sm text-grey-500">Coupon</p>
               <p className="text-base text-orange-200 font-semibold">
-                {coupon}%
+                {couponData?.discount}%
               </p>
             </div>
           )}
@@ -185,13 +204,13 @@ const OrderSummaryCard: React.FC<Props> = ({
           <div className="flex items-center justify-between mt-5 pt-5 border-t border-dashed border-darkmode-100">
             <p className="text-sm text-grey-500">Total</p>
             <p className="text-base text-white font-semibold">
-              ${price.toFixed(2)}
+              ${totalPrice.toFixed(2)}
             </p>
           </div>
         </div>
       )}
 
-      {!residentialPlan && (
+      {!residentialPlan && plan && (
         <div className="mt-8 bg-darkmode-300 rounded-lg p-[18px]">
           <div className="flex items-center justify-between">
             <p className="text-sm text-grey-500">Price</p>
@@ -215,37 +234,47 @@ const OrderSummaryCard: React.FC<Props> = ({
             <p className="text-base text-white font-semibold">{quantity}</p>
           </div>
 
-          {coupon && (
-            <div className="flex items-center justify-between mt-2.5">
-              <p className="text-sm text-grey-500">Sale</p>
-              <p className="text-base text-orange-200 font-semibold">
-                {coupon}%
-              </p>
-            </div>
-          )}
+          <div className="flex items-center justify-between mt-2.5">
+            <p className="text-sm text-grey-500">Sale</p>
+            <p className="text-base text-orange-200 font-semibold">
+              {discount}%
+            </p>
+          </div>
 
           <div className="flex items-center justify-between mt-5 pt-5 border-t border-dashed border-darkmode-100">
             <p className="text-sm text-grey-500">Total</p>
             <p className="text-base text-white font-semibold">
-              ${price.toFixed(2)}
+              ${price?.toFixed(2)}
             </p>
           </div>
         </div>
       )}
 
-      <PaymentRadioGroup
-        options={paymentOptions}
-        selected={selectedPayment}
-        onChange={setSelectedPayment}
-      />
+      {!residentialPlan && !plan && (
+        <div className="mt-8 bg-darkmode-300 rounded-lg p-[18px] h-80">
+          <p className="text-sm text-grey-500 text-center">
+            Please select a plan first
+          </p>
+        </div>
+      )}
 
-      <Button
-        disabled={resiLoading}
-        onClick={handlePurchase}
-        className="mt-6 text-base font-semibold w-full"
-      >
-        {resiLoading ? "Purchasing..." : "Purchase"}
-      </Button>
+      {(plan || residentialPlan) && (
+        <>
+          <PaymentRadioGroup
+            options={paymentOptions}
+            selected={selectedPayment}
+            onChange={setSelectedPayment}
+          />
+          <Button
+            disabled={resiLoading}
+            onClick={handlePurchase}
+            className="mt-6 text-base font-semibold w-full"
+          >
+            {resiLoading ? "Purchasing..." : "Purchase"}
+          </Button>
+        </>
+      )}
+
       {openFirst && (
         <NotEnoughBalanceModal
           open={openFirst}

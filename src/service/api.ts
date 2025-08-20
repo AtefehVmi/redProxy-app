@@ -129,6 +129,43 @@ export async function getUserConfigs(params?: {
   return await instance.get("/plans/configurations/", { params });
 }
 
+export async function deleteUserConfig(config_uuid: string) {
+  return await instance.delete(`/plans/configurations/${config_uuid}`);
+}
+
+export async function updateUserConfig(
+  config_uuid: string,
+  payload: {
+    name: string;
+    protocol: string;
+    format: string;
+    rotation: string;
+    sticky_lifetime: number;
+    country: string;
+    state: string;
+    city: string;
+    quantity: number;
+    is_active: boolean;
+  }
+) {
+  return await instance.put(`/plans/configurations/${config_uuid}`);
+}
+
+export async function createUserConfig(payload: {
+  name: string;
+  plan_uuid: string;
+  protocol: string;
+  port: number;
+  format: string;
+  rotation: string;
+  sticky_lifetime: number;
+  country: string;
+  state: string;
+  city: string;
+  quantity: number;
+}) {
+  return await instance.post(`/plans/configurations/`, payload);
+}
 //residential
 export async function getPoolTypes(): Promise<PoolTypes[]> {
   return await instance.get("/plans/pool-types/");
@@ -171,7 +208,10 @@ export async function estimateResi(
   name: string,
   payload: { quantity: number; coupon: string }
 ): Promise<any> {
-  return await instance.post(`/payment/purchase/estimate/${name}`, payload);
+  return await instance.post(
+    `/payment/purchase/estimate/pool/${name}/`,
+    payload
+  );
 }
 
 export async function purchaseResi(
@@ -224,6 +264,14 @@ export async function purchaseProxy(
   return data;
 }
 
+//shared
+export async function calculateDiscount(
+  code: string,
+  amount: number
+): Promise<any> {
+  return await instance.get(`/payment/coupon/${code}?amount=${amount}`);
+}
+
 //payments
 export async function depositBalance(
   amount: number,
@@ -253,8 +301,7 @@ export async function getOrders({
   params.append("completed", completed.toString());
   queryString = `?${params.toString()}`;
 
-  const { data } = await instance.get(`/payment/orders/${queryString}`);
-  return data ?? [];
+  return await instance.get(`/payment/orders/${queryString}`);
 }
 
 export async function getTransactions(): Promise<Transaction[]> {
@@ -272,11 +319,9 @@ export async function getPackages(name: string): Promise<any> {
 }
 
 export async function getDataUsage(): Promise<any> {
-  const { data } = await instance.get(`/payment/orders/chart/`);
-  return data;
+  return await instance.get(`/payment/orders/chart/`);
 }
 
 export async function getPurchaseOverview(): Promise<any> {
-  const { data } = await instance.get(`/payment/orders/purchase-details/`);
-  return data ?? {};
+  return await instance.get(`/payment/orders/purchase-details/`);
 }

@@ -16,23 +16,13 @@ import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/querykeys";
 import { getResiPackages } from "@/service/api";
 
-const plans = [
-  { id: 1, gb: 1, perPrice: 2, total: 12, discount: 5 },
-  { id: 2, gb: 2, perPrice: 2, total: 12, discount: 5 },
-  { id: 3, gb: 3, perPrice: 2, total: 12, discount: 5 },
-  { id: 4, gb: 5, perPrice: 2, total: 12, discount: 20, recommend: true },
-  { id: 5, gb: 10, perPrice: 2, total: 12, discount: 20, recommend: true },
-  { id: 6, gb: 20, perPrice: 2, total: 12, discount: 5 },
-  { id: 7, gb: 50, perPrice: 2, total: 12, discount: 5 },
-  { id: 8, gb: 100, perPrice: 2, total: 12, discount: 5 },
-];
-
 const PurchaseNewPlan = ({ className }: { className?: string }) => {
-  const [selectedPlanId, setSelectedPlanId] = useState<number | null>(
-    plans[0].id
-  );
-
+  const [selectedPlanId, setSelectedPlanId] = useState<number | null>(null);
   const [coupon, setCoupon] = useState("");
+  const [couponData, setCouponData] = useState<{
+    total_price: string;
+    discount: number;
+  } | null>(null);
   const [qty, setQty] = useState<number | null>(null);
   const [bannerVisibility, setBannerVisibility] = useState(true);
   const [customAppliedQty, setCustomAppliedQty] = useState<number | null>(null);
@@ -47,14 +37,25 @@ const PurchaseNewPlan = ({ className }: { className?: string }) => {
     enabled: !!pool,
   });
 
-  console.log(packages);
+  const plans = (packages ?? []).map((pkg: any, idx: number) => ({
+    id: idx + 1,
+    gb: pkg.start,
+    perPrice: parseFloat(pkg.price),
+    total: parseFloat(pkg.price) * pkg.start,
+    discount: pkg.discount,
+    recommend: pkg.discount === 10,
+  }));
 
   const pathname = usePathname();
   const selectedPlan =
-    plans.find((plan) => plan.id === selectedPlanId) ?? plans[0];
+    plans.find((plan: any) => plan.id === selectedPlanId) ?? null;
 
   const handleSelectPlan = (id: number) => {
     setSelectedPlanId(id);
+    setCoupon("");
+    setCouponData(null);
+    setCustomAppliedQty(null);
+    setEstimatedPrice(null);
   };
 
   return (
@@ -88,23 +89,8 @@ const PurchaseNewPlan = ({ className }: { className?: string }) => {
           {pathname === "/purchase/new" ? (
             <>
               <div>
-                <div className="grid md:grid-cols-3 gap-4">
-                  {plans.slice(0, 3).map((plan) => (
-                    <ResidentialPlan
-                      key={plan.id}
-                      id={plan.id}
-                      gb={plan.gb}
-                      perPrice={plan.perPrice}
-                      total={plan.total}
-                      discount={plan.discount}
-                      isSelected={selectedPlanId === plan.id}
-                      onSelect={handleSelectPlan}
-                    />
-                  ))}
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-4 mt-6">
-                  {plans.slice(3, 5).map((plan) => (
+                <div className="grid grid-cols-2 1665:grid-cols-3 gap-4">
+                  {plans?.map((plan: any) => (
                     <ResidentialPlan
                       key={plan.id}
                       id={plan.id}
@@ -118,29 +104,17 @@ const PurchaseNewPlan = ({ className }: { className?: string }) => {
                     />
                   ))}
                 </div>
-
-                <div className="grid md:grid-cols-3 mt-6 gap-4">
-                  {plans.slice(5).map((plan) => (
-                    <ResidentialPlan
-                      key={plan.id}
-                      id={plan.id}
-                      gb={plan.gb}
-                      perPrice={plan.perPrice}
-                      total={plan.total}
-                      discount={plan.discount}
-                      isSelected={selectedPlanId === plan.id}
-                      onSelect={handleSelectPlan}
-                    />
-                  ))}
-                </div>
               </div>
 
               <CustomAmountCard
-                selectedPlanGb={selectedPlan.gb}
+                coupon={coupon}
+                pool={pool as string}
+                selectedPlanGb={selectedPlan?.gb}
                 quantity={qty}
                 setQuantity={setQty}
-                onApply={() => {
-                  setCustomAppliedQty(qty ?? selectedPlan.gb);
+                onApply={(appliedQty, price) => {
+                  setCustomAppliedQty(appliedQty);
+                  setEstimatedPrice(price);
                   setSelectedPlanId(null);
                 }}
                 className="mt-8"
@@ -152,16 +126,16 @@ const PurchaseNewPlan = ({ className }: { className?: string }) => {
         </div>
         <div className="xl:col-span-3">
           <CouponCard
-            residentialDiscount={true}
-            amount={customAppliedQty ?? selectedPlan.gb}
             coupon={coupon}
             setCoupon={setCoupon}
-            setEstimatedPrice={setEstimatedPrice}
+            amount={customAppliedQty ?? selectedPlan?.gb}
+            setCouponData={setCouponData}
           />
           <CustomPlanCard className="mt-4" />
           <OrderSummaryCard
-            quantity={customAppliedQty ?? selectedPlan.gb}
-            price={estimatedPrice ?? 4.0}
+            coupon={coupon}
+            quantity={customAppliedQty ?? selectedPlan?.gb}
+            couponData={couponData}
             residentialPlan={selectedPlan}
             className="mt-4"
           />

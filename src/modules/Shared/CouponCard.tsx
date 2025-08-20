@@ -3,81 +3,49 @@
 import Button from "@/components/Button/Button";
 import InputText from "@/components/Input/Input";
 import Loader from "@/components/Loader/Loader";
+import { QUERY_KEYS } from "@/constants/querykeys";
 import useFetch from "@/hooks/UseFetch";
-import { estimatePrice, estimateResi } from "@/service/api";
+import { calculateDiscount, estimatePrice, estimateResi } from "@/service/api";
 import CouponIcon from "@public/icons/coupon.svg";
+import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 type Props = {
+  setCouponData: (
+    data: { total_price: string; discount: number } | null
+  ) => void;
+  amount?: number;
   coupon: string;
   setCoupon: (coupon: string) => void;
-  amount?: number;
-  residentialDiscount?: boolean;
-  selectedPlanId?: number;
-  setEstimatedPrice: (price: number) => void;
 };
 
-const CouponCard = ({
-  coupon,
-  setCoupon,
-  amount,
-  residentialDiscount = false,
-  selectedPlanId,
-  setEstimatedPrice,
-}: Props) => {
+const CouponCard = ({ amount, setCouponData, coupon, setCoupon }: Props) => {
   const [inputValue, setInputValue] = useState(coupon ?? "");
-  const params = useSearchParams();
-  const pool = params.get("pool");
 
-  const { fetch: estimateFetch, loading: estimateLoading } = useFetch(
-    estimatePrice,
+  const { fetch: discountFetch, loading: discountLoading } = useFetch(
+    calculateDiscount,
     false,
     {
       toastOnError: true,
     }
   );
 
-  const { fetch: estimateResiFetch, loading: estimateResiLoading } = useFetch(
-    estimateResi,
-    false,
-    {
-      toastOnError: true,
-    }
-  );
-
-  const handleCouponCheckClick = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
+  const handleApplyCoupon = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!inputValue.trim()) return;
 
     try {
-      let result;
-      if (residentialDiscount) {
-        if (!pool) return;
-        result = await estimateResiFetch(pool, {
-          quantity: amount ?? 1,
-          coupon: inputValue,
-        });
-      } else {
-        if (!selectedPlanId) return;
-        result = await estimateFetch({
-          plan: selectedPlanId,
-          quantity: amount ?? 1,
-          coupon: inputValue,
-        });
-      }
-
-      if (result?.price != null) {
-        setEstimatedPrice(result.price);
-      }
+      const data = await discountFetch(inputValue, amount ?? 1);
       setCoupon(inputValue);
-    } catch {
+      toast.success("Coupon applied successfully!");
+      setCouponData(data);
+      console.log(data);
+    } catch (err) {
+      setCouponData(null);
       setCoupon("");
-      setInputValue("");
-      setEstimatedPrice(0);
     }
   };
 
@@ -86,7 +54,7 @@ const CouponCard = ({
       <p className="text-base text-white font-bold">Coupon Code</p>
 
       <form
-        onSubmit={handleCouponCheckClick}
+        onSubmit={handleApplyCoupon}
         className="flex flex-col gap-4 mt-6 w-full"
       >
         <InputText
@@ -99,11 +67,11 @@ const CouponCard = ({
           startAdornment={<Image src={CouponIcon} alt="" />}
         />
         <Button
-          disabled={estimateResiLoading}
+          disabled={discountLoading}
           type="submit"
           className="w-full text-base py-3"
         >
-          {estimateResiLoading ? (
+          {discountLoading ? (
             <>
               Continue <Loader />
             </>

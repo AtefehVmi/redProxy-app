@@ -27,7 +27,7 @@ const Button = ({
   );
   const variantStyle = cn(
     variant === "primary" &&
-      "bg-darkmode-100 text-white hover:bg-orange-200 gradient-border focus:bg-[#EB7F43] disabled:bg-darkmode-200",
+      "bg-darkmode-100 text-white hover:bg-orange-200 gradient-border focus:bg-[#EB7F43] disabled:bg-darkmode-200 disabled:cursor-not-allowed",
     variant === "text" &&
       "bg-transparent text-white hover:bg-darkmode-200 disabled:text-grey-400 focus:bg-darkmode-100",
     variant === "secondary" &&
