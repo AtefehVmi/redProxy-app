@@ -10,6 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/querykeys";
 import { getUserPlans } from "@/service/api";
 import NoSearchResultImage from "@public/image/search.png";
+import Loader from "@/components/Loader/Loader";
 
 interface Props {
   filterValue?: string;
@@ -21,7 +22,7 @@ const ResidentialPlansTab = ({ filterValue, searchValue }: Props) => {
   const limit = params.get("limit") ? parseInt(params.get("limit")!) : 8;
   const offset = params.get("offset") ? parseInt(params.get("offset")!) : 0;
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: [...QUERY_KEYS.PLANS, filterValue, searchValue],
     queryFn: () =>
       getUserPlans(
@@ -34,6 +35,14 @@ const ResidentialPlansTab = ({ filterValue, searchValue }: Props) => {
   const totalCount = data?.length ?? 0;
   const paginatedData = data?.slice(offset, offset + limit) ?? [];
   const isDataAvailable = offset + limit < totalCount;
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-[560px]">
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -75,7 +84,7 @@ const ResidentialPlansTab = ({ filterValue, searchValue }: Props) => {
               desc={item.pool_type.description}
               purchaseDate={item.created}
               expireDate={item.expiration}
-              // remainingGb={item.remainingGb}
+              remainingGb={item.available_gb}
               planId={item.uuid}
             />
           ))}

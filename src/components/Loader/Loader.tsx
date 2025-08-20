@@ -8,7 +8,7 @@ const Loader = ({ className }: { className?: string }) => {
       }`}
     >
       <span
-        className="inline-block xl:h-3 xl:w-3 w-3 h-3 animate-spin rounded-full border-2 border-solid border-current 
+        className="inline-block xl:h-3 xl:w-3 w-3 h-3 animate-spin rounded-full border-2 border-solid border-current border-white
             border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
         role="status"
       />

@@ -12,13 +12,14 @@ import EyeIcon from "@public/icons/eye.svg";
 import PurchaseIcon from "@public/icons/shopping-cart.svg";
 import Button from "@/components/Button/Button";
 import Link from "next/link";
+import { formatDate } from "@/utils/formatDate";
 
 type Props = {
   name: string;
   desc: string;
   purchaseDate: string;
   expireDate: string;
-  remainingGb?: number;
+  remainingGb: number;
   planId: string;
 };
 
@@ -27,7 +28,7 @@ const ResidentialPlanCard: React.FC<Props> = ({
   desc,
   purchaseDate,
   expireDate,
-  remainingGb = 12,
+  remainingGb,
   planId,
 }) => {
   const [showGb, setShowGb] = useState(false);
@@ -73,7 +74,7 @@ const ResidentialPlanCard: React.FC<Props> = ({
             <p className="text-grey-400 text-xs">{desc}</p>
           </div>
 
-          <div className="rounded-lg bg-blue-100">
+          <div className="rounded-lg bg-blue-100 min-w-10 min-h-10 ml-1">
             <Image src={PlanIcon} alt="" className="m-[9px]" />
           </div>
         </div>
@@ -91,7 +92,9 @@ const ResidentialPlanCard: React.FC<Props> = ({
               <p className="text-grey-400 text-sm">Purchase Date</p>
             </div>
 
-            <p className="text-grey-50 font-semibold text-sm">{purchaseDate}</p>
+            <p className="text-grey-50 font-semibold text-sm">
+              {formatDate(purchaseDate)}
+            </p>
           </div>
 
           <div>
@@ -100,7 +103,9 @@ const ResidentialPlanCard: React.FC<Props> = ({
               <p className="text-grey-400 text-sm">Expiration Date</p>
             </div>
 
-            <p className="text-grey-50 font-semibold text-sm">{expireDate}</p>
+            <p className="text-grey-50 font-semibold text-sm">
+              {formatDate(expireDate)}
+            </p>
           </div>
 
           <div>
@@ -111,7 +116,9 @@ const ResidentialPlanCard: React.FC<Props> = ({
 
             <button onClick={() => setShowGb(!showGb)}>
               {showGb ? (
-                <p className="text-white">{remainingGb}</p>
+                <p className="text-white text-sm font-semibold">
+                  {remainingGb ?? 0}GB
+                </p>
               ) : (
                 <Image src={EyeIcon} alt="" />
               )}
