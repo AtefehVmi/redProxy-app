@@ -1,3 +1,5 @@
+"use client";
+
 import cn from "@/utils/cn";
 import PlanIcon from "@public/icons/plans.svg";
 import Image from "next/image";
@@ -6,14 +8,39 @@ import CalendarIcon from "@public/icons/calendar.svg";
 import GlobeIcon from "@public/icons/globe-big.svg";
 import InputText from "@/components/Input/Input";
 import LayersIcon from "@public/icons/layer-grey.svg";
+import { useQuery } from "@tanstack/react-query";
+import { QUERY_KEYS } from "@/constants/querykeys";
+import { getPlanById } from "@/service/api";
+import { usePathname } from "next/navigation";
+import { formatDate } from "@/utils/formatDate";
+import { useState } from "react";
 
 const PreviousPlanCard = () => {
+  const pathname = usePathname();
+  const planId = pathname.split("/").pop();
+
+  const [bandwidth, setBandwidth] = useState<number>(1);
+
+  const { data: plan } = useQuery({
+    queryKey: [...QUERY_KEYS.USER_PLAN, planId],
+    queryFn: () => getPlanById(planId as string),
+    enabled: !!planId,
+  });
+
   const recommend = true;
 
   const data = [
-    { planData: "01 April 2026", icon: CalendarIcon, title: "Purchase Date" },
-    { planData: "12 April 2026", icon: CalendarIcon, title: "Expiration Date" },
-    { planData: "12GB", icon: GlobeIcon, title: "Remaining GB" },
+    {
+      planData: formatDate(plan?.created ?? ""),
+      icon: CalendarIcon,
+      title: "Purchase Date",
+    },
+    {
+      planData: formatDate(plan?.expiration ?? ""),
+      icon: CalendarIcon,
+      title: "Expiration Date",
+    },
+    { planData: plan?.available_gb, icon: GlobeIcon, title: "Remaining GB" },
   ];
 
   return (
@@ -30,9 +57,11 @@ const PreviousPlanCard = () => {
             </div>
             <div>
               <p className="text-white font-semibold text-base">
-                Universal Scraper API
+                {plan?.pool_type?.name}
               </p>
-              <p className="text-grey-400 text-xs">Scraping Pool</p>
+              <p className="text-grey-400 text-xs">
+                {plan?.pool_type.description}
+              </p>
             </div>
           </div>
           <div
@@ -76,6 +105,9 @@ const PreviousPlanCard = () => {
         </div>
 
         <InputText
+          type="number"
+          value={bandwidth}
+          onChange={(e) => setBandwidth(Number(e.target.value))}
           className="mt-6"
           startAdornment={<Image src={LayersIcon} alt="" />}
           placeholder="Enter Bandwidth *"

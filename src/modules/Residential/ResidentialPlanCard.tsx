@@ -13,6 +13,8 @@ import PurchaseIcon from "@public/icons/shopping-cart.svg";
 import Button from "@/components/Button/Button";
 import Link from "next/link";
 import { formatDate } from "@/utils/formatDate";
+import useFetch from "@/hooks/UseFetch";
+import { updatePlanName } from "@/service/api";
 
 type Props = {
   name: string;
@@ -34,12 +36,26 @@ const ResidentialPlanCard: React.FC<Props> = ({
   const [showGb, setShowGb] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState(initialName);
+  const [loading, setLoading] = useState(false);
 
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
-  };
-  const handleNameSubmit = () => {
-    setIsEditing(false);
+  const { fetch: updateNameFetch } = useFetch(updatePlanName, false, {
+    toastOnError: true,
+  });
+
+  const handleNameSubmit = async () => {
+    if (!name.trim() || name === initialName) {
+      setIsEditing(false);
+      return;
+    }
+
+    setLoading(true);
+    const result = await updateNameFetch(planId, { name });
+    if (result) {
+      setIsEditing(false);
+    } else {
+      setName(initialName);
+    }
+    setLoading(false);
   };
 
   return (
@@ -52,7 +68,7 @@ const ResidentialPlanCard: React.FC<Props> = ({
                 <input
                   type="text"
                   value={name}
-                  onChange={handleNameChange}
+                  onChange={(e) => setName(e.target.value)}
                   onBlur={handleNameSubmit}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") handleNameSubmit();

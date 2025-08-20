@@ -166,6 +166,7 @@ export async function createUserConfig(payload: {
 }) {
   return await instance.post(`/plans/configurations/`, payload);
 }
+
 //residential
 export async function getPoolTypes(): Promise<PoolTypes[]> {
   return await instance.get("/plans/pool-types/");
@@ -202,6 +203,13 @@ export async function getUserPlans(
 
 export async function getPlanById(plan_uuid: string): Promise<ResidentialPlan> {
   return await instance.get(`/plans/${plan_uuid}/`);
+}
+
+export async function updatePlanName(
+  plan_uuid: string,
+  payload: { name: string }
+): Promise<ResidentialPlan> {
+  return await instance.put(`/plans/${plan_uuid}/`, payload);
 }
 
 export async function estimateResi(

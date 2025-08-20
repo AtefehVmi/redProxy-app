@@ -1,3 +1,5 @@
+"use client";
+
 import { useSearchParams } from "next/navigation";
 import Pagination from "@/components/Pagination/Pagination";
 import Image from "next/image";
@@ -8,9 +10,11 @@ import Link from "next/link";
 import ShoppingCartIcon from "@public/icons/shopping-cart.svg";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/querykeys";
-import { getUserPlans } from "@/service/api";
+import { getUserPlans, updatePlanName } from "@/service/api";
 import NoSearchResultImage from "@public/image/search.png";
 import Loader from "@/components/Loader/Loader";
+import useFetch from "@/hooks/UseFetch";
+import { useState } from "react";
 
 interface Props {
   filterValue?: string;
@@ -22,7 +26,7 @@ const ResidentialPlansTab = ({ filterValue, searchValue }: Props) => {
   const limit = params.get("limit") ? parseInt(params.get("limit")!) : 8;
   const offset = params.get("offset") ? parseInt(params.get("offset")!) : 0;
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: [...QUERY_KEYS.PLANS, filterValue, searchValue],
     queryFn: () =>
       getUserPlans(
@@ -80,7 +84,7 @@ const ResidentialPlansTab = ({ filterValue, searchValue }: Props) => {
           {paginatedData?.map((item) => (
             <ResidentialPlanCard
               key={item.uuid}
-              name={item.pool_type.name}
+              name={item.name}
               desc={item.pool_type.description}
               purchaseDate={item.created}
               expireDate={item.expiration}
