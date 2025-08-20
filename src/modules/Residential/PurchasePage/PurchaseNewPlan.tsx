@@ -10,8 +10,11 @@ import OrderSummaryCard from "@/modules/Shared/OrderSummaryCard";
 import HotSaleImage from "@public/icons/hot-sale.svg";
 import CrossIcon from "@public/icons/cross.svg";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import PreviousPlanCard from "./PreviousPlanCard";
+import { useQuery } from "@tanstack/react-query";
+import { QUERY_KEYS } from "@/constants/querykeys";
+import { getResiPackages } from "@/service/api";
 
 const plans = [
   { id: 1, gb: 1, perPrice: 2, total: 12, discount: 5 },
@@ -28,11 +31,23 @@ const PurchaseNewPlan = ({ className }: { className?: string }) => {
   const [selectedPlanId, setSelectedPlanId] = useState<number | null>(
     plans[0].id
   );
+
   const [coupon, setCoupon] = useState("");
   const [qty, setQty] = useState<number | null>(null);
   const [bannerVisibility, setBannerVisibility] = useState(true);
   const [customAppliedQty, setCustomAppliedQty] = useState<number | null>(null);
   const [estimatedPrice, setEstimatedPrice] = useState<number | null>(null);
+
+  const params = useSearchParams();
+  const pool = params.get("pool");
+
+  const { data: packages } = useQuery({
+    queryKey: [...QUERY_KEYS.RESI_PACKAGES, pool],
+    queryFn: () => getResiPackages(pool as string),
+    enabled: !!pool,
+  });
+
+  console.log(packages);
 
   const pathname = usePathname();
   const selectedPlan =

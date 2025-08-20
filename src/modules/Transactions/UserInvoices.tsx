@@ -1,14 +1,12 @@
 "use client";
 import React from "react";
-import CustomCard from "@/components/CustomCard/customCard";
 import SelectWithCustomCard from "@/components/CustomSelect/SelectWithCustomCard";
 import Table from "@/components/Table/Table";
-import { InvoiceColumns } from "@/constants/TableColumns";
 import cn from "@/utils/cn";
-import { getOrders, getTransactions } from "@/service/api";
+import { getTransactions } from "@/service/api";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/querykeys";
-import Order, { Transaction } from "@/service/models";
+import { Transaction } from "@/service/models";
 import Pagination from "@/components/Pagination/Pagination";
 import { useSearchParams } from "next/navigation";
 import TableCell from "@/components/Table/TableCell";
@@ -20,7 +18,7 @@ const UserInvoices = ({ height }: { height?: string }) => {
   const offset = params.get("offset") ? parseInt(params.get("offset")!) : 0;
 
   function onFilterChange() {}
-  const { data: orders } = useQuery({
+  const { data: orders, isLoading } = useQuery({
     queryKey: QUERY_KEYS.TRANSACTIONS,
     queryFn: () => getTransactions(),
   });
@@ -82,13 +80,6 @@ const UserInvoices = ({ height }: { height?: string }) => {
         return <TableCell type={"TEXT"} value={getValue()} />;
       },
     },
-    {
-      accessorKey: "download",
-      header: "Download",
-      cell: ({ getValue }) => {
-        return <TableCell type={"DOWNLOAD"} value={getValue()} />;
-      },
-    },
   ];
 
   return (
@@ -113,7 +104,11 @@ const UserInvoices = ({ height }: { height?: string }) => {
             className="w-[119px] h-26px"
           />
         </div>
-        <Table columns={TransactionsColumns} data={orders ?? []} />
+        <Table
+          isLoading={isLoading}
+          columns={TransactionsColumns}
+          data={orders ?? []}
+        />
       </div>
 
       <Pagination

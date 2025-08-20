@@ -87,7 +87,6 @@ instance.interceptors.response.use(
 );
 
 //auth
-
 export async function regisetrUser(payload: any): Promise<any> {
   const { data } = await axios.post(
     `${process.env.NEXT_PUBLIC_API_BASEURL}/users/register/`,
@@ -135,11 +134,8 @@ export async function getPoolTypes(): Promise<PoolTypes[]> {
   return await instance.get("/plans/pool-types/");
 }
 
-export async function getPlanDetails(plan_id?: string): Promise<any> {
-  const { data } = await instance.get("/proxies/plan/details/", {
-    params: { plan_id },
-  });
-  return data;
+export async function getResiPackages(name: string): Promise<any> {
+  return await instance.get(`/payment/purchase/packages/${name}/`);
 }
 
 export async function getResiCountries(name: string): Promise<any> {
@@ -185,29 +181,15 @@ export async function purchaseResi(
   coupon?: string,
   plan?: string
 ): Promise<any> {
-  const { data } = await instance.post(`/payment/purchase/rotating/${name}/`, {
-    quantity,
-    method,
-    coupon,
-    plan,
-  });
-  return data;
-}
-
-export async function getProxyUsageDetails(
-  name: "residential" | "premium_residential" | "enterprise_residential",
-  plan_id?: string
-): Promise<any> {
-  const { data } = await instance.get(`/residential/${name}/details/`, {
-    params: { plan_id },
-  });
-  return data;
-}
-
-export async function getPlan(plan_id?: string): Promise<any> {
-  const { data } = await instance.get(`/proxies/plan/details/`, {
-    params: { plan_id },
-  });
+  const { data } = await instance.post(
+    `/payment/purchase/residential/${name}/`,
+    {
+      quantity,
+      method,
+      coupon,
+      plan,
+    }
+  );
   return data;
 }
 
@@ -272,7 +254,7 @@ export async function getOrders({
   queryString = `?${params.toString()}`;
 
   const { data } = await instance.get(`/payment/orders/${queryString}`);
-  return data;
+  return data ?? [];
 }
 
 export async function getTransactions(): Promise<Transaction[]> {

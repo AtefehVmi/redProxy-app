@@ -10,4 +10,5 @@ export const QUERY_KEYS = {
   TRANSACTIONS: ["transactions"],
   PLANS: ["plans"],
   USER_PLAN: ["user_plan"],
+  RESI_PACKAGES: ["resi_packages"],
 };

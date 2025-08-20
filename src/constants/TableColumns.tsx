@@ -59,11 +59,11 @@ export const InvoiceColumns: ColumnDef<Order, any>[] = [
       return <TableCell type={"TEXT"} value={getValue()} />;
     },
   },
-  {
-    accessorKey: "download",
-    header: "Download",
-    cell: ({ getValue }) => {
-      return <TableCell type={"DOWNLOAD"} value={getValue()} />;
-    },
-  },
+  // {
+  //   accessorKey: "download",
+  //   header: "Download",
+  //   cell: ({ getValue }) => {
+  //     return <TableCell type={"DOWNLOAD"} value={getValue()} />;
+  //   },
+  // },
 ];

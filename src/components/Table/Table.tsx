@@ -13,6 +13,7 @@ interface TableProps<TData> {
   data: TData[];
   className?: string;
   bottomRounded?: boolean;
+  isLoading?: boolean;
 }
 
 const Table = <TData extends object>({
@@ -20,6 +21,7 @@ const Table = <TData extends object>({
   data,
   className,
   bottomRounded,
+  isLoading = false,
 }: TableProps<TData>) => {
   const table = useReactTable({
     data,
@@ -60,7 +62,16 @@ const Table = <TData extends object>({
           ))}
         </thead>
         <tbody>
-          {data.length > 0 ? (
+          {isLoading ? (
+            <tr>
+              <td
+                colSpan={columns.length}
+                className="text-center py-4 text-grey-400"
+              >
+                Loading...
+              </td>
+            </tr>
+          ) : data.length > 0 ? (
             table.getRowModel().rows.map((row, rowIndex) => (
               <tr
                 key={row.id}

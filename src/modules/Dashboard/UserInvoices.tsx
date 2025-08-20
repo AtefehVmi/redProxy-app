@@ -11,108 +11,6 @@ import { getOrders } from "@/service/api";
 import Pagination from "@/components/Pagination/Pagination";
 import { useSearchParams } from "next/navigation";
 
-const INVOICE_DATA: Array<any> = [
-  {
-    date: "08/05/2024",
-    invoice: "#982ZK-001",
-    order: "100 GB Residential",
-    amount: "$ 300.00",
-    paymentMethod: "Mastercard",
-    status: "PAID",
-    download: "https://www.google.com",
-  },
-  {
-    date: "09/05/2024",
-    invoice: "#982ZK-002",
-    order: "10 GB Residential",
-    amount: "$ 300.00",
-    paymentMethod: "Mastercard",
-    status: "PAID",
-    download: "https://www.google.com",
-  },
-  {
-    date: "10/05/2024",
-    invoice: "#982ZK-003",
-    order: "50 GB Residential",
-    amount: "$ 300.00",
-    paymentMethod: "Mastercard",
-    status: "PAID",
-    download: "https://www.google.com",
-  },
-  {
-    date: "11/05/2024",
-    invoice: "#982ZK-004",
-    order: "20 GB Residential",
-    amount: "$ 300.00",
-    paymentMethod: "Mastercard",
-    status: "FAILED",
-    download: "https://www.google.com",
-  },
-  {
-    date: "11/05/2024",
-    invoice: "#982ZK-004",
-    order: "20 GB Residential",
-    amount: "$ 300.00",
-    paymentMethod: "Mastercard",
-    status: "FAILED",
-    download: "https://www.google.com",
-  },
-  {
-    date: "11/05/2024",
-    invoice: "#982ZK-004",
-    order: "20 GB Residential",
-    amount: "$ 300.00",
-    paymentMethod: "Mastercard",
-    status: "FAILED",
-    download: "https://www.google.com",
-  },
-  {
-    date: "11/05/2024",
-    invoice: "#982ZK-004",
-    order: "20 GB Residential",
-    amount: "$ 300.00",
-    paymentMethod: "Mastercard",
-    status: "FAILED",
-    download: "https://www.google.com",
-  },
-  {
-    date: "11/05/2024",
-    invoice: "#982ZK-004",
-    order: "20 GB Residential",
-    amount: "$ 300.00",
-    paymentMethod: "Mastercard",
-    status: "FAILED",
-    download: "https://www.google.com",
-  },
-  {
-    date: "11/05/2024",
-    invoice: "#982ZK-004",
-    order: "20 GB Residential",
-    amount: "$ 300.00",
-    paymentMethod: "Mastercard",
-    status: "FAILED",
-    download: "https://www.google.com",
-  },
-  {
-    date: "11/05/2024",
-    invoice: "#982ZK-004",
-    order: "20 GB Residential",
-    amount: "$ 300.00",
-    paymentMethod: "Mastercard",
-    status: "FAILED",
-    download: "https://www.google.com",
-  },
-  {
-    date: "10/05/2024",
-    invoice: "#982ZK-003",
-    order: "50 GB Residential",
-    amount: "$ 300.00",
-    paymentMethod: "Mastercard",
-    status: "PAID",
-    download: "https://www.google.com",
-  },
-];
-
 const UserInvoices = () => {
   const params = useSearchParams();
   const limit = params.get("limit") ? parseInt(params.get("limit")!) : 4;
@@ -120,7 +18,7 @@ const UserInvoices = () => {
 
   function onFilterChange() {}
 
-  const { data: orders } = useQuery({
+  const { data: orders, isLoading } = useQuery({
     queryKey: QUERY_KEYS.ORDERS,
     queryFn: () => getOrders({ completed: false, all: true }),
   });
@@ -146,12 +44,16 @@ const UserInvoices = () => {
             className="w-[119px] h-26px"
           />
         </div>
-        <Table columns={InvoiceColumns} data={orders ?? INVOICE_DATA} />
+        <Table
+          isLoading={isLoading}
+          columns={InvoiceColumns}
+          data={orders ?? []}
+        />
       </div>
       <Pagination
         color="bg-orange-200 border-orange-200 hover:bg-orange-400"
         noMargin={true}
-        totalCount={INVOICE_DATA.length}
+        totalCount={orders?.length}
         limit={limit}
         offset={offset}
         isDataAvailable={(orders?.length ?? 0) >= limit}
