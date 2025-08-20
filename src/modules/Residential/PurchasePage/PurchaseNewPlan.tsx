@@ -15,6 +15,7 @@ import PreviousPlanCard from "./PreviousPlanCard";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/querykeys";
 import { getResiPackages } from "@/service/api";
+import Loader from "@/components/Loader/Loader";
 
 const PurchaseNewPlan = ({ className }: { className?: string }) => {
   const [selectedPlanId, setSelectedPlanId] = useState<number | null>(null);
@@ -39,7 +40,7 @@ const PurchaseNewPlan = ({ className }: { className?: string }) => {
   const params = useSearchParams();
   const pool = params.get("pool");
 
-  const { data: packages } = useQuery({
+  const { data: packages, isLoading } = useQuery({
     queryKey: [...QUERY_KEYS.RESI_PACKAGES, pool],
     queryFn: () => getResiPackages(pool as string),
     enabled: !!pool,
@@ -98,21 +99,28 @@ const PurchaseNewPlan = ({ className }: { className?: string }) => {
           {pathname === "/purchase/new" ? (
             <>
               <div>
-                <div className="grid grid-cols-2 1665:grid-cols-3 gap-4">
-                  {plans?.map((plan: any) => (
-                    <ResidentialPlan
-                      key={plan.id}
-                      id={plan.id}
-                      gb={plan.gb}
-                      perPrice={plan.perPrice}
-                      total={plan.total}
-                      discount={plan.discount}
-                      recommend={plan.recommend}
-                      isSelected={selectedPlanId === plan.id}
-                      onSelect={handleSelectPlan}
-                    />
-                  ))}
-                </div>
+                {isLoading ? (
+                  <div className="flex items-end gap-2">
+                    <p className="text-white text-2xl">Loading plans...</p>
+                    <Loader />
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 1665:grid-cols-3 gap-4">
+                    {plans?.map((plan: any) => (
+                      <ResidentialPlan
+                        key={plan.id}
+                        id={plan.id}
+                        gb={plan.gb}
+                        perPrice={plan.perPrice}
+                        total={plan.total}
+                        discount={plan.discount}
+                        recommend={plan.recommend}
+                        isSelected={selectedPlanId === plan.id}
+                        onSelect={handleSelectPlan}
+                      />
+                    ))}
+                  </div>
+                )}
               </div>
 
               <CustomAmountCard

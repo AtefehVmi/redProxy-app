@@ -8,11 +8,12 @@ import useFetch from "@/hooks/UseFetch";
 import {
   estimatePrice,
   estimateResi,
+  getUserProfile,
   purchaseProxy,
   purchaseResi,
 } from "@/service/api";
 import cn from "@/utils/cn";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
@@ -76,7 +77,12 @@ const OrderSummaryCard: React.FC<Props> = ({
   const params = useSearchParams();
   const pool = params.get("pool");
 
-  const balance = 0;
+  const { data: user } = useQuery({
+    queryKey: QUERY_KEYS.PROFILE,
+    queryFn: () => getUserProfile(),
+  });
+
+  const balance = user?.balance;
 
   const { fetch: purchaseResiFetch, loading: resiLoading } = useFetch(
     purchaseResi,
@@ -109,7 +115,13 @@ const OrderSummaryCard: React.FC<Props> = ({
   }, [customPlan, couponData]);
 
   const handlePurchase = () => {
-    if (balance >= 1) {
+    const cost = customPlan
+      ? discountedTotal
+      : residentialPlan
+      ? totalPrice * (1 - discount / 100)
+      : price ?? 0;
+
+    if (!balance || Number(balance) < cost) {
       setOpenFirst(true);
       return;
     }

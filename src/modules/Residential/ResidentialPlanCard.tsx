@@ -43,8 +43,8 @@ const ResidentialPlanCard: React.FC<Props> = ({
   };
 
   return (
-    <div className="border border-darkmode-100 bg-darkmode-300 rounded-lg p-4">
-      <div>
+    <div className="border border-darkmode-100 bg-darkmode-300 rounded-lg p-4 flex flex-col">
+      <div className="grow">
         <div className="flex items-center justify-between">
           <div>
             <div className="flex items-center gap-1">
