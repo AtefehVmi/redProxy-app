@@ -19,9 +19,14 @@ import { useState } from "react";
 interface Props {
   filterValue?: string;
   searchValue?: string;
+  activeFilter?: string;
 }
 
-const ResidentialPlansTab = ({ filterValue, searchValue }: Props) => {
+const ResidentialPlansTab = ({
+  filterValue,
+  searchValue,
+  activeFilter,
+}: Props) => {
   const params = useSearchParams();
   const limit = params.get("limit") ? parseInt(params.get("limit")!) : 8;
   const offset = params.get("offset") ? parseInt(params.get("offset")!) : 0;
@@ -36,8 +41,13 @@ const ResidentialPlansTab = ({ filterValue, searchValue }: Props) => {
       ),
   });
 
-  const totalCount = data?.length ?? 0;
-  const paginatedData = data?.slice(offset, offset + limit) ?? [];
+  const filteredData =
+    activeFilter === "All"
+      ? data
+      : data?.filter((plan) => plan.pool_type.name === activeFilter);
+
+  const totalCount = filteredData?.length ?? 0;
+  const paginatedData = filteredData?.slice(offset, offset + limit) ?? [];
   const isDataAvailable = offset + limit < totalCount;
 
   if (isLoading) {

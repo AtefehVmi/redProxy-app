@@ -15,76 +15,14 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/querykeys";
 import PlusIcon from "@public/icons/plus.svg";
 import GlobeIcon from "@public/icons/globe.svg";
-import { getPoolTypes } from "@/service/api";
+import { getPoolTypes, getUserPlans } from "@/service/api";
 
-const data = [
-  {
-    name: "Universal Scraper API",
-    desc: "Scraping Pool",
-    purchase_date: "01 April 2026",
-    expire_date: "12 April 2026",
-    remainingGb: 12,
-    id: 1,
-  },
-  {
-    name: "Universal Scraper API",
-    desc: "Scraping Pool",
-    purchase_date: "01 April 2026",
-    expire_date: "12 April 2026",
-    remainingGb: 12,
-    id: 1,
-  },
-  {
-    name: "Universal Scraper API",
-    desc: "Scraping Pool",
-    purchase_date: "01 April 2026",
-    expire_date: "12 April 2026",
-    remainingGb: 12,
-    id: 1,
-  },
-  {
-    name: "Universal Scraper API",
-    desc: "Scraping Pool",
-    purchase_date: "01 April 2026",
-    expire_date: "12 April 2026",
-    remainingGb: 12,
-    id: 1,
-  },
-  {
-    name: "Universal Scraper API",
-    desc: "Scraping Pool",
-    purchase_date: "01 April 2026",
-    expire_date: "12 April 2026",
-    remainingGb: 12,
-    id: 1,
-  },
-  {
-    name: "Universal Scraper API",
-    desc: "Scraping Pool",
-    purchase_date: "01 April 2026",
-    expire_date: "12 April 2026",
-    remainingGb: 12,
-    id: 1,
-  },
-  {
-    name: "Universal Scraper API",
-    desc: "Scraping Pool",
-    purchase_date: "01 April 2026",
-    expire_date: "12 April 2026",
-    remainingGb: 12,
-    id: 1,
-  },
-  {
-    name: "Universal Scraper API",
-    desc: "Scraping Pool",
-    purchase_date: "01 April 2026",
-    expire_date: "12 April 2026",
-    remainingGb: 12,
-    id: 1,
-  },
-];
+interface Props {
+  filterValue?: string;
+  searchValue?: string;
+}
 
-const PreviousPlansCard = () => {
+const PreviousPlansCard = ({ filterValue, searchValue }: Props) => {
   const params = useSearchParams();
   const queryClient = useQueryClient();
 
@@ -111,7 +49,24 @@ const PreviousPlansCard = () => {
     })),
   ];
 
-  const paginatedData = data.slice(offset, offset + limit);
+  const { data, isLoading, refetch } = useQuery({
+    queryKey: [...QUERY_KEYS.PLANS, filterValue, searchValue],
+    queryFn: () =>
+      getUserPlans(
+        filterValue !== "All" ? filterValue : undefined,
+        true,
+        searchValue || undefined
+      ),
+  });
+
+  const filteredData =
+    activeFilter === "All"
+      ? data
+      : data?.filter((plan) => plan.pool_type.name === activeFilter);
+
+  const totalCount = filteredData?.length ?? 0;
+  const paginatedData = filteredData?.slice(offset, offset + limit) ?? [];
+  const isDataAvailable = offset + limit < totalCount;
 
   return (
     <div className="border border-darkmode-100 bg-darkmode-200 rounded">
@@ -150,7 +105,7 @@ const PreviousPlansCard = () => {
       </div>
 
       <div className="mt-6">
-        {paginatedData.length === 0 ? (
+        {paginatedData?.length === 0 ? (
           <div className="flex items-center justify-center h-[560px]">
             <div>
               <Image quality={100} priority src={NoDataImage} alt="" />
@@ -163,13 +118,13 @@ const PreviousPlansCard = () => {
           <div className="grid md:grid-cols-2 2xl:grid-cols-4 gap-y-5 gap-x-4 px-6">
             {paginatedData?.map((item) => (
               <ResidentialPlanCard
-                key={item.id}
+                key={item.uuid}
                 name={item.name}
-                desc={item.desc}
-                purchaseDate={item.purchase_date}
-                expireDate={item.expire_date}
-                remainingGb={item.remainingGb}
-                planId={"hjh"}
+                desc={item.pool_type.description}
+                purchaseDate={item.created}
+                expireDate={item.expiration}
+                remainingGb={item.available_gb}
+                planId={item.uuid}
               />
             ))}
           </div>
@@ -178,10 +133,10 @@ const PreviousPlansCard = () => {
         <Pagination
           color="bg-blue-100 border-blue-100 hover:bg-blue-400"
           className="mb-0"
-          totalCount={data.length}
+          totalCount={totalCount}
           limit={limit}
           offset={offset}
-          isDataAvailable={data?.length >= limit}
+          isDataAvailable={isDataAvailable}
         />
       </div>
     </div>

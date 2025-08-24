@@ -175,9 +175,9 @@ const Pagination: React.FC<PaginationProps> = ({
         {totalCount && (
           <p className="text-sm text-grey-400">
             <span className="font-medium">
-              {isDataAvailable ? currentLimit : 0}
+              {isDataAvailable ? currentLimit : 1}
             </span>{" "}
-            of {totalCount} items
+            of {totalCount + 1} items
           </p>
         )}
       </div>

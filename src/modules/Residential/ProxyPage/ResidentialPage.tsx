@@ -55,7 +55,7 @@ const ResidentialPage = () => {
 
   const activeTab = params.get("tab") || tabs[0].key;
   const [searchValue, setSearchValue] = React.useState("");
-  const [filterValue, setFilterValue] = useState("");
+  const [activeFilter, setActiveFilter] = useState("All");
 
   const { data: poolTypesData } = useQuery({
     queryKey: QUERY_KEYS.POOL_TYPES,
@@ -137,8 +137,8 @@ const ResidentialPage = () => {
           {activeTab === "plans" && (
             <StatusFilterButton
               filterOptions={filterOptions}
-              value={filterValue}
-              onChange={(selected) => setFilterValue(selected)}
+              value={activeFilter}
+              onChange={(selected) => setActiveFilter(selected)}
             />
           )}
         </div>
@@ -148,7 +148,10 @@ const ResidentialPage = () => {
         {activeTab === "configs" ? (
           <ResidentialConfigTab planUuid={searchValue} />
         ) : (
-          <ResidentialPlansTab searchValue={searchValue} />
+          <ResidentialPlansTab
+            activeFilter={activeFilter}
+            searchValue={searchValue}
+          />
         )}
       </div>
     </div>
