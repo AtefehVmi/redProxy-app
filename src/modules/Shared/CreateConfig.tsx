@@ -11,7 +11,7 @@ import ResidentialGenerateTab from "../CreateResidentialConfig/ResidentialGenera
 import ActivePlanCard from "./ActivePlanCard";
 import InvoiceDetailsCard from "./InvoiceDetailsCard";
 
-const CreateConfig = () => {
+const CreateConfig = ({ href }: { href: string }) => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-9 gap-4">
       <div
@@ -70,7 +70,7 @@ const CreateConfig = () => {
       </div>
 
       <div className="lg:col-span-3 1665:col-span-2 order-1 lg:order-2">
-        <ActivePlanCard />
+        <ActivePlanCard href={href} />
         <InvoiceDetailsCard className="mt-4" />
       </div>
     </div>

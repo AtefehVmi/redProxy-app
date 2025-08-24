@@ -23,7 +23,7 @@ const Page = () => {
         </Link>
       </div>
       <div className="w-full mt-[30px]">
-        <CreateConfig />
+        <CreateConfig href="/plan/datacenter" />
       </div>
     </div>
   );

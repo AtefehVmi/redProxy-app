@@ -2,8 +2,11 @@ import Button from "@/components/Button/Button";
 import LayersIcon from "@public/icons/layers.svg";
 import Image from "next/image";
 import PlusIcon from "@public/icons/plus.svg";
+import Link from "next/link";
 
-const ActivePlanCard = () => {
+type Props = { href: string };
+
+const ActivePlanCard = ({ href }: Props) => {
   return (
     <div className="border border-darkmode-100 bg-darkmode-200 rounded-lg py-5 px-4 relative overflow-hidden">
       <div className="h-44 w-96 rotate-12 opacity-45 bg-orange-300/45 absolute blur-3xl -top-28 -right-40"></div>
@@ -15,13 +18,15 @@ const ActivePlanCard = () => {
           </div>
 
           <div>
-            <p className="text-white font-bold text-sm">Active Plan</p>
+            <p className="text-white font-bold text-sm">Add Plan</p>
           </div>
         </div>
 
-        <Button>
-          <Image src={PlusIcon} alt="" />
-        </Button>
+        <Link href={href}>
+          <Button>
+            <Image src={PlusIcon} alt="" />
+          </Button>
+        </Link>
       </div>
 
       <div className="mt-10">

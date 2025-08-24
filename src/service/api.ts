@@ -121,6 +121,14 @@ export async function getUserProfile(): Promise<Profile> {
   return await instance.get("/users/profile/");
 }
 
+export async function updateUserProfile(payload: {
+  password: string;
+  current_password: string;
+}): Promise<any> {
+  const { data } = await instance.patch("/users/profile/", payload);
+  return data;
+}
+
 //user configs
 export async function getUserConfigs(params?: {
   plan_uuid?: string;

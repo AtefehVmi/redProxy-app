@@ -10,6 +10,10 @@ import UserIcon from "@public/icons/sidebar-user.svg";
 import EmailIcon from "@public/icons/email.svg";
 import LockIcon from "@public/icons/lock.svg";
 import PasswordInput from "@/components/PasswordInput/PasswordInput";
+import { useQuery } from "@tanstack/react-query";
+import { QUERY_KEYS } from "@/constants/querykeys";
+import { getUserProfile } from "@/service/api";
+import Loader from "@/components/Loader/Loader";
 
 type ProfileData = {
   firstName: string;
@@ -30,6 +34,11 @@ const MyProfile = () => {
     confirmNewPassword: "",
   });
 
+  const { data, isLoading } = useQuery({
+    queryKey: QUERY_KEYS.PROFILE,
+    queryFn: () => getUserProfile(),
+  });
+
   const handleChange = (field: keyof ProfileData, value: string) => {
     setProfileData((prev) => ({ ...prev, [field]: value }));
   };
@@ -42,7 +51,7 @@ const MyProfile = () => {
 
           <div>
             <p className="text-white text-base md:text-lg font-semibold">
-              Fatemeh.mozaffari.77@gmail.com
+              {isLoading ? <Loader /> : data?.email}
             </p>
 
             <div className="flex items-center mt-2 gap-2">
