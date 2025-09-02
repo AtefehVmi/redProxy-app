@@ -115,7 +115,7 @@ const Navbar = ({ className }: { className?: string }) => {
         <ProfileDropdown />
 
         <Button onClick={() => setOpenMenu(true)} className="block lg:hidden">
-          <Image src={BurgerMenuIcon} alt="" />
+          <Image src={BurgerMenuIcon} alt="menu" />
         </Button>
 
         {openMenu && (
